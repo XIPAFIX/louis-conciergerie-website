@@ -84,21 +84,48 @@ nav.links a:hover{color:var(--ink)}
 .chip{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
 @media (max-width:860px){.hero{grid-template-columns:1fr;gap:36px;padding-block:36px 24px}}
 
-/* Billet (hero) */
-.ticket{position:relative;display:grid;grid-template-columns:1fr 92px;background:var(--surface);border-radius:var(--radius);box-shadow:0 1px 0 var(--line),0 24px 48px -24px color-mix(in srgb,var(--ink) 35%,transparent);transform:rotate(-2.5deg)}
-.ticket-main{padding:24px 24px 22px;border-right:2px dashed var(--line);min-width:0}
-.ticket-stub{background:var(--stub);border-radius:0 var(--radius) var(--radius) 0;display:flex;align-items:center;justify-content:center}
-.ticket-stub span{writing-mode:vertical-rl;transform:rotate(180deg);font:500 12px/1 var(--font-mono);letter-spacing:.3em;color:var(--muted)}
-.ticket::before,.ticket::after{content:"";position:absolute;right:83px;width:18px;height:18px;border-radius:50%;background:var(--bg)}
-.ticket::before{top:-9px}.ticket::after{bottom:-9px}
+/* Billet (hero) : billet luxe doré qui tourne sur lui-même */
+.ticket-scene{perspective:1400px;padding:20px 0 40px;position:relative}
+.ticket-scene::after{content:"";position:absolute;left:12%;right:12%;bottom:6px;height:28px;border-radius:50%;background:radial-gradient(closest-side,rgba(224,180,74,.28),transparent);filter:blur(6px);animation:shadow-pulse 14s linear infinite}
+.ticket-spin{position:relative;transform-style:preserve-3d;animation:ticket-spin 14s linear infinite}
+@keyframes ticket-spin{from{transform:rotateX(10deg) rotateY(0deg)}to{transform:rotateX(10deg) rotateY(360deg)}}
+@keyframes shadow-pulse{0%,50%,100%{transform:scaleX(1);opacity:1}25%,75%{transform:scaleX(.35);opacity:.5}}
+.ticket-scene:hover .ticket-spin{animation-play-state:paused}
+.ticket{--notch:calc(100% - 92px);position:relative;display:grid;grid-template-columns:1fr 92px;border-radius:var(--radius);color:#f4efe2;
+  background:
+    repeating-radial-gradient(circle at 20% 120%,rgba(224,180,74,.07) 0 1px,transparent 1px 7px),
+    linear-gradient(135deg,#0b0b0e 0%,#17140e 55%,#0b0b0e 100%);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  -webkit-mask:radial-gradient(circle 10px at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 10px at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 10px at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 10px at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+/* liseré doré */
+.ticket::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:var(--gold-grad);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+/* reflet qui balaie le billet */
+.ticket::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,240,200,.16) 45%,rgba(255,255,255,.28) 50%,rgba(255,240,200,.16) 55%,transparent 65%) -150% 0/250% 100% no-repeat;animation:sheen 4.5s ease-in-out infinite}
+@keyframes sheen{0%,30%{background-position:-150% 0}70%,100%{background-position:250% 0}}
+:root{--gold-grad:linear-gradient(135deg,#8a6a1f 0%,#f5d77a 28%,#b8902f 48%,#fff1b8 62%,#a07a26 100%)}
+.ticket-main{padding:24px 24px 22px;border-right:2px dashed rgba(224,180,74,.35);min-width:0}
+.ticket-stub{background:linear-gradient(180deg,rgba(224,180,74,.10),rgba(224,180,74,.03));border-radius:0 var(--radius) var(--radius) 0;display:flex;align-items:center;justify-content:center}
+.ticket-stub span{writing-mode:vertical-rl;transform:rotate(180deg);font:500 12px/1 var(--font-mono);letter-spacing:.3em;color:var(--gold)}
 .ticket .t-head{display:flex;justify-content:space-between;align-items:center}
-.ticket .t-title{font:900 40px/.95 var(--font-display);text-transform:uppercase;margin:16px 0 4px}
-.ticket .t-sub{color:var(--muted);font-size:14px}
-.seat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
-.seat div{font:500 11px/1.3 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.seat b{display:block;font:800 26px/1 var(--font-display);color:var(--ink);letter-spacing:.02em;margin-top:4px}
-.barcode{height:34px;margin-top:18px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px);opacity:.85;border-radius:2px}
-.vip{font:500 11px/1 var(--font-mono);letter-spacing:.14em;color:var(--gold);border:1px solid var(--gold);padding:5px 8px;border-radius:4px}
+.ticket .eyebrow{color:#cbb98c}
+.gold-text{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ticket .t-title{font:900 40px/.95 var(--font-display);text-transform:uppercase;margin:10px 0 4px;padding-top:.15em}
+.ticket .t-sub{color:#b9b2a0;font-size:14px}
+.seat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(224,180,74,.25)}
+.seat div{font:500 11px/1.3 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:#b9b2a0}
+.seat b{display:block;font:800 26px/1 var(--font-display);color:#f4efe2;letter-spacing:.02em;margin-top:4px}
+.barcode{height:34px;margin-top:18px;background:repeating-linear-gradient(90deg,#e0b44a 0 2px,transparent 2px 4px,#e0b44a 4px 5px,transparent 5px 9px,#e0b44a 9px 12px,transparent 12px 14px);opacity:.85;border-radius:2px}
+.vip{white-space:nowrap;font:600 11px/1 var(--font-mono);letter-spacing:.14em;color:#1a1408;background:var(--gold-grad);padding:6px 9px;border-radius:4px}
+/* Verso du billet */
+.ticket.back{--notch:92px;position:absolute;inset:0;transform:rotateY(180deg);grid-template-columns:92px 1fr}
+.ticket.back .ticket-stub{border-radius:var(--radius) 0 0 var(--radius);border-right:2px dashed rgba(224,180,74,.35)}
+.ticket.back .back-main{display:grid;place-items:center;align-content:center;gap:12px;text-align:center;padding:24px;min-width:0}
+.monogram{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--gold-grad);color:#1a1408;font:900 40px/1 var(--font-display);box-shadow:0 0 0 4px #0b0b0e,0 0 0 5px rgba(224,180,74,.6)}
+.back-name{font:900 30px/1 var(--font-display);text-transform:uppercase;letter-spacing:.04em}
+.back-tag{font:500 11px/1.4 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:#cbb98c}
+.back-no{font:500 11px/1 var(--font-mono);letter-spacing:.3em;color:#8d846f}
 
 section{padding-block:64px}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
@@ -229,19 +256,32 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       </div>
     </div>
     <div aria-hidden="true">
-      <div class="ticket">
-        <div class="ticket-main">
-          <div class="t-head"><span class="eyebrow">Louis Conciergerie</span><span class="vip">Carré Or</span></div>
-          <div class="t-title">Votre événement</div>
-          <div class="t-sub">Le match, le concert ou la finale que vous voulez voir</div>
-          <div class="seat">
-            <div>Tribune<b>A</b></div>
-            <div>Rang<b>04</b></div>
-            <div>Place<b>12</b></div>
+      <div class="ticket-scene">
+        <div class="ticket-spin">
+          <div class="ticket">
+            <div class="ticket-main">
+              <div class="t-head"><span class="eyebrow">Louis Conciergerie</span><span class="vip">Carré Or</span></div>
+              <div class="t-title gold-text">Votre événement</div>
+              <div class="t-sub">Le match, le concert ou la finale que vous voulez voir</div>
+              <div class="seat">
+                <div>Tribune<b>A</b></div>
+                <div>Rang<b>04</b></div>
+                <div>Place<b>12</b></div>
+              </div>
+              <div class="barcode"></div>
+            </div>
+            <div class="ticket-stub"><span>Admis · 1 personne</span></div>
           </div>
-          <div class="barcode"></div>
+          <div class="ticket back">
+            <div class="ticket-stub"><span>Accès privilège</span></div>
+            <div class="back-main">
+              <div class="monogram">L</div>
+              <div class="back-name gold-text">Louis Conciergerie</div>
+              <div class="back-tag">Billetterie privée · Sport &amp; Concerts</div>
+              <div class="back-no">N° 0001</div>
+            </div>
+          </div>
         </div>
-        <div class="ticket-stub"><span>Admis · 1 personne</span></div>
       </div>
     </div>
   </div>
