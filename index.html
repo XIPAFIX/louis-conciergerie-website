@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="theme-color" content="#f6e7b8">
+<meta name="theme-color" content="#f3e0aa">
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
@@ -22,14 +22,14 @@
 /* Layout : billetterie. Chaque événement est un billet (souche perforée, tribune / rang / place). */
 :root{
   /* Ambiance champagne : fond couleur champagne, objets en laque noire et or, vraies bulles */
-  --bg:#f5e6b6;           /* champagne */
+  --bg:#eed596;           /* champagne */
   --surface:#17130c;
   --ink:#251908;          /* brun très profond */
   --muted:#5f4a26;
   --line:rgba(125,90,18,.24);
-  --accent:#8a5f0e;       /* or foncé, lisible sur le champagne */
+  --accent:#7a530b;       /* or foncé, lisible sur le champagne */
   --accent-ink:#1a1006;
-  --gold:#7d5a12;
+  --gold:#6e4e0c;
   --wa:#25b865;           /* WhatsApp */
   --stub:#100d08;
   --velvet:#8f1424;
@@ -62,11 +62,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body)
 /* Fond : la couleur du champagne vu à travers la flûte, lumineux en haut, plus doré vers le bas et sur les bords (les bulles sont dans #bubbles) */
 body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(55% 45% at 50% -6%,rgba(255,252,238,.85),transparent 72%),
-    radial-gradient(34% 70% at -4% 55%,rgba(206,160,62,.30),transparent 72%),
-    radial-gradient(34% 70% at 104% 55%,rgba(206,160,62,.30),transparent 72%),
-    radial-gradient(70% 45% at 50% 110%,rgba(214,168,70,.38),transparent 72%),
-    linear-gradient(180deg,#fbf2d4 0%,#f6e7b8 40%,#f0d999 100%)}
+    radial-gradient(55% 45% at 50% -6%,rgba(255,247,222,.62),transparent 72%),
+    radial-gradient(34% 70% at -4% 55%,rgba(190,142,48,.34),transparent 72%),
+    radial-gradient(34% 70% at 104% 55%,rgba(190,142,48,.34),transparent 72%),
+    radial-gradient(70% 45% at 50% 110%,rgba(196,148,54,.42),transparent 72%),
+    linear-gradient(180deg,#f5e3b0 0%,#eed596 40%,#e4c375 100%)}
 #bubbles{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -89,7 +89,7 @@ h1 em,h2 em{font-style:normal;background:var(--gold-text);-webkit-background-cli
 /* Header : transparent sur l'accueil, fond sombre flouté dès qu'on défile (façon agence) */
 header.site{position:fixed;top:0;left:0;right:0;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .35s ease,box-shadow .35s ease}
 header.site::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold-grad);opacity:0;transition:opacity .35s ease}
-header.site.scrolled{background:rgba(250,240,210,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 12px 30px -20px rgba(90,62,14,.55)}
+header.site.scrolled{background:rgba(244,228,180,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 12px 30px -20px rgba(90,62,14,.55)}
 header.site.scrolled::after{opacity:1}
 .bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:20px;transition:padding .35s ease}
 header.site.scrolled .bar{padding-block:11px}
@@ -114,7 +114,7 @@ nav.links a:hover{color:var(--accent)}
 @media (max-width:420px){.bar .btn span{display:none}.bar .btn{padding:11px}}
 /* Menu plein écran (mobile) */
 .menu{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:110px 28px 48px;
-  background:radial-gradient(90% 60% at 50% 0%,rgba(255,252,238,.9),transparent 70%),linear-gradient(180deg,#fbf2d4,#f0d999);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+  background:radial-gradient(90% 60% at 50% 0%,rgba(255,247,222,.7),transparent 70%),linear-gradient(180deg,#f5e3b0,#e4c375);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
 .menu.open{opacity:1;visibility:visible}
 .menu nav{display:grid;gap:4px}
 .menu nav a{font:900 clamp(40px,11vw,64px)/1.08 var(--font-display);text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease,color .2s ease}
@@ -425,7 +425,7 @@ nav.links a:hover::after{transform:scaleX(1)}
 @keyframes lc-hd-in{from{opacity:0;transform:translateY(22px) scale(.9)}}
 .lc-ft-card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:var(--gold-grad);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
-.lc-ft-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:rgba(246,232,186,calc(var(--haze,.2) * .55))}
+.lc-ft-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:rgba(238,213,150,calc(var(--haze,.2) * .55))}
 @media (min-width:761px){.lc-ft-card{--notch:76%;
   -webkit-mask:radial-gradient(circle calc(var(--w)*.045) at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle calc(var(--w)*.045) at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
   mask:radial-gradient(circle calc(var(--w)*.045) at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle calc(var(--w)*.045) at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}}
@@ -2707,10 +2707,10 @@ form.addEventListener("submit", async ev => {
     W=innerWidth;H=innerHeight;var dpr=Math.min(window.devicePixelRatio||1,W<700?1.25:1.5);
     c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
     // ordinateur : autant de bulles qu'avant ; téléphone : un peu moins pour rester fluide (le régulateur ajuste si besoin)
-    FREE=baseFREE=W<700?140:Math.round(Math.min(420,Math.max(160,W*H/2400)));
-    HARD=baseHARD=W<700?400:1000;
+    FREE=baseFREE=W<700?220:Math.round(Math.min(640,Math.max(250,W*H/1600)));
+    HARD=baseHARD=W<700?650:1600;
     if(Math.abs(W-lastW)>40){                  // colonnes recalculées seulement si la largeur change
-      lastW=W;var n=Math.max(6,Math.round(W/(W<700?90:70)));streams=[];
+      lastW=W;var n=Math.max(8,Math.round(W/(W<700?60:48)));streams=[];
       for(var i=0;i<n;i++)streams.push({x:(i+.15+Math.random()*.7)*W/n,z:Math.random(),every:.09+Math.random()*.2,t:Math.random(),sz:.9+Math.random()*.7});
     }
   }
@@ -2759,7 +2759,7 @@ form.addEventListener("submit", async ev => {
     ctx.clearRect(0,0,W,H);step(dt,true);govern(dt,t);
     raf=requestAnimationFrame(frame);
   }
-  function warm(){bubbles=[];for(var i=0;i<500;i++)step(.025,false)}  // le verre est déjà plein au chargement
+  function warm(){bubbles=[];for(var i=0;i<600;i++)step(.025,false)}  // le verre est déjà plein au chargement
   // En pause quand l'onglet est caché ou que le menu plein écran est ouvert
   var menu=document.getElementById('menu');
   function sync(){
