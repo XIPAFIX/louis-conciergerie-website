@@ -502,6 +502,80 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:board] ==== */
+/* Le tableau des départs (#stats) : panneau laqué noir, palettes à rabat et caractères dorés */
+.lc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#conciergerie{padding-bottom:clamp(56px,6vw,88px)}
+.lc-bd{position:relative;display:block;border:1px solid var(--line);border-radius:var(--radius);padding:18px clamp(16px,2.4vw,28px) 22px;
+  background:radial-gradient(80% 60% at 50% -12%,rgba(255,226,170,.075),transparent 62%),linear-gradient(180deg,#120a08,#0a0605);
+  box-shadow:inset 0 1px 0 rgba(255,241,184,.08),0 30px 60px -30px rgba(0,0,0,.9)}
+.lc-bd::before{content:"";position:absolute;inset:5px;border:1px solid rgba(224,180,74,.09);border-radius:10px;pointer-events:none}
+.lc-bd-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font:500 11px/1.4 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.lc-bd-stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.lc-bd .stat{padding:26px 24px}
+.lc-bd .stat:first-child{padding-left:0}
+.lc-bd .stat:last-child{padding-right:0}
+.lc-bd .lc-bd-num{display:flex;font:900 clamp(56px,7vw,100px)/1 var(--font-display);letter-spacing:0;text-transform:none;max-width:none;color:inherit}
+/* Palette : 2 moitiés fixes + 2 volets qui tombent ; le caractère est découpé au milieu, sans couture */
+.lc-bd .lc-fl{position:relative;display:inline-block;vertical-align:top;flex:none;width:.62em;height:1.2em;margin-right:.06em;perspective:5em;border-radius:.07em;background:#0e0c09;box-shadow:0 .05em .1em rgba(0,0,0,.6);color:#f2d37e;font:inherit;letter-spacing:0;text-transform:none;max-width:none;text-shadow:0 1px 0 rgba(0,0,0,.55);contain:size layout style}
+.lc-bd .lc-fl:last-child{margin-right:0}
+.lc-bd .lc-fl::before{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(224,180,74,.22);pointer-events:none;transition:box-shadow .2s ease}
+.lc-bd .lc-fl::after{content:"";position:absolute;left:0;right:0;top:calc(50% - max(.5px,.0125em));height:max(1px,.025em);z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,rgba(224,180,74,.45) 0 max(1px,.035em),rgba(0,0,0,.42) 0 calc(100% - max(1px,.035em)),rgba(224,180,74,.45) 0)}
+.lc-bd .lc-fl>span{position:absolute;left:0;right:0;height:50%;overflow:hidden;font:inherit;letter-spacing:0;text-transform:none;max-width:none;color:inherit}
+.lc-bd .lc-fl>span::after{content:"";position:absolute;inset:0;pointer-events:none}
+/* la fente de la charnière est sous le caractère : le tiret reste lisible, pas de « = » */
+.lc-bd .lc-fl-t,.lc-bd .lc-fl-lt{top:0;border-radius:.07em .07em 0 0;background:linear-gradient(#1f1a12,#16130d calc(100% - max(.5px,.0125em)),#000 0);box-shadow:inset 0 1px 0 rgba(255,240,200,.05);transform-origin:50% 100%}
+.lc-bd .lc-fl-b,.lc-bd .lc-fl-lb{bottom:0;border-radius:0 0 .07em .07em;background:linear-gradient(#000 max(.5px,.0125em),#100d09 0,#0b0a07);transform-origin:50% 0}
+.lc-bd .lc-fl-t::after,.lc-bd .lc-fl-lt::after{background:linear-gradient(180deg,rgba(255,248,225,.09),rgba(255,248,225,0) 55%,rgba(0,0,0,.16))}
+.lc-bd .lc-fl-b::after,.lc-bd .lc-fl-lb::after{background:linear-gradient(180deg,rgba(0,0,0,.26),rgba(0,0,0,0) 42%,rgba(0,0,0,.12))}
+.lc-bd .lc-fl-lt,.lc-bd .lc-fl-lb{display:none;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.lc-bd .lc-fl.is-flip .lc-fl-lt,.lc-bd .lc-fl.is-flip .lc-fl-lb{display:block}
+.lc-bd .lc-fl b{display:block;height:200%;min-width:0;padding:0;margin:0;font-family:inherit;font-weight:inherit;font-size:calc(var(--lc-fl-s,.9) * 1em);line-height:calc(1.2em / var(--lc-fl-s,.9));text-align:center;white-space:pre;font-variant-numeric:normal;color:inherit;background:none;-webkit-background-clip:border-box;background-clip:border-box;transform:translateY(calc(var(--lc-fl-dy,0em) + var(--ty,0em))) scaleX(var(--sx,1))}
+.lc-bd .lc-fl-b b,.lc-bd .lc-fl-lb b{transform:translateY(calc(var(--lc-fl-dy,0em) + var(--ty,0em) - 50%)) scaleX(var(--sx,1))}
+.lc-bd .lc-fl-sh{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}
+/* Ligne des prochaines dates (bouton) */
+.lc-bd-line{all:unset;box-sizing:border-box;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"k k go" "date title j" "meta meta dots";align-items:center;gap:14px 18px;width:100%;margin-top:6px;padding:18px 0 4px;border-top:1px solid var(--line);cursor:pointer;color:var(--ink);font:900 clamp(24px,3vw,44px)/1 var(--font-display);-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.lc-bd-line:focus-visible{outline:3px solid var(--accent);outline-offset:6px;border-radius:8px}
+.lc-bd-k,.lc-bd-go{font:500 11px/1.4 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.lc-bd-k{grid-area:k;color:var(--gold)}
+.lc-bd-go{grid-area:go;justify-self:end;display:inline-flex;align-items:center;gap:8px;padding-right:2px;color:var(--ink)}
+.lc-bd-go::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--accent);border-bottom:1.5px solid var(--accent);transform:rotate(-45deg);transition:transform .2s ease}
+.lc-bd-date,.lc-bd-title,.lc-bd-j{display:flex;white-space:nowrap}
+.lc-bd-date{grid-area:date}
+.lc-bd-title{grid-area:title;min-width:0}
+.lc-bd-j{grid-area:j;justify-self:end}
+.lc-bd-meta{grid-area:meta;display:flex;align-items:center;gap:10px;min-width:0;font:600 14px/1.4 var(--font-body);color:var(--muted);transition:opacity .15s ease}
+.lc-bd-meta.is-out{opacity:0}
+.lc-bd-heat{color:#ecd9b0;white-space:nowrap}
+.lc-bd-venue{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc-bd-venue::before{content:"·";margin-right:10px;color:var(--gold)}
+.lc-bd-led{flex:none;width:10px;height:10px;border-radius:50%;animation:lc-bd-led 2.4s ease-in-out infinite alternate}
+.lc-bd-led.h3{background:#b3121f;box-shadow:0 0 0 1.5px #f5d77a,0 0 12px rgba(179,18,31,.8)}
+.lc-bd-led.h2{background:var(--accent);box-shadow:0 0 12px rgba(232,192,99,.6)}
+@keyframes lc-bd-led{from{opacity:.65}to{opacity:1}}
+.lc-bd.is-off .lc-bd-led{animation-play-state:paused}
+.lc-bd-dots{grid-area:dots;justify-self:end;display:flex;align-items:center;gap:5px}
+.lc-bd-dots i{display:block;width:6px;height:6px;border-radius:50%;background:rgba(224,180,74,.3);transition:background .3s ease,transform .3s ease}
+.lc-bd-dots i.on{background:var(--accent);transform:scale(1.2)}
+.lc-bd-line:active .lc-bd-title{opacity:.85}
+@media (hover:hover) and (pointer:fine){
+  .lc-bd-line:hover .lc-fl::before{box-shadow:inset 0 0 0 1px rgba(245,215,122,.55)}
+  .lc-bd-line:hover .lc-bd-go::after{transform:translateX(3px) rotate(-45deg)}
+}
+/* La ligne de la date choisie s'illumine une fois la liste ouverte */
+.lc-bd-flash{animation:lc-bd-flash 1.4s ease-out}
+@keyframes lc-bd-flash{0%,30%{box-shadow:0 0 0 2px #f0cf6e;background:rgba(224,180,74,.12)}100%{box-shadow:0 0 0 2px rgba(240,207,110,0);background:rgba(224,180,74,0)}}
+@media (prefers-reduced-motion: reduce){.lc-bd-flash{box-shadow:0 0 0 2px #f0cf6e;background:rgba(224,180,74,.12)}.lc-bd-led{animation:none}}
+@media (max-width:760px){
+  .lc-bd-stats{grid-template-columns:1fr}
+  .lc-bd .stat{padding:16px 0}
+  .lc-bd-line{grid-template-columns:auto 1fr;grid-template-areas:"k go" "date j" "title title" "meta meta" "dots dots";gap:12px}
+  .lc-bd-meta{flex-wrap:wrap;row-gap:0}
+  .lc-bd-venue{flex-basis:100%}
+  .lc-bd-venue::before{content:none}
+  .lc-bd-dots{justify-self:center;padding-top:2px}
+}
+@media (max-width:359px){.lc-bd-gox{display:none}}
 
 /* ---- */
 
@@ -984,12 +1058,7 @@ const mqGroup = `<div class="marquee-group">${[...new Set(events.map(e => e.titl
 mq.innerHTML = mqGroup + mqGroup;
 requestAnimationFrame(() => mq.style.setProperty("--dur", Math.round(mq.firstElementChild.offsetWidth / 70) + "s"));
 
-// Chiffres (calculés à partir de la liste des événements)
-document.getElementById("stats").innerHTML = [
-  [events.length, "événements à venir cette saison"],
-  [CATS.length, "univers : " + CATS.map(c => c.name.toLowerCase()).join(", ")],
-  [1, "seul interlocuteur, du premier message à vos billets"]
-].map(([n, label], i) => `<div class="stat rv" style="--d:${i * .1}s"><b data-count="${n}">${n}</b><span>${esc(label)}</span></div>`).join("");
+// Chiffres : le tableau des départs (#stats) est construit par son propre script, plus bas (lc-slot-js:board)
 
 // Message WhatsApp pré-rempli : Louis voit tout de suite pour quel événement le client écrit
 const waEventMsg = e => "Bonjour Louis, je souhaite des places pour :\n" +
@@ -1532,6 +1601,340 @@ form.addEventListener("submit", async ev => {
 <!-- ---- -->
 
 <!-- ==== [lc-slot-js:board] ==== -->
+<script>
+/* Le tableau des départs : les chiffres et les 6 prochaines dates sur des palettes à rabat (#stats) */
+(function(){
+  var root = document.getElementById("stats");
+  if (!root || typeof events === "undefined" || typeof CATS === "undefined") return;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var canAnimate = !reduce && typeof Element.prototype.animate === "function";
+  var MON = ["JAN","FÉV","MAR","AVR","MAI","JUN","JUL","AOÛ","SEP","OCT","NOV","DÉC"];
+  var ALNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", DIGITS = "0123456789";
+  var PERIOD = 4500, HOLD = 8000, STAGGER = 28;
+  var pad2 = function(n){ return (n < 10 ? "0" : "") + n; };
+  var chars = function(s){ return Array.from ? Array.from(s) : s.split(""); };
+  var fitW = {}, liftY = {}, ctx2d = null, scale = .9, baseT = .96, gen = 0;   // glyphes mesurés sur la police chargée
+
+  /* ---------- Données (uniquement les vrais événements) ---------- */
+  var list = events.slice(0, 6);
+  var items = list.map(function(e){
+    var d = parse(e.date), end = parse(e.end || e.date);
+    var days = Math.round((d - today) / 864e5), live = days <= 0 && end >= today;
+    var venue = String(e.venue).replace(/\s*\(.*\)\s*$/, "");
+    var hot = HEAT[e.heat] || "", heat = (live ? (e.end ? "En cours · " : "Aujourd'hui · ") : "") + hot;
+    var w = when(e);
+    return {
+      e: e,
+      date: pad2(d.getDate()) + " " + MON[d.getMonth()],
+      title: e.title.toLocaleUpperCase("fr-FR"),
+      j: "J-" + Math.max(0, days),
+      heat: heat, heatClass: "h" + e.heat, venue: venue,
+      label: e.title + ", " + w.charAt(0).toLowerCase() + w.slice(1) + ", " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") +
+        ". " + (live ? (e.end ? "En cours. " : "Aujourd'hui. ") : "Dans " + days + " jour" + (days > 1 ? "s" : "") + ". ") + (hot ? hot + ". " : "") + "Voir les dates"
+    };
+  });
+  var N = Math.min(20, items.reduce(function(m, it){ return Math.max(m, chars(it.title).length); }, 0));
+  var JN = items.reduce(function(m, it){ return Math.max(m, it.j.length); }, 4);
+  var fit = function(s, n){ var a = chars(s).slice(0, n); while (a.length < n) a.push(" "); return a; };
+  var fitR = function(s, n){ var a = chars(s).slice(0, n); while (a.length < n) a.unshift(" "); return a; };   // compte à rebours calé à droite
+  var figs = [events.length, CATS.length, 1];
+  var FW = figs.reduce(function(m, n){ return Math.max(m, String(n).length); }, 2);
+  var labels = ["événements à venir cette saison", "univers : " + CATS.map(function(c){ return c.name.toLowerCase(); }).join(", "), "seul interlocuteur, du premier message à vos billets"];
+
+  /* ---------- Construction ---------- */
+  var CELL = '<span class="lc-fl-t"><b></b></span><span class="lc-fl-b"><b></b></span><span class="lc-fl-lt"><b></b><i class="lc-fl-sh"></i></span><span class="lc-fl-lb"><b></b><i class="lc-fl-sh"></i></span>';
+  function makeCell(ch){
+    var el = document.createElement("span"); el.className = "lc-fl"; el.innerHTML = CELL;
+    var bs = el.getElementsByTagName("b"), sh = el.getElementsByTagName("i");
+    var c = { el: el, t: bs[0], b: bs[1], lt: bs[2], lb: bs[3], leafT: bs[2].parentNode, leafB: bs[3].parentNode, shT: sh[0], shB: sh[1], ch: " ", timers: [], anims: null };
+    put(c, ch, true);
+    return c;
+  }
+  function row(host, n, init){ var out = []; for (var i = 0; i < n; i++){ var c = makeCell(init ? init[i] : " "); host.appendChild(c.el); out.push(c); } return out; }
+  function span(cls, txt){ var s = document.createElement("span"); if (cls) s.className = cls; if (txt != null) s.textContent = txt; return s; }
+
+  root.className = "stats lc-bd rv";
+  root.textContent = "";
+  var head = span("lc-bd-head"); head.setAttribute("aria-hidden", "true");
+  head.appendChild(span("", "Le tableau · Saison 2026 – 2027"));
+  head.appendChild(span("", "À jour au " + today.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })));
+  root.appendChild(head);
+  var sr = document.createElement("p"); sr.className = "lc-sr";
+  sr.textContent = figs.map(function(n, i){ return n + " " + labels[i] + "."; }).join(" ");
+  root.appendChild(sr);
+
+  var statsBox = document.createElement("div"); statsBox.className = "lc-bd-stats"; statsBox.setAttribute("aria-hidden", "true");
+  var numHosts = [], numCells = [];
+  figs.forEach(function(n, i){
+    var st = document.createElement("div"); st.className = "stat";
+    var num = span("lc-bd-num"); numHosts.push(num);
+    var start = reduce ? chars(String(n).padStart(FW, "0")) : chars("0".repeat(FW));
+    numCells.push(row(num, FW, start));
+    st.appendChild(num); st.appendChild(span("", labels[i]));
+    statsBox.appendChild(st);
+  });
+  root.appendChild(statsBox);
+
+  var btn = null, dateBox, jBox, dateCells = [], titleCells = [], jCells = [], meta, led, heatEl, venueEl, dots = [];
+  if (items.length){
+    btn = document.createElement("button"); btn.type = "button"; btn.className = "lc-bd-line";
+    var k = span("lc-bd-k", "Prochaines dates"), go = span("lc-bd-go"), goTxt = span("", "Voir");
+    goTxt.appendChild(span("lc-bd-gox", " les dates")); go.appendChild(goTxt);
+    dateBox = span("lc-bd-date"); jBox = span("lc-bd-j"); var titleBox = span("lc-bd-title");
+    meta = span("lc-bd-meta" + (reduce ? "" : " is-out")); led = document.createElement("i"); heatEl = span("lc-bd-heat"); venueEl = span("lc-bd-venue");
+    meta.appendChild(led); meta.appendChild(heatEl); meta.appendChild(venueEl);
+    var dotBox = span("lc-bd-dots");
+    items.forEach(function(){ var d = document.createElement("i"); dotBox.appendChild(d); dots.push(d); });
+    [k, go, dateBox, titleBox, jBox, meta, dotBox].forEach(function(el){ el.setAttribute("aria-hidden", "true"); btn.appendChild(el); });
+    var first = items[0];
+    dateCells = row(dateBox, 6, reduce ? fit(first.date, 6) : null);
+    titleCells = row(titleBox, N, reduce ? fit(first.title, N) : null);
+    jCells = row(jBox, JN, reduce ? fitR(first.j, JN) : null);
+    root.appendChild(btn);
+    setMeta(first, true); setDots(0); btn.setAttribute("aria-label", "Prochaine date : " + first.label);
+  }
+
+  /* ---------- Rendu d'un caractère (resserré si le glyphe est trop large pour la palette) ---------- */
+  function squeeze(ch){
+    if (ch === " ") return 1;
+    if (fitW[ch] != null) return fitW[ch];
+    var v = 1;
+    try {
+      if (ctx2d){ var m = ctx2d.measureText(ch), ink = ((m.actualBoundingBoxLeft || 0) + (m.actualBoundingBoxRight || m.width)) / 100; if (ink > 0) v = Math.min(1, .57 / (scale * ink)); }
+    } catch (err) {}
+    return (fitW[ch] = Math.round(v * 1000) / 1000);
+  }
+  // un tiret coupé par la charnière ressemble à « = » : on le loge entier dans le volet du haut
+  function lift(ch){
+    if (liftY[ch] != null) return liftY[ch];
+    var v = 0;
+    if (ctx2d && /[-–—]/.test(ch)){ try { var m = ctx2d.measureText(ch), bottom = baseT + scale * m.actualBoundingBoxDescent / 100; if (bottom > .575) v = (.575 - bottom) / scale; } catch (err) {} }
+    return (liftY[ch] = Math.round(v * 1000) / 1000);
+  }
+  function paint(b, ch){
+    if (b._ch === ch && b._v === gen) return;   // rien à réécrire
+    b._ch = ch; b._v = gen;
+    b.textContent = ch === " " ? "" : ch;
+    var sx = squeeze(ch), ty = lift(ch);
+    if (sx !== (b._sx || 1)){ b._sx = sx; if (sx < 1) b.style.setProperty("--sx", sx); else b.style.removeProperty("--sx"); }
+    if (ty !== (b._ty || 0)){ b._ty = ty; if (ty) b.style.setProperty("--ty", ty + "em"); else b.style.removeProperty("--ty"); }
+  }
+  function put(c, ch, all){ c.ch = ch; paint(c.t, ch); paint(c.b, ch); if (all){ paint(c.lt, ch); paint(c.lb, ch); } }
+
+  /* ---------- Mécanique de la palette (Web Animations, transform et opacité uniquement) ---------- */
+  // Calendrier absolu : chaque rabat démarre à heure fixe (la durée totale ne dépend pas des images perdues),
+  // et seuls les volets en mouvement sont affichés, donc composités.
+  function settle(c){
+    if (!c.anims) return;
+    c.anims.forEach(function(a){ a.onfinish = null; a.cancel(); }); c.anims = null;
+    paint(c.b, c.ch); c.el.classList.remove("is-flip");
+  }
+  function flipTo(c, seq, delay){
+    c.timers.forEach(clearTimeout); c.timers = [];
+    if (!canAnimate){ settle(c); put(c, seq[seq.length - 1][0]); return; }
+    var t = delay || 0;
+    seq.forEach(function(s, k){
+      var last = k === seq.length - 1;
+      if (t <= 0) run(c, s[0], s[1], last);
+      else { var id = setTimeout(function(){ c.timers.splice(c.timers.indexOf(id), 1); run(c, s[0], s[1], last); }, t); c.timers.push(id); }
+      t += s[1] ? 110 : 330;
+    });
+  }
+  // Entre deux rabats d'une même série, les volets restent en place (fin d'animation tenue) : pas de calques recréés
+  function run(c, ch, fast, last){
+    settle(c);
+    if (ch === c.ch) return;
+    var old = c.ch; c.ch = ch;
+    paint(c.t, ch); paint(c.lt, old); paint(c.b, old); paint(c.lb, ch);
+    c.el.classList.add("is-flip");
+    var d1 = fast ? 40 : 150, d2 = fast ? 45 : 170;
+    var a1 = c.leafT.animate([{ transform: "rotateX(0deg)" }, { transform: "rotateX(-90deg)" }], { duration: d1, easing: "ease-in", fill: "forwards" });
+    var a2 = c.leafB.animate([{ transform: "rotateX(90deg)" }, { transform: "rotateX(0deg)" }], { duration: d2, delay: d1, easing: fast ? "ease-out" : "cubic-bezier(.3,1.5,.5,1)", fill: "both" });
+    c.anims = [a1, a2];
+    if (!fast){
+      c.anims.push(c.shT.animate([{ opacity: 0 }, { opacity: .55 }], { duration: d1, easing: "ease-in", fill: "forwards" }));
+      c.anims.push(c.shB.animate([{ opacity: .5 }, { opacity: 0 }], { duration: d2, delay: d1, easing: "ease-out", fill: "both" }));
+    }
+    if (last) a2.onfinish = function(){ settle(c); };
+  }
+  function rnd(set, not){ var ch; do { ch = set.charAt(Math.floor(Math.random() * set.length)); } while (ch === not); return ch; }
+  function setRow(cells, arr, offset, shuffle, set){
+    cells.forEach(function(c, i){
+      var target = arr[i], at = offset + i * STAGGER;
+      if (shuffle){
+        if (target === " " && c.ch === " ") return;            // une case vide qui reste vide ne bouge pas
+        var r1 = rnd(set, c.ch), r2 = rnd(set, r1);
+        flipTo(c, [[r1, true], [r2, true], [target, false]], at);
+      } else if (target !== c.ch || c.timers.length) flipTo(c, [[target, false]], at);
+    });
+  }
+
+  /* ---------- Ligne : méta (voyant, demande, lieu), points, libellé accessible ---------- */
+  var metaOut = 0, metaIn = 0;
+  function setMeta(it, now){
+    var apply = function(){ led.className = "lc-bd-led " + it.heatClass; heatEl.textContent = it.heat; venueEl.textContent = it.venue; };
+    clearTimeout(metaOut); clearTimeout(metaIn);
+    if (now || reduce){ apply(); return; }
+    // fondu enchaîné au cœur de la cascade des palettes
+    metaOut = setTimeout(function(){ meta.classList.add("is-out"); }, 170);
+    metaIn = setTimeout(function(){ apply(); meta.classList.remove("is-out"); }, 320);
+  }
+  function setDots(n){ dots.forEach(function(d, i){ d.classList.toggle("on", i === n); }); }
+
+  var idx = 0, numsDone = reduce, lineDone = reduce, ready = false;
+  function show(n){
+    idx = n; var it = items[n];
+    setRow(dateCells, fit(it.date, 6), 0, false);
+    setRow(titleCells, fit(it.title, N), 60, false);
+    setRow(jCells, fitR(it.j, JN), 140, false);
+    setMeta(it); setDots(n);
+    btn.setAttribute("aria-label", (n === 0 ? "Prochaine date : " : "Date à venir : ") + it.label);
+  }
+  // Les chiffres et la ligne se dévoilent chacun quand ils sont à moitié visibles
+  // (sur téléphone, la ligne est encore sous le pli quand les chiffres apparaissent).
+  function revealNums(){
+    if (numsDone) return; numsDone = true;
+    numCells.forEach(function(cells, i){ setRow(cells, chars(String(figs[i]).padStart(FW, "0")), i * 90, true, DIGITS); });
+  }
+  function revealLine(){
+    if (lineDone) return; lineDone = true;
+    if (btn){
+      var it = items[0];
+      setRow(dateCells, fit(it.date, 6), 0, true, ALNUM);
+      setRow(titleCells, fit(it.title, N), 30, true, ALNUM);
+      setRow(jCells, fitR(it.j, JN), 90, true, ALNUM);
+      setTimeout(function(){ meta.classList.remove("is-out"); }, 350);
+    }
+    sync();
+  }
+
+  /* ---------- Taille des palettes : demi-hauteur en pixels entiers (charnière nette) ---------- */
+  var q = function(f){ return Math.max(10, Math.floor(f * .6) / .6); };
+  function layout(){
+    var mobile = matchMedia("(max-width:760px)").matches, vw = document.documentElement.clientWidth;
+    var nf = mobile ? 56 : Math.max(56, Math.min(100, vw * .07));
+    numHosts.forEach(function(h){ h.style.fontSize = q(nf) + "px"; });
+    if (!btn) return;
+    var w = btn.clientWidth, P = .68, lf;
+    var big = "";
+    if (mobile){
+      lf = Math.min(44, w / (N * P - .06));
+      big = q(Math.min(lf * 1.4, 36, (w - 12) / ((6 + JN) * P - .12))) + "px";   // date et compte à rebours plus grands
+    } else {
+      lf = Math.max(24, Math.min(44, vw * .03));
+      var need = (6 + N + JN) * P - .18;
+      if (need * lf + 36 > w) lf = (w - 36) / need;
+    }
+    btn.style.fontSize = q(lf) + "px";
+    dateBox.style.fontSize = jBox.style.fontSize = big;
+  }
+
+  /* ---------- Calage du caractère sur la police réellement chargée ---------- */
+  function calibrate(){
+    try {
+      var fam = getComputedStyle(root.querySelector(".lc-bd-num")).fontFamily;
+      ctx2d = document.createElement("canvas").getContext("2d");
+      ctx2d.font = "900 100px " + fam;
+      var mH = ctx2d.measureText("H");
+      if (mH.actualBoundingBoxAscent == null) throw 0;
+      var cap = mH.actualBoundingBoxAscent / 100, acc = cap, desc = 0;
+      "ÉÈÊÀÂÛÙÔÎÇQ&".split("").forEach(function(ch){ var m = ctx2d.measureText(ch); acc = Math.max(acc, m.actualBoundingBoxAscent / 100); desc = Math.max(desc, m.actualBoundingBoxDescent / 100); });
+      // capitales ~60 % de la palette, accents et jambages toujours dans le cadre
+      scale = Math.min(1, .72 / cap, .53 / Math.max(.01, acc - cap / 2), .55 / Math.max(.01, cap / 2 + desc));
+      root.style.setProperty("--lc-fl-s", scale.toFixed(4));
+      root.style.setProperty("--lc-fl-dy", "0em");
+      var probe = makeCell(" ");
+      probe.el.style.cssText = "position:absolute;left:0;top:0;font-size:100px;visibility:hidden";
+      probe.t.innerHTML = 'H<i style="display:inline-block;width:0;height:0;vertical-align:baseline"></i>';
+      root.querySelector(".lc-bd-num").appendChild(probe.el);
+      var base = probe.t.lastChild.getBoundingClientRect().top - probe.el.getBoundingClientRect().top;
+      probe.el.parentNode.removeChild(probe.el);
+      baseT = .6 + scale * cap / 2;                  // ligne de base visée : capitales centrées sur la charnière
+      var target = baseT * 100;
+      root.style.setProperty("--lc-fl-dy", ((target - base) / (100 * scale)).toFixed(4) + "em");
+    } catch (err) { ctx2d = null; }
+    fitW = {}; liftY = {}; gen++;
+    [].concat.apply([], numCells.concat([dateCells, titleCells, jCells])).forEach(function(c){ if (!c.anims) put(c, c.ch, true); });
+  }
+
+  /* ---------- Rythme : uniquement des minuteries, jamais hors écran ni onglet caché ---------- */
+  var timer = 0, vis = false, hov = false, foc = false, holdUntil = 0;
+  var running = function(){ return lineDone && !reduce && btn && items.length > 1 && vis && !document.hidden && !hov && !foc; };
+  function sync(){
+    root.classList.toggle("is-off", !vis || document.hidden);
+    if (running()){ if (!timer) timer = setTimeout(tick, PERIOD); }
+    else if (timer){ clearTimeout(timer); timer = 0; }
+  }
+  function tick(){
+    timer = 0;
+    if (!running()) return;
+    var wait = holdUntil - Date.now();
+    if (wait > 0){ timer = setTimeout(tick, wait); return; }
+    show((idx + 1) % items.length);
+    sync();
+  }
+  function start(){
+    if (ready) return; ready = true;
+    calibrate(); layout();
+    if ("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var on = en.isIntersecting && en.intersectionRatio >= .5;
+          if (en.target === statsBox){ if (on && !numsDone) setTimeout(revealNums, 200); return; }
+          vis = on;                                   // la ligne : défilement seulement quand elle est visible
+          if (on && !lineDone) setTimeout(revealLine, 200);
+          sync();
+        });
+      }, { threshold: [0, .25, .5, .75, 1] });
+      io.observe(statsBox); if (btn) io.observe(btn);
+    } else { vis = true; revealNums(); revealLine(); }
+  }
+  if (reduce){ root.classList.add("is-off"); }
+  layout();
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(start, start);
+    setTimeout(start, 3000);
+    if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", function(){ if (ready){ calibrate(); layout(); } });
+  } else start();
+  var rz = 0;
+  addEventListener("resize", function(){ clearTimeout(rz); rz = setTimeout(layout, 150); });
+  document.addEventListener("visibilitychange", sync);
+
+  if (!btn) return;
+  btn.addEventListener("pointerenter", function(ev){ if (ev.pointerType !== "touch"){ hov = true; sync(); } });
+  btn.addEventListener("pointerleave", function(ev){ if (ev.pointerType !== "touch"){ hov = false; sync(); } });
+  btn.addEventListener("focus", function(){ var kb = true; try { kb = btn.matches(":focus-visible"); } catch (err) {} foc = kb; sync(); });
+  btn.addEventListener("blur", function(){ foc = false; sync(); });
+  root.addEventListener("touchstart", function(){ holdUntil = Date.now() + HOLD; }, { passive: true });
+
+  /* ---------- Clic : ouvre la catégorie, descend jusqu'à la date et la fait briller ---------- */
+  function flash(el){
+    var t = 0, done = false, t0 = Date.now();
+    var fire = function(){
+      if (done) return; done = true; clearTimeout(t); removeEventListener("scroll", onScroll);
+      el.classList.remove("lc-bd-flash"); void el.offsetWidth; el.classList.add("lc-bd-flash");
+      setTimeout(function(){ el.classList.remove("lc-bd-flash"); }, 1400);
+    };
+    var onScroll = function(){ clearTimeout(t); t = setTimeout(fire, 120); if (Date.now() - t0 > 2200) fire(); };
+    addEventListener("scroll", onScroll, { passive: true });
+    t = setTimeout(fire, 180);
+  }
+  function findRow(title, tries){
+    var pnl = document.getElementById("cat-panel"), rows = pnl ? pnl.querySelectorAll(".row") : [], hit = null;
+    for (var i = 0; i < rows.length && !hit; i++){ var h = rows[i].querySelector("h4"); if (h && h.textContent.trim() === title) hit = rows[i]; }
+    if (!hit){ if (tries < 30) setTimeout(function(){ findRow(title, tries + 1); }, 50); return; }
+    hit.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    flash(hit);
+  }
+  btn.addEventListener("click", function(){
+    var e = items[idx].e, c = CATS.find(function(x){ return x.test(e); });
+    var tile = c && document.querySelector('.cat[data-cat="' + c.key + '"]');
+    if (!tile) return;
+    if (tile.getAttribute("aria-expanded") !== "true") tile.click();
+    findRow(e.title, 0);
+  });
+})();
+</script>
 
 <!-- ---- -->
 
