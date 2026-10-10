@@ -1173,11 +1173,11 @@ const UPCOMING = [
 // Événements passés : mets tes photos dans le dossier images/ et indique le nom du fichier.
 const PAST = [
   { title: "Roland-Garros",      cat: "Tennis",   when: "Juin 2026",    venue: "Court Philippe-Chatrier", commons: ["Carlos_Alcaraz_-_Roland_Garros_2025_-_serving_(cropped).jpg"], example: true },
-  { title: "France – Espagne",   cat: "Football", when: "Juillet 2026", venue: "Coupe du monde",          commons: ["Kylian_Mbappe_France_v_Senegal_16_June_2026-391_(cropped).jpg","Lamine_Yamal_France_v_Spain_7.24.26-142.jpg"], example: true },
-  { title: "Ninho",              cat: "Concert",  when: "2026",         venue: "Paris",                    commons: ["Ninho.jpg"], example: true },
-  { title: "Céline Dion",        cat: "Concert",  when: "2026",         venue: "Paris",                    commons: ["Celine_Dion_Paris,_Bercy_2013-11-25_02.JPG"], example: true },
-  { title: "Ligue des champions et Ligue 1", cat: "Football", when: "Saison 2025-2026", venue: "Parc des Princes", commons: ["Achraf_Hakimi_PSG.jpg","Ousmane_Dembélé_2018_(cropped).jpg"], example: true },
-  { title: "Finale du Top 14",   cat: "Rugby",    when: "Juin 2026",    venue: "Stade de France",          commons: ["Antoine_Dupont_February_2023.jpg"], example: true }
+  { title: "France – Espagne",   cat: "Football", when: "Juillet 2026", venue: "Coupe du monde",          photo: "images/passe-france-espagne.jpg", photoPos: "50% 40%", example: true },
+  { title: "Ninho",              cat: "Concert",  when: "2026",         venue: "Paris",                    photo: "images/passe-ninho.jpg", photoPos: "50% 58%", example: true },
+  { title: "Céline Dion",        cat: "Concert",  when: "2026",         venue: "Paris",                    photo: "images/passe-celine-dion.jpg", photoPos: "50% 18%", example: true },
+  { title: "Finale du Top 14",   cat: "Rugby",    when: "Juin 2026",    venue: "Stade de France",          photo: "images/passe-top14.jpg", photoPos: "36% 45%", example: true },
+  { title: "Ligue des champions et Ligue 1", cat: "Football", when: "Saison 2025-2026", venue: "Parc des Princes", commons: ["Achraf_Hakimi_PSG.jpg","Ousmane_Dembélé_2018_(cropped).jpg"], example: true }
 ];
 /* ============================================== */
 
@@ -1206,7 +1206,8 @@ const photoHTML = (e, sizes = "(max-width:860px) 50vw, 25vw") => {
   const list = photos(e); if (!list.length) return "";
   const imgs = list.map(f => {
     const src = e.photo ? `src="${esc(f)}"` : `src="${esc(commonsUrl(f))}" srcset="${[480, 900, 1400].map(w => esc(commonsUrl(f, w)) + " " + w + "w").join(", ")}" sizes="${sizes}"`;
-    return `<img ${src} alt="${esc(e.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`;
+    const pos = e.photoPos ? ` style="object-position:${esc(e.photoPos)}"` : "";
+    return `<img ${src}${pos} alt="${esc(e.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`;
   }).join("");
   const credit = e.commons && !e.photo ? `<a class="credit" href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent([].concat(e.commons)[0])}" target="_blank" rel="noopener" aria-label="Photo Wikimedia Commons"><span class="cr-long">${e.photoNote ? esc(e.photoNote) + " · " : ""}Photo${list.length > 1 ? "s" : ""} Wikimedia Commons</span><span class="cr-short">©</span></a>` : "";
   return `<div class="photos n${list.length}">${imgs}</div>${credit}`;
