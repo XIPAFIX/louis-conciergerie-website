@@ -6,10 +6,10 @@
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
-<meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
+<meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a6a1f'/%3E%3Cstop offset='.5' stop-color='%23f5d77a'/%3E%3Cstop offset='1' stop-color='%23a07a26'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0e'/%3E%3Cpath d='M22 14h9v29h14v7H22z' fill='url(%23g)'/%3E%3C/svg%3E">
 <meta property="og:title" content="Louis Conciergerie : billets sport et concerts">
-<meta property="og:description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
+<meta property="og:description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://louis-conciergerie.fr/">
 <meta property="og:locale" content="fr_FR">
@@ -445,6 +445,7 @@ nav.links a:hover::after{transform:scaleX(1)}
 .lc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .lc-tk{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab}
 .lc-tk.is-drag{cursor:grabbing}
+.lc-tk:focus-visible{outline:2px solid var(--gold);outline-offset:8px;border-radius:18px}
 .lc-tk-present,.lc-tk-float,.lc-tk-rig{transform-style:preserve-3d}
 .lc-tk-present{position:relative;z-index:1;transform:rotateX(70deg) translateY(40px);transition:transform 1.6s cubic-bezier(.16,1,.3,1)}
 .lc-tk.is-presented .lc-tk-present{transform:none}
@@ -475,10 +476,6 @@ nav.links a:hover::after{transform:scaleX(1)}
 .lc-tk-shadow{position:absolute;left:12%;right:12%;bottom:6px;height:28px;border-radius:50%;pointer-events:none;
   background:radial-gradient(closest-side,rgba(224,180,74,.30),rgba(224,180,74,.08) 60%,transparent);
   transform:scaleX(var(--lc-sh,1));opacity:calc(.5 + var(--lc-sh,1)*.5)}
-.lc-tk-btn{display:flex;align-items:center;gap:8px;margin:-6px auto 0;font:500 11px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(224,180,74,.06);border:1px solid rgba(224,180,74,.45);border-radius:999px;padding:9px 14px;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.lc-tk-btn span{font-size:14px;line-height:1}
-.lc-tk-btn:active{transform:scale(.94)}
-@media (hover:hover) and (pointer:fine){.lc-tk-btn:hover{transform:translateY(-2px);border-color:#f0cf6e;box-shadow:0 6px 16px -6px rgba(224,180,74,.55)}.lc-tk-btn:active{transform:scale(.94)}}
 @media (max-width:520px){
   .lc-tk .ticket{grid-template-columns:1fr 64px;--notch:calc(100% - 64px)}
   .lc-tk .ticket.back{grid-template-columns:64px 1fr;--notch:64px}
@@ -878,7 +875,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
       <a href="#a-venir">À venir</a>
       <a href="#comment">Comment ça marche</a>
       <a href="#passes">Événements passés</a>
-      <a href="#devis">Contact</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="bar-end">
       <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4.9 2.9.8 3.4.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
@@ -893,7 +890,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
     <a href="#a-venir">À venir</a>
     <a href="#comment">Comment ça marche</a>
     <a href="#passes">Événements passés</a>
-    <a href="#devis">Contact</a>
+    <a href="#contact">Contact</a>
   </nav>
   <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrire sur WhatsApp</a>
 </div>
@@ -903,7 +900,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
     <div class="wrap hero-in">
       <p class="eyebrow rv">Billetterie privée · Sport &amp; concerts</p>
       <h1 class="rv" style="--d:.1s"><span class="l">Les meilleures places,</span> <em class="l">sans chercher.</em></h1>
-      <p class="lead rv" style="--d:.2s">Tennis, football, grands concerts : dites-nous quel événement vous intéresse, on vous rappelle avec un prix et on s'occupe de tout jusqu'à la remise de vos billets.</p>
+      <p class="lead rv" style="--d:.2s">Tennis, football, grands concerts : dites-nous quel événement vous intéresse, on vous rappelle et on s'occupe de tout jusqu'à la remise de vos billets.</p>
       <div class="cta rv" style="--d:.3s">
         <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrire sur WhatsApp</a>
         <a class="btn btn-ghost" href="#a-venir">Voir les événements</a>
@@ -925,13 +922,13 @@ nav.links a.is-active::after{transform:scaleX(1)}
       <div class="intro-text">
         <p class="eyebrow rv"><span class="idx">01</span>La conciergerie</p>
         <h2 class="rv">Un seul contact pour les plus <em>grands événements.</em></h2>
-        <p class="rv">Dites-moi le match, le concert ou la finale que vous voulez voir. Je cherche les places, je vous rappelle avec un prix clair et je m'occupe de tout jusqu'à la remise de vos billets.</p>
+        <p class="rv">Dites-moi le match, le concert ou la finale que vous voulez voir. Je cherche les places, je vous rappelle rapidement et je m'occupe de tout jusqu'à la remise de vos billets.</p>
         <ul class="points rv">
           <li><b>Sport et concerts</b><span>Tennis, football, rugby et les plus grandes tournées.</span></li>
-          <li><b>Un prix clair</b><span>Vous connaissez le prix avant de valider quoi que ce soit.</span></li>
+          <li><b>Un service sur mesure</b><span>Catégorie, places côte à côte, horaires : on s'adapte à votre demande.</span></li>
           <li><b>Vos billets remis</b><span>Une fois validé, vos billets vous sont envoyés.</span></li>
         </ul>
-        <div class="cta rv" style="justify-content:flex-start"><a class="btn btn-primary" href="#devis">Demander un prix</a></div>
+        <div class="cta rv" style="justify-content:flex-start"><a class="btn btn-primary" href="#contact">Nous contacter</a></div>
       </div>
       <div class="intro-visual rv" style="--d:.15s">
         <div class="ticket-scene lc-tk" aria-hidden="true">
@@ -968,7 +965,6 @@ nav.links a.is-active::after{transform:scaleX(1)}
         </div></div>
         <i class="lc-tk-shadow"></i>
         </div>
-        <button type="button" class="lc-tk-btn"><span aria-hidden="true">↻</span> Tourner le billet</button>
         <p class="lc-sr" id="lc-tk-live" aria-live="polite"></p>
       </div>
     </div>
@@ -981,7 +977,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
     <div class="wrap">
       <div class="sec-head rv">
         <div><p class="eyebrow"><span class="idx">02</span>Saison 2026 – 2027</p><h2>Événements <em>à venir</em></h2></div>
-        <p>Choisissez une catégorie pour voir les dates. Ce sont les matchs et concerts où les places partent vite : écrivez-moi, je vous trouve des places.</p>
+        <p>Choisissez une catégorie pour découvrir les prochaines dates. Pour ces matchs et ces concerts, les places partent vite : contactez-nous, on s'occupe de vous trouver les meilleures.</p>
       </div>
       <div class="cat-grid" id="cat-grid"></div>
       <div class="cat-panel" id="cat-panel" hidden></div>
@@ -995,8 +991,8 @@ nav.links a.is-active::after{transform:scaleX(1)}
         <p>Vous m'écrivez, je m'occupe du reste. Voici comment ça se passe, de votre premier message jusqu'à vos billets.</p>
       </div>
       <div class="steps">
-        <div class="step rv"><div class="n">01</div><h3>Dites-nous l'événement</h3><p>Par WhatsApp ou avec le formulaire : l'événement, le nombre de places et votre budget.</p></div>
-        <div class="step rv" style="--d:.12s"><div class="n">02</div><h3>On vous rappelle</h3><p>Louis vous contacte rapidement avec les places disponibles et un prix clair.</p></div>
+        <div class="step rv"><div class="n">01</div><h3>Dites-nous l'événement</h3><p>Par WhatsApp ou avec le formulaire : l'événement, le nombre de places et vos envies.</p></div>
+        <div class="step rv" style="--d:.12s"><div class="n">02</div><h3>On vous rappelle</h3><p>Louis vous contacte rapidement avec les places disponibles.</p></div>
         <div class="step rv" style="--d:.24s"><div class="n">03</div><h3>Vous recevez vos billets</h3><p>Une fois validé, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p></div>
       </div>
     </div>
@@ -1018,7 +1014,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
       <div class="lc-ec-text">
         <p class="eyebrow">Sur demande</p>
         <h2>Votre événement n'est pas dans la liste&nbsp;?</h2>
-        <p>Dites-moi lequel, je vous rappelle avec un prix.</p>
+        <p>Dites-moi lequel, je m'occupe de vous trouver des places.</p>
       </div>
       <div class="lc-ec-stage" aria-hidden="true">
         <div class="lc-ec-scene">
@@ -1054,11 +1050,11 @@ nav.links a.is-active::after{transform:scaleX(1)}
     </div>
   </section>
 
-  <section id="devis">
+  <section id="contact">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><p class="eyebrow"><span class="idx">05</span>Demande de prix</p><h2>On vous <em>rappelle</em></h2></div>
-        <p>Remplissez le formulaire, Louis reçoit votre demande directement et vous recontacte avec un prix. Vous préférez écrire tout de suite&nbsp;? Passez par WhatsApp.</p>
+        <div><p class="eyebrow"><span class="idx">05</span>Contact</p><h2>On vous <em>rappelle</em></h2></div>
+        <p>Remplissez le formulaire, Louis reçoit votre demande directement et vous recontacte très vite. Vous préférez écrire tout de suite&nbsp;? Passez par WhatsApp.</p>
       </div>
       <div class="quote">
         <aside class="rv">
@@ -1069,7 +1065,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
           </div>
           <ul class="points" style="margin-top:26px">
             <li><b>Réponse directe</b><span>Votre demande arrive directement chez Louis.</span></li>
-            <li><b>Sans engagement</b><span>Vous recevez un prix, vous décidez ensuite.</span></li>
+            <li><b>Sans engagement</b><span>Posez-nous toutes vos questions, vous décidez ensuite.</span></li>
           </ul>
         </aside>
 
@@ -1080,8 +1076,8 @@ nav.links a.is-active::after{transform:scaleX(1)}
         <div class="field full"><label for="f-event">Événement</label><select id="f-event" name="evenement" required></select></div>
         <div class="field full" id="other-wrap" hidden><label for="f-other">Quel événement ?</label><input id="f-other" name="autre_evenement" placeholder="Ex. : Finale de la Coupe de France"></div>
         <div class="field"><label for="f-qty">Nombre de places</label><input id="f-qty" name="places" type="number" min="1" max="20" value="2" required></div>
-        <div class="field"><label for="f-budget">Budget par place <span class="opt">(facultatif)</span></label><input id="f-budget" name="budget" placeholder="Ex. : 150 €"></div>
-        <div class="field full"><label for="f-msg">Message <span class="opt">(facultatif)</span></label><textarea id="f-msg" name="message" placeholder="Catégorie souhaitée, places côte à côte, horaires pour vous rappeler…"></textarea></div>
+        <div class="field"><label for="f-when">Quand vous rappeler ? <span class="opt">(facultatif)</span></label><input id="f-when" name="rappel" placeholder="Ex. : en soirée, après 18 h"></div>
+        <div class="field full"><label for="f-msg">Message <span class="opt">(facultatif)</span></label><textarea id="f-msg" name="message" placeholder="Catégorie souhaitée, places côte à côte, une question…"></textarea></div>
         <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-foot">
           <small>Vos informations servent uniquement à vous recontacter au sujet de votre demande.</small>
@@ -1114,7 +1110,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
       <h4>Contact</h4>
       <div class="foot-links">
         <a class="js-wa js-wa-num" href="#" target="_blank" rel="noopener"></a>
-        <a href="#devis">Demande de prix</a>
+        <a href="#contact">Nous contacter</a>
       </div>
     </div>
   </div>
@@ -1135,7 +1131,7 @@ const CONFIG = {
   // Identifiant Formspree (formspree.io) : le formulaire envoie les demandes sur ton email
   formspreeId: "VOTRE_ID_FORMSPREE",
   // Message pré-rempli quand un client ouvre WhatsApp
-  waMessage: "Bonjour Louis, je souhaite avoir un prix pour des billets."
+  waMessage: "Bonjour Louis, j'ai découvert Louis Conciergerie et j'aimerais votre aide pour obtenir des places."
 };
 
 // Événements à venir. date / end au format AAAA-MM-JJ. heat :
@@ -1171,7 +1167,7 @@ const PAST = [
   { title: "France – Espagne",   cat: "Football", when: "Juillet 2026", venue: "Coupe du monde",          commons: ["Kylian_Mbappe_France_v_Senegal_16_June_2026-391_(cropped).jpg","Lamine_Yamal_France_v_Spain_7.24.26-142.jpg"], example: true },
   { title: "Ninho",              cat: "Concert",  when: "2026",         venue: "Paris",                    commons: ["Ninho.jpg"], example: true },
   { title: "Céline Dion",        cat: "Concert",  when: "2026",         venue: "Paris",                    commons: ["Celine_Dion_Paris,_Bercy_2013-11-25_02.JPG"], example: true },
-  { title: "PSG – Real Madrid",  cat: "Football", when: "2026",         venue: "Parc des Princes",         commons: ["Vitinha_(PSG).jpg","Vinicius_Junior_(2025).jpg"], example: true },
+  { title: "Ligue des champions et Ligue 1", cat: "Football", when: "Saison 2025-2026", venue: "Parc des Princes", commons: ["Achraf_Hakimi_PSG.jpg","Ousmane_Dembélé_2018_(cropped).jpg"], example: true },
   { title: "Finale du Top 14",   cat: "Rugby",    when: "Juin 2026",    venue: "Stade de France",          commons: ["Antoine_Dupont_February_2023.jpg"], example: true }
 ];
 /* ============================================== */
@@ -1279,7 +1275,7 @@ requestAnimationFrame(() => mq.style.setProperty("--dur", Math.round(mq.firstEle
 // Chiffres : le tableau des départs (#stats) est construit par son propre script, plus bas (lc-slot-js:board)
 
 // Message WhatsApp pré-rempli : Louis voit tout de suite pour quel événement le client écrit
-const waEventMsg = e => "Bonjour Louis, je souhaite des places pour :\n" +
+const waEventMsg = e => "Bonjour Louis, j'ai vu cet événement sur votre site et j'aimerais y assister :\n" +
   "🎟️ " + e.title + " (" + e.cat + ")\n" +
   "📅 " + when(e) + "\n" +
   "📍 " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") + "\n" +
@@ -1303,7 +1299,7 @@ function rowHTML(e, i) {
     <span class="pill h${e.heat}">${HEAT[e.heat]}</span>
     <div class="row-actions">
       <a class="btn btn-wa" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Écrivez-moi</a>
-      <a class="btn btn-ghost" href="#devis" data-event="${esc(label)}">Formulaire</a>
+      <a class="btn btn-ghost" href="#contact" data-event="${esc(label)}">Formulaire</a>
       <button type="button" class="btn btn-ghost lc-pn-share" data-share="${events.indexOf(e)}" aria-label="Partager ${esc(e.title)}" title="Partager"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="M7.8 7.7 12 3.5l4.2 4.2"/><path d="M8.5 10.5H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5"/></svg></button>
     </div>
   </article>`;
@@ -1371,10 +1367,10 @@ if (viaWhatsApp) form.querySelector(".form-foot small").textContent = "Votre dem
 const formMsg = () => {
   const v = n => (form[n].value || "").trim();
   const ev = sel.value === "__autre" ? "Autre : " + (v("autre_evenement") || "non précisé") : sel.value;
-  return ["Bonjour Louis, je souhaite un prix pour des billets.",
+  return ["Bonjour Louis, je viens de remplir le formulaire de votre site, voici ma demande :",
     "Nom : " + v("nom"), "Téléphone : " + v("telephone"), v("email") && "Email : " + v("email"),
     "Événement : " + ev, v("places") && "Nombre de places : " + v("places"),
-    v("budget") && "Budget par place : " + v("budget"), v("message") && "Message : " + v("message")
+    v("rappel") && "Me rappeler : " + v("rappel"), v("message") && "Message : " + v("message")
   ].filter(Boolean).join("\n");
 };
 form.addEventListener("submit", async ev => {
@@ -1580,8 +1576,14 @@ form.addEventListener("submit", async ev => {
   var rig = scene.querySelector(".lc-tk-rig"), front = scene.querySelector(".ticket:not(.back)");
   var gl = scene.querySelectorAll(".lc-tk-gl");
   var shadow = scene.querySelector(".lc-tk-shadow"), igrid = scene.closest(".intro-grid");
-  var btn = document.querySelector("#conciergerie .lc-tk-btn"), live = document.getElementById("lc-tk-live");
+  var live = document.getElementById("lc-tk-live");
   if (!rig || !front || !gl.length) return;
+  // pas de bouton à part : le billet se clique (ou Entrée / Espace au clavier) pour passer à l'événement suivant
+  scene.setAttribute("tabindex", "0"); scene.setAttribute("role", "button");
+  scene.setAttribute("aria-label", "Billet : voir l'événement suivant");
+  var keyGo = function(fn){ scene.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
+  }); };
   var mm = function(q){ return !!(window.matchMedia && matchMedia(q).matches); };
   var reduce = mm("(prefers-reduced-motion: reduce)");
   var fine = mm("(hover:hover) and (pointer:fine)");
@@ -1652,12 +1654,11 @@ form.addEventListener("submit", async ev => {
   };
   var next = function(){ if (list.length) { idx = (idx + 1) % list.length; print(list[idx]); } };
 
-  /* ---- Mouvement réduit : statique, le bouton change le recto sans rotation ---- */
+  /* ---- Mouvement réduit : statique, un clic change le recto sans rotation ---- */
   if (reduce) {
     scene.classList.add("is-presented");
     var swap = function(){ next(); announce(false); };
-    if (btn) btn.addEventListener("click", swap);
-    scene.addEventListener("click", swap);
+    scene.addEventListener("click", swap); keyGo(swap);
     return;
   }
 
@@ -1723,15 +1724,16 @@ form.addEventListener("submit", async ev => {
     if (busy) raf = requestAnimationFrame(lcTkFrame);
   }
 
-  /* ---- Retourner : clic, tap ou bouton, toujours dans le même sens ---- */
+  /* ---- Clic, tap ou clavier : un tour complet, toujours dans le même sens. Le recto passe derrière,
+     se réimprime (comme pendant la rotation automatique) et revient avec l'événement suivant ---- */
   function flip(){
     clearTimeout(idleT);
     if (mode === "auto") vel = spin / 60;
-    target = (mode === "spring" && target > angle - 1) ? target + 180 : Math.round(angle / 180) * 180 + 180;
+    target = (mode === "spring" && target > angle - 1) ? target + 360 : (Math.floor((angle + 90) / 360) + 1) * 360;
     mode = "spring"; spin = 0; flipAnnounce = true;
     wake();
   }
-  if (btn) btn.addEventListener("click", flip);
+  keyGo(flip);
 
   /* ---- Glisser / lancer ---- */
   scene.addEventListener("pointerdown", function(e){
@@ -2328,7 +2330,7 @@ form.addEventListener("submit", async ev => {
         '<div class="lc-ph-chat"><div class="lc-ph-feed">' +
           '<p class="lc-ph-msg me" data-s="1"></p>' +
           '<p class="lc-ph-typing"><i></i><i></i><i></i></p>' +
-          '<p class="lc-ph-msg lou" data-s="2">Bien reçu ! Je regarde les places disponibles et je vous rappelle avec un prix clair.</p>' +
+          '<p class="lc-ph-msg lou" data-s="2">Bien reçu ! Je regarde les places disponibles et je vous rappelle très vite.</p>' +
           '<div class="lc-ph-msg lou att" data-s="3"><div class="lc-ph-tk"><small>Vos billets</small><b></b><span></span><i></i></div><p>Une fois validé, vos billets vous sont envoyés.</p></div>' +
         '</div></div><div class="lc-ph-bar"><span>Message</span><i></i></div><i class="lc-ph-gl"></i>' +
       '</div></div>' +
@@ -2483,7 +2485,7 @@ form.addEventListener("submit", async ev => {
   var message = function(){
     var v = input.value.trim(), q = qty.value;
     if (!v) return typeof CONFIG !== "undefined" ? CONFIG.waMessage : "";
-    return "Bonjour Louis, je cherche des places pour : " + v + (q ? "\nNombre de places : " + q : "");
+    return "Bonjour Louis, j'aimerais assister à un événement qui n'est pas encore sur votre site : " + v + (q ? "\nNombre de places : " + q : "");
   };
   var sync = function(){
     var v = input.value.trim(), t = v || DEF;
@@ -2588,7 +2590,7 @@ form.addEventListener("submit", async ev => {
     entries.forEach(function(en){ if (en.isIntersecting && !en.target.hidden) seen.add(en.target); else seen.delete(en.target); });
     refresh();
   });
-  [".hero .cta", "#cat-panel", ".cta-big", "#devis .contact-card", "footer"].forEach(function(sel){
+  [".hero .cta", "#cat-panel", ".cta-big", "#contact .contact-card", "footer"].forEach(function(sel){
     var el = document.querySelector(sel); if (el) watch.observe(el);
   });
   new MutationObserver(function(){
