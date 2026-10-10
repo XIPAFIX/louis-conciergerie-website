@@ -282,12 +282,13 @@ section[id]{scroll-margin-top:40px}
   .row-actions{grid-column:1 / -1}.row-actions .btn{flex:1}
 }
 /* Grand bandeau d'appel, pleine largeur */
-.cta-big{position:relative;text-align:center;overflow:hidden;background:radial-gradient(70% 130% at 50% 0%,#b0182c 0%,#7a0e1c 42%,#3d050c 78%,#1c0508 100%);border-block:1px solid rgba(245,215,122,.6)}
+.cta-big{position:relative;text-align:center;overflow:hidden;padding-block:clamp(64px,8vw,112px);background:radial-gradient(70% 130% at 50% 0%,#b0182c 0%,#7a0e1c 42%,#3d050c 78%,#1c0508 100%);border-block:1px solid rgba(245,215,122,.6)}
 .cta-big::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 60% at 50% 110%,rgba(245,200,105,.25),transparent 70%);pointer-events:none}
 .cta-big .wrap{position:relative;display:grid;justify-items:center}
-.cta-big h2{font-size:clamp(44px,8vw,116px);max-width:12ch;margin:18px 0 18px;text-shadow:0 4px 24px rgba(0,0,0,.45)}
-.cta-big p{margin:0 0 30px;font-size:clamp(17px,1.7vw,20px);color:#f0e2c8}
+.cta-big h2{font-size:clamp(38px,10.5vw,56px);max-width:16ch;margin:16px 0;text-shadow:0 4px 24px rgba(0,0,0,.45)}
+.cta-big p{margin:0;font-size:clamp(17px,1.7vw,20px);color:#f0e2c8}
 .cta-big .eyebrow{color:#f5d77a}
+@media (min-width:981px){.cta-big{background:radial-gradient(60% 120% at 72% 0%,#b0182c 0%,#7a0e1c 42%,#3d050c 78%,#1c0508 100%)}.cta-big h2{font-size:clamp(44px,6vw,92px);max-width:14ch;margin-inline:0}}
 
 /* Passés : galerie en mosaïque, légende sur la photo */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(210px,21vw,280px);gap:14px}
@@ -747,6 +748,98 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:ecrin] ==== */
+/* Bandeau « Carte blanche » : un écrin de joaillier (laque noire, filet d'or, velours rouge, satin doré) s'ouvre au défilement.
+   Le billet vierge qui en sort grave l'événement tapé dans le champ ; le bouton WhatsApp envoie la demande précise à Louis. */
+.lc-ec .lc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cta-big .wrap.lc-ec{grid-template-columns:minmax(0,1fr);grid-template-areas:"text" "stage" "form"}
+.lc-ec-text{grid-area:text;display:grid;justify-items:center;min-width:0}
+.lc-ec-stage{grid-area:stage;position:relative;width:100%;height:264px;margin:14px 0 10px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+/* --k : taille de l'écrin. Les dimensions sont calculées (pas de scale()) pour que le billet et les gravures restent nets */
+.lc-ec-scene{--k:.8;--W:calc(240px * var(--k));--D:calc(150px * var(--k));--H:calc(70px * var(--k));--L:calc(26px * var(--k));--open:1;
+  position:absolute;top:14px;left:calc(50% - 210px * var(--k));width:calc(420px * var(--k));height:calc(340px * var(--k));perspective:calc(900px * var(--k));perspective-origin:50% 30%}
+.js .lc-ec-scene{--open:0}
+/* lumière chaude qui s'échappe de l'écrin */
+.lc-ec-scene::before{content:"";position:absolute;left:50%;top:40%;width:calc(400px * var(--k));height:calc(320px * var(--k));transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(closest-side,rgba(255,226,160,.5),rgba(255,226,160,.12) 55%,transparent);opacity:var(--open)}
+.lc-ec-shadow{position:absolute;left:50%;top:73%;width:calc(320px * var(--k));height:calc(64px * var(--k));transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent)}
+.lc-ec-box{position:absolute;left:50%;top:60%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-26deg);animation:lc-ec-sway 10s ease-in-out -5s infinite alternate}
+@keyframes lc-ec-sway{from{transform:rotateX(-24deg) rotateY(-32deg)}to{transform:rotateX(-24deg) rotateY(-18deg)}}
+.lc-ec.is-off .lc-ec-box{animation-play-state:paused}
+/* faces (1px de plus pour masquer les jointures) */
+.lc-ec-f{position:absolute;left:0;top:0;display:block;border-radius:3px}
+.lc-ec-x{background:linear-gradient(180deg,#24201a,#0b0b0e 60%,#060607);box-shadow:inset 0 0 0 1px rgba(224,180,74,.5),inset 0 1px 0 rgba(255,241,184,.55)}
+.lc-ec-fr,.lc-ec-bk{width:calc(var(--W) + 1px);height:calc(var(--H) + 1px);margin:calc(var(--H) / -2 - .5px) 0 0 calc(var(--W) / -2 - .5px)}
+.lc-ec-fr{transform:translateZ(calc(var(--D) / 2))}
+.lc-ec-bk{transform:translateZ(calc(var(--D) / -2)) rotateY(180deg)}
+.lc-ec-le,.lc-ec-ri{width:calc(var(--D) + 1px);height:calc(var(--H) + 1px);margin:calc(var(--H) / -2 - .5px) 0 0 calc(var(--D) / -2 - .5px)}
+.lc-ec-le{transform:translateX(calc(var(--W) / -2)) rotateY(-90deg)}
+.lc-ec-ri{transform:translateX(calc(var(--W) / 2)) rotateY(90deg)}
+/* éclairage : la face avant accroche un reflet, les côtés restent dans l'ombre */
+.lc-ec-fr{background:linear-gradient(100deg,transparent 52%,rgba(255,240,205,.06) 66%,transparent 80%),linear-gradient(180deg,#24201a,#0b0b0e 60%,#060607)}
+.lc-ec-ri,.lc-ec-lri{background:linear-gradient(180deg,#191612,#08080a 60%,#040405)}
+.lc-ec-bo{width:var(--W);height:var(--D);margin:calc(var(--D) / -2) 0 0 calc(var(--W) / -2);transform:translateY(calc(var(--H) / 2)) rotateX(-90deg);background:#060607}
+/* doublure de velours des parois, au-dessus du coussin */
+.lc-ec-in{height:calc(16px * var(--k));margin-top:calc(-8px * var(--k));border-radius:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(180deg,#5c0b16,#2a0409);box-shadow:inset 0 1px 0 rgba(224,180,74,.55)}
+.lc-ec-ibk{width:calc(var(--W) - 3px);margin-left:calc(var(--W) / -2 + 1.5px);transform:translate3d(0,calc(var(--H) / -2 + 8px * var(--k)),calc(var(--D) / -2 + 1.5px))}
+.lc-ec-ile{width:calc(var(--D) - 3px);margin-left:calc(var(--D) / -2 + 1.5px);transform:translate3d(calc(var(--W) / -2 + 1.5px),calc(var(--H) / -2 + 8px * var(--k)),0) rotateY(90deg)}
+/* coussin de velours rouge, fente au milieu, lueur qui monte de la fente */
+.lc-ec-cu{width:calc(var(--W) - 4px);height:calc(var(--D) - 4px);margin:calc(var(--D) / -2 + 2px) 0 0 calc(var(--W) / -2 + 2px);border-radius:6px;transform:translateY(calc(var(--H) / -2 + 14px * var(--k))) rotateX(90deg);
+  background:linear-gradient(180deg,transparent calc(50% - 1.5px),#1c0205 calc(50% - 1.5px) calc(50% + 1px),rgba(255,170,170,.2) calc(50% + 1px) calc(50% + 2px),transparent calc(50% + 2px)),
+    radial-gradient(120% 90% at 30% 20%,rgba(255,180,180,.18),transparent 60%),linear-gradient(160deg,var(--velvet),var(--velvet-lo));
+  box-shadow:inset 0 0 16px rgba(0,0,0,.6)}
+.lc-ec-cu::after{content:"";position:absolute;left:8%;right:8%;top:14%;bottom:14%;background:radial-gradient(closest-side,rgba(255,214,150,.5),rgba(255,190,120,.12) 60%,transparent);opacity:var(--open)}
+/* billet vierge : il sort de la fente une fois le couvercle levé */
+.lc-ec-tk{position:absolute;left:calc(-80px * var(--k));top:calc(-18px * var(--k));width:calc(160px * var(--k));height:calc(84px * var(--k));padding:calc(9px * var(--k)) calc(12px * var(--k)) calc(8px * var(--k));border-radius:calc(6px * var(--k));display:grid;grid-template-rows:auto 1fr auto;justify-items:center;align-items:center;gap:calc(2px * var(--k));text-align:center;color:#f4efe2;
+  background:linear-gradient(158deg,rgba(255,236,190,.1),transparent 45%),linear-gradient(135deg,#0b0b0e,#17140e 55%,#0b0b0e);
+  box-shadow:inset 0 0 0 1px rgba(224,180,74,.85),inset 0 0 0 3px #100e0b,inset 0 0 0 3.6px rgba(224,180,74,.4);
+  transform:translateY(calc(clamp(0,(var(--open) - .3) / .7,1) * -88px * var(--k))) rotateX(8deg);transition:box-shadow .45s ease}
+.lc-ec-tk small{font:500 calc(7.5px * var(--k))/1 var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:#cbb98c}
+.lc-ec-tk-t{max-width:100%;font:900 calc(20px * var(--k))/1 var(--font-display);text-transform:uppercase;letter-spacing:.01em;padding-top:.08em;overflow-wrap:anywhere;
+  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lc-ec-tk.lc-ec-long .lc-ec-tk-t{-webkit-line-clamp:3}
+.lc-ec-tk > i{display:block;width:calc(74px * var(--k));height:calc(9px * var(--k));opacity:.8;border-radius:1px;background:repeating-linear-gradient(90deg,#e0b44a 0 2px,transparent 2px 4px,#e0b44a 4px 5px,transparent 5px 9px,#e0b44a 9px 12px,transparent 12px 14px)}
+.lc-ec-mono{position:absolute;right:calc(9px * var(--k));bottom:calc(6px * var(--k));width:calc(18px * var(--k));height:calc(18px * var(--k));border-radius:50%;display:grid;place-items:center;font:900 calc(11px * var(--k))/1 var(--font-display);color:#1a1408;background:var(--gold-grad);box-shadow:0 0 0 2px #0e0c0a,0 0 0 2.6px rgba(224,180,74,.5)}
+.lc-ec-tk.is-engr,.lc-ec.is-sent .lc-ec-tk{box-shadow:inset 0 0 0 1px #f5d77a,inset 0 0 0 3px #100e0b,inset 0 0 0 3.6px rgba(245,215,122,.7),0 0 22px -4px rgba(245,215,122,.75)}
+/* couvercle : charnière sur l'arête arrière, il déborde d'1px comme un vrai couvercle */
+.lc-ec-lid{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;transform-origin:0 0 calc(var(--D) / -2 - 1px);transform:translateY(calc(var(--H) / -2)) rotateX(calc(var(--open) * 105deg))}
+.lc-ec-lfr,.lc-ec-lbk{width:calc(var(--W) + 3px);height:var(--L);margin:calc(var(--L) / -2) 0 0 calc(var(--W) / -2 - 1.5px)}
+.lc-ec-lfr{transform:translate3d(0,calc(var(--L) / -2),calc(var(--D) / 2 + 1px))}
+.lc-ec-lbk{transform:translate3d(0,calc(var(--L) / -2),calc(var(--D) / -2 - 1px)) rotateY(180deg)}
+.lc-ec-lle,.lc-ec-lri{width:calc(var(--D) + 3px);height:var(--L);margin:calc(var(--L) / -2) 0 0 calc(var(--D) / -2 - 1.5px)}
+.lc-ec-lle{transform:translate3d(calc(var(--W) / -2 - 1px),calc(var(--L) / -2),0) rotateY(-90deg)}
+.lc-ec-lri{transform:translate3d(calc(var(--W) / 2 + 1px),calc(var(--L) / -2),0) rotateY(90deg)}
+.lc-ec-lto,.lc-ec-lin{width:calc(var(--W) + 2px);height:calc(var(--D) + 2px);margin:calc(var(--D) / -2 - 1px) 0 0 calc(var(--W) / -2 - 1px)}
+.lc-ec-lto{transform:translateY(calc(var(--L) * -1)) rotateX(90deg);background:linear-gradient(115deg,transparent 34%,rgba(255,240,205,.07) 47%,transparent 60%),linear-gradient(180deg,#1f1b16,#0b0b0e 55%,#060607)}
+/* filet d'or et monogramme gravés sur le dessus */
+.lc-ec-lto::before{content:"";position:absolute;inset:calc(10px * var(--k));border:1px solid rgba(224,180,74,.42);border-radius:2px}
+.lc-ec-lto b{position:absolute;left:50%;top:50%;width:calc(34px * var(--k));height:calc(34px * var(--k));transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;padding-top:calc(2px * var(--k));font:900 calc(20px * var(--k))/1 var(--font-display);color:transparent;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;box-shadow:0 0 0 1px rgba(224,180,74,.55)}
+/* doublure de satin doré, nom de la maison imprimé comme dans les écrins de joaillier */
+.lc-ec-lin{transform:rotateX(-90deg);background:linear-gradient(104deg,transparent 18%,rgba(255,246,214,.26) 33%,transparent 47%,transparent 60%,rgba(255,246,214,.14) 72%,transparent 84%),radial-gradient(90% 70% at 30% 30%,rgba(255,241,184,.32),transparent 60%),linear-gradient(160deg,#5a4214,#c9a040 38%,#7a5a18 70%,#33240a);box-shadow:inset 0 0 0 1px rgba(255,241,184,.25),inset 0 0 18px rgba(30,18,4,.55)}
+.lc-ec-lin b{position:absolute;left:0;right:0;top:24%;text-align:center;font:500 calc(7px * var(--k))/1 var(--font-mono);letter-spacing:.34em;text-transform:uppercase;color:rgba(52,34,6,.72)}
+/* fermoir doré au bas du couvercle */
+.lc-ec-lfr b{position:absolute;left:50%;bottom:calc(-7px * var(--k));width:calc(16px * var(--k));height:calc(11px * var(--k));margin-left:calc(-8px * var(--k));border-radius:2px 2px 4px 4px;background:var(--gold-grad);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 -2px 0 rgba(90,60,10,.45)}
+/* champ « Quel événement ? », nombre de places, bouton WhatsApp */
+.lc-ec-form{grid-area:form;position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%;max-width:560px}
+.lc-ec-form input,.lc-ec-form select{min-height:52px;margin:0;border:1.5px solid rgba(245,215,122,.55);background-color:rgba(20,4,7,.55);border-radius:999px;color:var(--ink);font-size:16px;transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+.lc-ec-form input{flex:1 1 260px;width:auto;min-width:0;padding:0 20px}
+.lc-ec-form input::placeholder{color:rgba(247,239,223,.5)}
+.lc-ec-form select{flex:0 0 128px;width:128px;padding:0 34px 0 20px;-webkit-appearance:none;appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,#f5d77a 50%),linear-gradient(135deg,#f5d77a 50%,transparent 50%);background-position:right 21px center,right 16px center;background-size:5px 5px;background-repeat:no-repeat}
+.lc-ec-form option{background:#1c0a0d;color:var(--ink)}
+.lc-ec-form input:focus,.lc-ec-form select:focus{border-color:#f5d77a;background-color:rgba(20,4,7,.78);box-shadow:0 0 0 3px rgba(245,215,122,.22)}
+.lc-ec-form .btn{flex:0 0 auto;min-height:52px}
+@media (hover:hover) and (pointer:fine){.lc-ec-form input:hover,.lc-ec-form select:hover{border-color:rgba(245,215,122,.85)}}
+@media (max-width:560px){.lc-ec-form input{flex-basis:100%}.lc-ec-form .btn{flex:1 1 auto}}
+@media (max-width:440px){.lc-ec-wa{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (min-width:561px) and (max-width:980px){.lc-ec-stage{height:330px}.lc-ec-scene{--k:1;top:18px}}
+@media (min-width:981px){
+  .cta-big .wrap.lc-ec{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);grid-template-areas:"text stage" "form stage";justify-items:stretch;align-items:center;column-gap:48px;text-align:left}
+  .lc-ec-text{justify-items:start;align-self:end}
+  .lc-ec-form{justify-content:flex-start;align-self:start;margin-top:30px}
+  .lc-ec-stage{height:430px;margin:0}
+  .lc-ec-scene{--k:1.16;top:24px}
+}
+@media (min-width:1200px){.lc-ec-stage{height:470px}.lc-ec-scene{--k:1.3;top:30px}}
+@media (prefers-reduced-motion: reduce){.js .lc-ec-scene{--open:1}.lc-ec-box{animation:none}.lc-ec-tk{transition:none}}
 
 /* ---- */
 
@@ -924,11 +1017,43 @@ nav.links a.is-active::after{transform:scaleX(1)}
   </section>
 
   <section class="cta-big">
-    <div class="wrap rv">
-      <p class="eyebrow">Sur demande</p>
-      <h2>Votre événement n'est pas dans la liste&nbsp;?</h2>
-      <p>Dites-moi lequel, je vous rappelle avec un prix.</p>
-      <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrivez-moi sur WhatsApp</a>
+    <div class="wrap rv lc-ec">
+      <div class="lc-ec-text">
+        <p class="eyebrow">Sur demande</p>
+        <h2>Votre événement n'est pas dans la liste&nbsp;?</h2>
+        <p>Dites-moi lequel, je vous rappelle avec un prix.</p>
+      </div>
+      <div class="lc-ec-stage" aria-hidden="true">
+        <div class="lc-ec-scene">
+          <i class="lc-ec-shadow"></i>
+          <div class="lc-ec-box">
+            <i class="lc-ec-f lc-ec-bo"></i>
+            <i class="lc-ec-f lc-ec-x lc-ec-bk"></i>
+            <i class="lc-ec-f lc-ec-x lc-ec-le"></i>
+            <i class="lc-ec-f lc-ec-x lc-ec-ri"></i>
+            <i class="lc-ec-f lc-ec-in lc-ec-ibk"></i>
+            <i class="lc-ec-f lc-ec-in lc-ec-ile"></i>
+            <i class="lc-ec-f lc-ec-cu"></i>
+            <div class="lc-ec-tk"><small>Carte blanche</small><b class="lc-ec-tk-t">Votre événement ?</b><i></i><span class="lc-ec-mono">L</span></div>
+            <i class="lc-ec-f lc-ec-x lc-ec-fr"></i>
+            <div class="lc-ec-lid">
+              <i class="lc-ec-f lc-ec-x lc-ec-lbk"></i>
+              <i class="lc-ec-f lc-ec-x lc-ec-lle"></i>
+              <i class="lc-ec-f lc-ec-x lc-ec-lri"></i>
+              <i class="lc-ec-f lc-ec-x lc-ec-lto"><b>L</b></i>
+              <i class="lc-ec-f lc-ec-lin"><b>Louis Conciergerie</b></i>
+              <i class="lc-ec-f lc-ec-x lc-ec-lfr"><b></b></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="lc-ec-form" novalidate>
+        <label class="lc-sr" for="lc-ec-event">Quel événement ?</label>
+        <input id="lc-ec-event" type="text" maxlength="60" autocomplete="off" enterkeyhint="send" placeholder="Ex. : Finale de la Coupe de France">
+        <label class="lc-sr" for="lc-ec-qty">Nombre de places</label>
+        <select id="lc-ec-qty"><option value="">Places</option><option value="1">1 place</option><option value="2">2 places</option><option value="3">3 places</option><option value="4">4 places</option><option value="5">5 places</option><option value="6">6 places</option><option value="7">7 places</option><option value="8">8 places</option></select>
+        <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>Écrivez-moi<span class="lc-ec-wa"> sur WhatsApp</span></span></a>
+      </form>
     </div>
   </section>
 
@@ -2343,6 +2468,96 @@ form.addEventListener("submit", async ev => {
 <!-- ---- -->
 
 <!-- ==== [lc-slot-js:ecrin] ==== -->
+<script>
+/* Écrin « Carte blanche » : le couvercle s'ouvre au défilement, le billet grave ce que l'on tape, WhatsApp reçoit la demande précise */
+(function(){
+  var root = document.querySelector(".cta-big .lc-ec");
+  if (!root) return;
+  var sec = root.closest(".cta-big"), stage = root.querySelector(".lc-ec-stage"), scene = root.querySelector(".lc-ec-scene");
+  var tk = root.querySelector(".lc-ec-tk"), title = root.querySelector(".lc-ec-tk-t");
+  var form = root.querySelector(".lc-ec-form"), input = document.getElementById("lc-ec-event"), qty = document.getElementById("lc-ec-qty");
+  var go = form && form.querySelector("a.btn-wa");
+  if (!stage || !scene || !tk || !title || !input || !qty || !go) return;
+  var DEF = title.textContent;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 1) Gravure et lien WhatsApp (textContent uniquement : rien n'est interprété comme du HTML)
+  var engr = 0;
+  var message = function(){
+    var v = input.value.trim(), q = qty.value;
+    if (!v) return typeof CONFIG !== "undefined" ? CONFIG.waMessage : "";
+    return "Bonjour Louis, je cherche des places pour : " + v + (q ? "\nNombre de places : " + q : "");
+  };
+  var sync = function(){
+    var v = input.value.trim(), t = v || DEF;
+    title.textContent = t;
+    title.style.fontSize = "calc(" + Math.max(13, 22 - t.length * 0.15).toFixed(2) + "px * var(--k))";
+    tk.classList.toggle("lc-ec-long", t.length > 34);
+    if (typeof waLink === "function") go.href = waLink(message());
+  };
+  input.addEventListener("input", function(){
+    sync();
+    if (reduce) return;
+    kick();
+    tk.classList.add("is-engr"); clearTimeout(engr);
+    engr = setTimeout(function(){ tk.classList.remove("is-engr"); }, 650);
+  });
+  qty.addEventListener("change", sync);
+  form.addEventListener("submit", function(ev){ ev.preventDefault(); go.click(); });
+  addEventListener("pageshow", sync);
+  sync();
+
+  // 2) Ouverture : suit le défilement tant que le bandeau est à l'écran, puis s'arrête une fois arrivée
+  if (reduce) { scene.style.setProperty("--open", "1"); return; }
+  var open = 0, raf = 0, onScreen = false, manual = null, sealing = false, sealT = 0;
+  var target = function(){
+    if (sealing) return .3;
+    if (document.activeElement === input) return 1;
+    if (manual !== null) return manual;
+    if (input.value.trim()) return 1;
+    // un seul getBoundingClientRect par image : l'écrin s'ouvre pendant que son centre passe de 96 % à 58 % de la hauteur de l'écran
+    var r = stage.getBoundingClientRect(), vh = innerHeight || 1;
+    var p = (vh * .96 - (r.top + r.height * .6)) / (vh * .38);
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    return p * p * (3 - 2 * p);
+  };
+  var frame = function(){
+    raf = 0;
+    var t = target();
+    open += (t - open) * .12;
+    if (Math.abs(t - open) < .002) open = t;
+    scene.style.setProperty("--open", open.toFixed(3));
+    if (open !== t) raf = requestAnimationFrame(frame);
+  };
+  var kick = function(){ if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(frame); };
+  var stop = function(){ if (raf) cancelAnimationFrame(raf); raf = 0; };
+  scene.style.setProperty("--open", "0");
+  root.classList.add("is-off");
+
+  addEventListener("scroll", kick, { passive: true });
+  addEventListener("resize", kick);
+  input.addEventListener("focus", kick);
+  input.addEventListener("blur", kick);
+  // un toucher sur l'écrin ouvre ou referme le couvercle
+  stage.addEventListener("click", function(){ manual = open > .5 ? 0 : 1; kick(); });
+  // envoi : le billet replonge dans l'écrin comme pour le sceller, puis ressort
+  go.addEventListener("click", function(){
+    root.classList.add("is-sent"); sealing = true; kick();
+    clearTimeout(sealT);
+    sealT = setTimeout(function(){ root.classList.remove("is-sent"); sealing = false; kick(); }, 1200);
+  });
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) stop(); else kick(); });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function(en){
+      onScreen = en[0].isIntersecting;
+      root.classList.toggle("is-off", !onScreen);
+      if (onScreen) kick();
+      else { stop(); manual = null; open = target(); scene.style.setProperty("--open", open.toFixed(3)); }   // hors écran : on le pose directement dans l'état qui l'attend
+    }).observe(sec);
+  } else { onScreen = true; root.classList.remove("is-off"); kick(); }
+})();
+</script>
 
 <!-- ---- -->
 
