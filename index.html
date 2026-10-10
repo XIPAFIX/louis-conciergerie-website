@@ -148,34 +148,60 @@ section{padding-block:64px}
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
 
 /* À venir : cartes billets */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.filters button{font:600 14px/1 var(--font-body);padding:10px 16px;border-radius:999px;border:1.5px solid rgba(224,180,74,.4);background:linear-gradient(180deg,#3a0e16,#22080d);color:#ecd9b0;cursor:pointer}
-.filters button[aria-pressed="true"]{background:var(--gold-grad);border-color:transparent;color:var(--accent-ink)}
-.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);margin:-8px 0 22px}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.events{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.ev{display:flex;flex-direction:column;background:var(--plush);border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;min-width:0;box-shadow:0 20px 40px -24px rgba(0,0,0,.75);transition:transform .2s ease,border-color .2s ease}
-.ev:hover{transform:translateY(-3px);border-color:rgba(224,180,74,.6)}
-.ev-visual{position:relative;aspect-ratio:16/10;max-width:100%;overflow:hidden;background:var(--stub)}
-.ev-visual svg,.ev-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ev-date{position:absolute;left:12px;top:12px;background:var(--gold-grad);color:var(--accent-ink);border-radius:10px;padding:8px 10px;text-align:center;min-width:64px;box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
-.ev-date .d{display:block;font:900 26px/1 var(--font-display)}
-.ev-date .m{display:block;font:500 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#4a3510}
 [hidden]{display:none!important}
 .photos{position:absolute;inset:0;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px}
 .photos img{position:static!important;width:100%;height:100%;object-fit:cover;object-position:50% 22%;min-width:0}
 .credit{position:absolute;right:8px;bottom:6px;font:500 10px/1.2 var(--font-body);color:#fff;text-decoration:none;background:rgba(0,0,0,.55);padding:3px 6px;border-radius:4px}
-.heat{position:absolute;right:12px;top:12px;font:600 11px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:7px 9px;border-radius:6px;color:#fff;background:rgba(20,6,9,.8);border:1px solid rgba(224,180,74,.45);backdrop-filter:blur(4px)}
-.heat.h3{background:#b3121f;border-color:#f5d77a}.heat.h4{background:#b91c1c}
-.ev-body{padding:16px 18px 14px;display:grid;gap:6px;flex:1;border-bottom:2px dashed var(--line);position:relative}
-.ev-body h3{font-size:28px}
-.ev-meta{color:var(--muted);font-size:14px;line-height:1.45}
-.ev-note{font-size:13px;color:var(--ink);opacity:.8}
-.ev-actions{display:flex;gap:8px;padding:12px 14px;background:rgba(0,0,0,.28)}
-.ev-actions .btn{flex:1;padding:11px 10px;font-size:14px}
 .tag{justify-self:start;font:500 11px/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border-radius:4px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
 .example{font:500 10px/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--muted);padding:4px 6px;border-radius:4px;margin-left:6px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+/* Catégories d'événements */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cat-wrap{position:relative;min-width:0}
+.cat-wrap .credit{z-index:2;top:8px;bottom:auto}
+.cat{position:relative;display:block;width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14070a;cursor:pointer;padding:0;color:var(--ink);text-align:left;font:inherit;box-shadow:0 20px 40px -24px rgba(0,0,0,.8);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.cat:hover{transform:translateY(-3px);border-color:rgba(224,180,74,.6)}
+.cat[aria-expanded="true"]{border:2px solid #f0cf6e;box-shadow:0 0 0 4px rgba(224,180,74,.15),0 20px 40px -20px rgba(224,180,74,.35)}
+.cat > svg,.cat .photos{position:absolute;inset:0;width:100%;height:100%}
+.cat .photos img{object-position:50% 20%}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,4,5,.05) 30%,rgba(11,4,5,.6) 62%,rgba(11,4,5,.95))}
+.cat-body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:18px;display:grid;gap:4px}
+.cat-name{font:900 clamp(30px,3.4vw,42px)/.95 var(--font-display);text-transform:uppercase;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-top:.1em}
+.cat-count{font:500 12px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#ecd9b0}
+.cat-next{font-size:13px;color:var(--muted)}
+.cat-cta{margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--accent)}
+.cat-cta::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
+.cat[aria-expanded="true"] .cat-cta::after{transform:rotate(-135deg) translateY(-2px)}
+@media (max-width:860px){.cat-grid{grid-template-columns:repeat(2,1fr);gap:12px}.cat-body{padding:14px}}
+@media (max-width:480px){.cat-next{display:none}.cat-wrap .credit{font-size:9px;top:6px;right:6px}}
+
+/* Liste des dates d'une catégorie */
+.cat-panel{scroll-margin-top:90px;margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--plush);padding:8px 22px 14px;box-shadow:0 24px 50px -24px rgba(0,0,0,.8);animation:panel-in .35s ease}
+@keyframes panel-in{from{opacity:0;transform:translateY(-8px)}}
+.panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 20px;padding:14px 0;border-bottom:1px solid var(--line)}
+.panel-head h3{font-size:clamp(28px,4vw,40px)}
+.panel-head .legend{margin:0}
+.row{display:grid;grid-template-columns:auto 1fr auto auto;gap:18px;align-items:center;padding:16px 0;border-bottom:1px dashed rgba(224,180,74,.25)}
+.row:last-child{border-bottom:0}
+.row-date{width:78px;text-align:center;border-radius:10px;padding:8px 6px;background:var(--gold-grad);color:var(--accent-ink)}
+.row-date .d{display:block;font:900 26px/1 var(--font-display)}
+.row-date .m{display:block;font:500 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#4a3510}
+.row-main{min-width:0}
+.row-main h4{margin:0;font:800 clamp(22px,2.4vw,28px)/1 var(--font-display);text-transform:uppercase;letter-spacing:.01em}
+.row-meta{color:var(--muted);font-size:14px;line-height:1.45;margin-top:4px}
+.row-note{font-size:13px;color:#ecd9b0;margin-top:2px}
+.pill{white-space:nowrap;font:600 11px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:7px 9px;border-radius:6px;color:#fff;background:rgba(20,6,9,.8);border:1px solid rgba(224,180,74,.45)}
+.pill.h3{background:#b3121f;border-color:#f5d77a}
+.row-actions{display:flex;gap:8px}
+.row-actions .btn{padding:11px 16px;font-size:14px}
+@media (max-width:760px){
+  .cat-panel{padding:6px 14px 10px}
+  .row{grid-template-columns:auto 1fr;gap:10px 14px}
+  .row .pill{grid-column:2;justify-self:start}
+  .row-actions{grid-column:1 / -1}.row-actions .btn{flex:1}
+}
 .cta-band{margin-top:28px;padding:28px;border-radius:var(--radius);background:radial-gradient(120% 140% at 30% 0%,#b0182c 0%,#7a0e1c 45%,#3d050c 100%);color:var(--ink);border:1px solid rgba(245,215,122,.6);box-shadow:inset 0 0 0 4px rgba(0,0,0,.25),0 24px 50px -24px rgba(0,0,0,.8);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
 .cta-band h3{font-size:clamp(26px,4vw,36px)}
 .cta-band p{margin:4px 0 0;opacity:.85;font-size:15px}
@@ -311,18 +337,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
     <div class="wrap">
       <div class="sec-head">
         <div><p class="eyebrow">Saison 2026 – 2027</p><h2>Événements à venir</h2></div>
-        <p>Les matchs et concerts les plus demandés, où les places partent vite. Écrivez-moi : je vous trouve des places.</p>
+        <p>Choisissez une catégorie pour voir les dates. Ce sont les matchs et concerts où les places partent vite : écrivez-moi, je vous trouve des places.</p>
       </div>
-      <div class="filters" role="group" aria-label="Filtrer les événements">
-        <button type="button" data-filter="all" aria-pressed="true">Tous</button>
-        <button type="button" data-filter="sport" aria-pressed="false">Sport</button>
-        <button type="button" data-filter="concert" aria-pressed="false">Concerts</button>
-      </div>
-      <div class="legend">
-        <span><i class="dot" style="background:#b3121f;box-shadow:0 0 0 1.5px #f5d77a"></i>Risque de rupture élevé</span>
-        <span><i class="dot" style="background:var(--accent)"></i>Forte demande</span>
-      </div>
-      <div class="events" id="events"></div>
+      <div class="cat-grid" id="cat-grid"></div>
+      <div class="cat-panel" id="cat-panel" hidden></div>
       <div class="cta-band">
         <div><h3>Votre événement n'est pas dans la liste ?</h3><p>Dites-moi lequel, je vous rappelle avec un prix.</p></div>
         <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener">Écrivez-moi sur WhatsApp</a>
@@ -494,32 +512,65 @@ function poster(e, i) {
 }
 
 const events = UPCOMING.filter(e => parse(e.end || e.date) >= today).sort((a,b) => a.date.localeCompare(b.date));
-document.getElementById("events").innerHTML = events.map((e, i) => {
+
+// Regroupement par catégorie
+const CATS = [
+  { key: "concert", name: "Concerts", test: e => e.type === "concert" },
+  { key: "foot",    name: "Football", test: e => e.kind === "foot" },
+  { key: "tennis",  name: "Tennis",   test: e => e.kind === "tennis" || e.kind === "clay" },
+  { key: "rugby",   name: "Rugby",    test: e => e.kind === "rugby" }
+].map(c => ({ ...c, list: events.filter(c.test) })).filter(c => c.list.length);
+
+const shortDate = d => d.getDate() + " " + MONTHS[d.getMonth()];
+const grid = document.getElementById("cat-grid"), panel = document.getElementById("cat-panel");
+grid.innerHTML = CATS.map((c, i) => {
+  // photo de couverture : un événement très demandé avec une photo d'artiste ou de joueur
+  const cover = c.list.find(e => e.heat === 3 && e.commons && !e.photoNote) || c.list.find(e => e.commons) || c.list[0];
+  const ph = photoHTML(cover), credit = (ph.match(/<a class="credit".*?<\/a>/) || [""])[0];
+  return `<div class="cat-wrap"><button type="button" class="cat" data-cat="${c.key}" aria-expanded="false" aria-controls="cat-panel">
+    ${poster(cover, "c" + i)}${ph.replace(credit, "")}
+    <span class="cat-body">
+      <span class="cat-name">${c.name}</span>
+      <span class="cat-count">${c.list.length} événement${c.list.length > 1 ? "s" : ""}</span>
+      <span class="cat-next">Prochain : ${esc(c.list[0].title)}, ${shortDate(parse(c.list[0].date))}</span>
+      <span class="cat-cta">Voir les dates</span>
+    </span>
+  </button>${credit}</div>`;
+}).join("");
+
+function rowHTML(e) {
   const d = parse(e.date), label = evLabel(e);
-  const dateBox = e.dateLabel ? `<span class="d" style="font-size:20px">${e.dateLabel[0]}</span><span class="m">${e.dateLabel[1]}</span>`
+  const dateBox = e.dateLabel ? `<span class="d" style="font-size:18px">${e.dateLabel[0]}</span><span class="m">${e.dateLabel[1]}</span>`
     : `<span class="d">${d.getDate()}${e.end ? "+" : ""}</span><span class="m">${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</span>`;
-  return `<article class="ev" data-type="${e.type}">
-    <div class="ev-visual">${poster(e, i)}${photoHTML(e)}
-      <div class="ev-date">${dateBox}</div>
-      <span class="heat h${e.heat}">${HEAT[e.heat]}</span>
+  return `<article class="row">
+    <div class="row-date">${dateBox}</div>
+    <div class="row-main">
+      <h4>${esc(e.title)}</h4>
+      <div class="row-meta">${esc(e.cat)} · ${when(e)} · ${esc(e.venue)}${e.city && e.city !== "France" ? ", " + esc(e.city) : ""}</div>
+      ${e.note ? `<div class="row-note">${esc(e.note)}</div>` : ""}
     </div>
-    <div class="ev-body">
-      <span class="tag">${esc(e.cat)}</span>
-      <h3>${esc(e.title)}</h3>
-      <div class="ev-meta">${when(e)}<br>${esc(e.venue)}${e.city && e.city !== "France" ? " · " + esc(e.city) : ""}</div>
-      ${e.note ? `<div class="ev-note">${esc(e.note)}</div>` : ""}
-    </div>
-    <div class="ev-actions">
+    <span class="pill h${e.heat}">${HEAT[e.heat]}</span>
+    <div class="row-actions">
       <a class="btn btn-wa" href="${waLink("Bonjour Louis, je cherche des places pour " + label + ". Combien pour ")}" target="_blank" rel="noopener">Écrivez-moi</a>
       <a class="btn btn-ghost" href="#devis" data-event="${esc(label)}">Formulaire</a>
     </div>
   </article>`;
-}).join("");
+}
 
-document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
-  document.querySelectorAll("[data-filter]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
-  document.querySelectorAll(".ev").forEach(c => c.hidden = b.dataset.filter !== "all" && c.dataset.type !== b.dataset.filter);
-}));
+grid.addEventListener("click", ev => {
+  const btn = ev.target.closest(".cat"); if (!btn) return;
+  const open = btn.getAttribute("aria-expanded") === "true";
+  grid.querySelectorAll(".cat").forEach(b => b.setAttribute("aria-expanded", "false"));
+  if (open) { panel.hidden = true; return; }
+  btn.setAttribute("aria-expanded", "true");
+  const c = CATS.find(x => x.key === btn.dataset.cat);
+  panel.innerHTML = `<div class="panel-head"><h3>${c.name}</h3>
+      <div class="legend"><span><i class="dot" style="background:#b3121f;box-shadow:0 0 0 1.5px #f5d77a"></i>Risque de rupture élevé</span><span><i class="dot" style="background:var(--accent)"></i>Forte demande</span></div>
+    </div>` + c.list.map(rowHTML).join("");
+  panel.hidden = false;
+  panel.style.animation = "none"; panel.offsetHeight; panel.style.animation = "";
+  if (matchMedia("(max-width:860px)").matches) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
 // Passés
 document.getElementById("gallery").innerHTML = PAST.map(e => `<figure class="shot">
