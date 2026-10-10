@@ -149,7 +149,7 @@ nav.links a:hover{color:var(--accent)}
 .points b{font:800 24px/1.1 var(--font-display);text-transform:uppercase;letter-spacing:.01em}
 .points span{color:var(--muted);font-size:15px}
 .intro-visual{width:100%;max-width:520px;justify-self:center}
-@media (max-width:860px){.intro-grid{grid-template-columns:1fr;gap:28px}.intro-visual{order:-1;max-width:460px}}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr;gap:28px}.intro-visual{order:-1;max-width:340px}}
 
 /* Chiffres */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(56px,8vw,96px);border-block:1px solid var(--line)}
@@ -160,13 +160,9 @@ nav.links a:hover{color:var(--accent)}
 .stat span{font:500 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:#e6d6b8;max-width:22em}
 @media (max-width:760px){.stats{grid-template-columns:1fr}.stat + .stat{border-left:0;border-top:1px solid var(--line)}.stat{padding:22px 4px;grid-template-columns:auto 1fr;align-items:center;gap:18px}.stat b{min-width:1.2em}}
 
-/* Billet (hero) : billet luxe doré qui tourne sur lui-même */
+/* Billet (section 01) : billet en or massif, piloté par le script du billet */
 .ticket-scene{perspective:1400px;padding:20px 0 40px;position:relative}
-.ticket-scene::after{content:"";position:absolute;left:12%;right:12%;bottom:6px;height:28px;border-radius:50%;background:radial-gradient(closest-side,rgba(224,180,74,.28),transparent);filter:blur(6px);animation:shadow-pulse 14s linear infinite}
-.ticket-spin{position:relative;transform-style:preserve-3d;animation:ticket-spin 14s linear infinite}
-@keyframes ticket-spin{from{transform:rotateX(10deg) rotateY(0deg)}to{transform:rotateX(10deg) rotateY(360deg)}}
-@keyframes shadow-pulse{0%,50%,100%{transform:scaleX(1);opacity:1}25%,75%{transform:scaleX(.35);opacity:.5}}
-.ticket-scene:hover .ticket-spin{animation-play-state:paused}
+.ticket-spin{position:relative;transform-style:preserve-3d;transform:rotateX(8deg) rotateY(-14deg)}
 .ticket{--notch:calc(100% - 92px);position:relative;display:grid;grid-template-columns:1fr 92px;border-radius:var(--radius);color:#f4efe2;
   background:
     repeating-radial-gradient(circle at 20% 120%,rgba(224,180,74,.07) 0 1px,transparent 1px 7px),
@@ -178,8 +174,7 @@ nav.links a:hover{color:var(--accent)}
 .ticket::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:var(--gold-grad);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 /* reflet qui balaie le billet */
-.ticket::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,240,200,.16) 45%,rgba(255,255,255,.28) 50%,rgba(255,240,200,.16) 55%,transparent 65%) -150% 0/250% 100% no-repeat;animation:sheen 4.5s ease-in-out infinite}
-@keyframes sheen{0%,30%{background-position:-150% 0}70%,100%{background-position:250% 0}}
+.ticket::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,240,200,.16) 45%,rgba(255,255,255,.28) 50%,rgba(255,240,200,.16) 55%,transparent 65%) -150% 0/250% 100% no-repeat}
 .ticket-main{padding:24px 24px 22px;border-right:2px dashed rgba(224,180,74,.35);min-width:0}
 .ticket-stub{background:linear-gradient(180deg,rgba(224,180,74,.10),rgba(224,180,74,.03));border-radius:0 var(--radius) var(--radius) 0;display:flex;align-items:center;justify-content:center}
 .ticket-stub span{writing-mode:vertical-rl;transform:rotate(180deg);font:500 12px/1 var(--font-mono);letter-spacing:.3em;color:var(--gold)}
@@ -389,6 +384,62 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:ticket] ==== */
+/* Billet en or massif : présenté au défilement, vraie épaisseur dorée, reflet lié à l'angle */
+.lc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lc-tk{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab}
+.lc-tk.is-drag{cursor:grabbing}
+.lc-tk-present,.lc-tk-float,.lc-tk-rig{transform-style:preserve-3d}
+.lc-tk-present{position:relative;z-index:1;transform:rotateX(70deg) translateY(40px);transition:transform 1.6s cubic-bezier(.16,1,.3,1)}
+.lc-tk.is-presented .lc-tk-present{transform:none}
+.lc-tk-float{animation:lc-tk-float 9s ease-in-out infinite alternate}
+@keyframes lc-tk-float{from{transform:translateY(-6px) rotateZ(-1deg)}to{transform:translateY(6px) rotateZ(1deg)}}
+.lc-tk.is-off .lc-tk-float{animation-play-state:paused}
+.lc-tk-rig{transform:rotateX(8deg) rotateY(-14deg)}
+.lc-tk .ticket{transform:translateZ(2px)}
+.lc-tk .ticket.back{transform:rotateY(180deg) translateZ(2px)}
+/* tranche dorée : 4 feuilles empilées + 2 chants latéraux, visibles quand le billet est de profil */
+.lc-tk-edge{position:absolute;inset:0;border-radius:var(--radius);transform:translateZ(var(--e));--notch:calc(100% - 92px);
+  background:linear-gradient(90deg,#4a3510,#b8902f 18%,#f5d77a 50%,#b8902f 82%,#4a3510);
+  -webkit-mask:radial-gradient(circle 10px at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 10px at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 10px at var(--notch) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 10px at var(--notch) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.lc-tk-side{position:absolute;top:7px;bottom:7px;width:4px;background:linear-gradient(180deg,#5a4212,#f5d77a 22%,#b8902f 48%,#fff1b8 70%,#8a6a1f 88%,#4a3510)}
+.lc-tk-l{left:-2px;transform:rotateY(90deg)}
+.lc-tk-r{right:-2px;transform:rotateY(90deg)}
+/* reflet : simple calque dont seule la position suit l'angle (pas de calque composité : moins coûteux sur mobile) */
+.lc-tk .ticket::after{content:none}
+.lc-tk-gl{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,240,200,.16) 45%,rgba(255,255,255,.28) 50%,rgba(255,240,200,.16) 55%,transparent 65%) 30% 0/250% 100% no-repeat}
+.lc-tk .ticket-main{display:flex;flex-direction:column}
+.lc-tk .t-sub{margin-bottom:20px}
+.lc-tk .seat{margin-top:auto;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 22px}
+.lc-tk .seat b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc-tk .t-title.lc-tk-long{font-size:32px}
+.lc-tk .back-tag{text-wrap:balance}
+.lc-tk-shadow{position:absolute;left:12%;right:12%;bottom:6px;height:28px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(224,180,74,.30),rgba(224,180,74,.08) 60%,transparent);
+  transform:scaleX(var(--lc-sh,1));opacity:calc(.5 + var(--lc-sh,1)*.5)}
+.lc-tk-btn{display:flex;align-items:center;gap:8px;margin:-6px auto 0;font:500 11px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(224,180,74,.06);border:1px solid rgba(224,180,74,.45);border-radius:999px;padding:9px 14px;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.lc-tk-btn span{font-size:14px;line-height:1}
+.lc-tk-btn:active{transform:scale(.94)}
+@media (hover:hover) and (pointer:fine){.lc-tk-btn:hover{transform:translateY(-2px);border-color:#f0cf6e;box-shadow:0 6px 16px -6px rgba(224,180,74,.55)}.lc-tk-btn:active{transform:scale(.94)}}
+@media (max-width:520px){
+  .lc-tk .ticket{grid-template-columns:1fr 64px;--notch:calc(100% - 64px)}
+  .lc-tk .ticket.back{grid-template-columns:64px 1fr;--notch:64px}
+  .lc-tk-edge{--notch:calc(100% - 64px)}
+  .lc-tk .ticket-main{padding:20px 18px 18px}
+  .lc-tk .t-head{flex-wrap:wrap;gap:6px}
+  .lc-tk .t-title{font-size:clamp(26px,8.4vw,36px)}
+  .lc-tk .t-title.lc-tk-long{font-size:clamp(22px,6.6vw,28px)}
+  .lc-tk .seat{gap:8px 14px}
+  .lc-tk .seat b{font-size:clamp(17px,4.6vw,24px)}
+  .lc-tk .ticket.back .back-main{padding:18px 14px}
+  .lc-tk .back-name{font-size:26px}
+}
+@media (prefers-reduced-motion: reduce){
+  .lc-tk{cursor:pointer}
+  .lc-tk-present{transform:none}
+  .lc-tk-rig{transform:rotateX(8deg) rotateY(-18deg)}
+}
 
 /* ---- */
 
@@ -481,34 +532,43 @@ nav.links a:hover::after{transform:scaleX(1)}
         </ul>
         <div class="cta rv" style="justify-content:flex-start"><a class="btn btn-primary" href="#devis">Demander un prix</a></div>
       </div>
-      <div class="intro-visual rv" style="--d:.15s" aria-hidden="true">
-        <div class="ticket-scene">
-        <div class="ticket-spin">
+      <div class="intro-visual rv" style="--d:.15s">
+        <div class="ticket-scene lc-tk" aria-hidden="true">
+        <div class="lc-tk-present"><div class="lc-tk-float">
+        <div class="ticket-spin lc-tk-rig">
+          <i class="lc-tk-edge" style="--e:-1.5px"></i><i class="lc-tk-edge" style="--e:-.5px"></i><i class="lc-tk-edge" style="--e:.5px"></i><i class="lc-tk-edge" style="--e:1.5px"></i>
+          <i class="lc-tk-side lc-tk-l"></i><i class="lc-tk-side lc-tk-r"></i>
           <div class="ticket">
             <div class="ticket-main">
-              <div class="t-head"><span class="eyebrow">Louis Conciergerie</span><span class="vip">Carré Or</span></div>
+              <div class="t-head"><span class="eyebrow">Louis Conciergerie</span><span class="vip">Billet privé</span></div>
               <div class="t-title gold-text">Votre événement</div>
               <div class="t-sub">Le match, le concert ou la finale que vous voulez voir</div>
               <div class="seat">
-                <div>Tribune<b>A</b></div>
-                <div>Rang<b>04</b></div>
-                <div>Place<b>12</b></div>
+                <div>Date<b>—</b></div>
+                <div>Ville<b>France</b></div>
+                <div>Jour J<b>—</b></div>
               </div>
               <div class="barcode"></div>
             </div>
-            <div class="ticket-stub"><span>Admis · 1 personne</span></div>
+            <div class="ticket-stub"><span>Saison 2026 – 2027</span></div>
+            <i class="lc-tk-gl"></i>
           </div>
           <div class="ticket back">
             <div class="ticket-stub"><span>Accès privilège</span></div>
             <div class="back-main">
               <div class="monogram">L</div>
               <div class="back-name gold-text">Louis Conciergerie</div>
-              <div class="back-tag">Billetterie privée · Sport &amp; Concerts</div>
+              <div class="back-tag">Billetterie privée&nbsp;· Sport &amp; Concerts</div>
               <div class="back-no">N° 0001</div>
             </div>
+            <i class="lc-tk-gl"></i>
           </div>
         </div>
+        </div></div>
+        <i class="lc-tk-shadow"></i>
         </div>
+        <button type="button" class="lc-tk-btn"><span aria-hidden="true">↻</span> Tourner le billet</button>
+        <p class="lc-sr" id="lc-tk-live" aria-live="polite"></p>
       </div>
     </div>
     <div class="wrap">
@@ -878,6 +938,250 @@ form.addEventListener("submit", async ev => {
 <!-- ---- -->
 
 <!-- ==== [lc-slot-js:ticket] ==== -->
+<script>
+/* Billet en or massif : tourne lentement sur lui-même, se retourne au clic / tap / bouton,
+   se lance au doigt ou à la souris avec inertie, et se réimprime avec le prochain vrai événement */
+(function(){
+  var scene = document.querySelector("#conciergerie .lc-tk");
+  if (!scene) return;
+  var rig = scene.querySelector(".lc-tk-rig"), front = scene.querySelector(".ticket:not(.back)");
+  var gl = scene.querySelectorAll(".lc-tk-gl");
+  var shadow = scene.querySelector(".lc-tk-shadow"), igrid = scene.closest(".intro-grid");
+  var btn = document.querySelector("#conciergerie .lc-tk-btn"), live = document.getElementById("lc-tk-live");
+  if (!rig || !front || !gl.length) return;
+  var mm = function(q){ return !!(window.matchMedia && matchMedia(q).matches); };
+  var reduce = mm("(prefers-reduced-motion: reduce)");
+  var fine = mm("(hover:hover) and (pointer:fine)");
+  var list = (typeof events !== "undefined" && events) || [];
+  var idx = 0;
+
+  /* ---- Impression du recto ---- */
+  var q = function(s){ return front.querySelector(s); };
+  var el = { eye: q(".t-head .eyebrow"), vip: q(".vip"), title: q(".t-title"), sub: q(".t-sub"),
+    seats: front.querySelectorAll(".seat b"), stub: q(".ticket-stub span") };
+  var kindLabel = function(e){
+    if (e.type === "concert") return "Concert";
+    return ({ foot: "Football", tennis: "Tennis", clay: "Tennis", rugby: "Rugby" })[e.kind] || "Sport";
+  };
+  var dayMs = 864e5;
+  var jourJ = function(e){
+    var d = parse(e.date), end = e.end ? parse(e.end) : d;
+    if (d <= today && today <= end) return "En cours";
+    var n = Math.round((d - today) / dayMs);
+    return n === 0 ? "Aujourd'hui" : "J-" + n;
+  };
+  var dateCell = function(e){
+    if (e.dateLabel) return "Janv.";
+    var d = parse(e.date);
+    return d.getDate() + " " + MONTHS[d.getMonth()] + (e.end ? "+" : "");
+  };
+  var sub = function(e){
+    var v = String(e.venue || "").replace(/\s*\([^)]*\)/g, "").trim();
+    return e.city && e.city !== "France" ? v + ", " + e.city : v;
+  };
+  function print(e){
+    if (!e) return;
+    el.eye.textContent = kindLabel(e);
+    el.vip.textContent = HEAT[e.heat] || "Forte demande";
+    el.title.textContent = e.title;
+    el.title.classList.toggle("lc-tk-long", e.title.length > 14);
+    el.sub.textContent = sub(e);
+    el.seats[0].textContent = dateCell(e);
+    el.seats[1].textContent = e.city;
+    el.seats[2].textContent = jourJ(e);
+  }
+  if (list.length) {
+    var y0 = parse(list[0].date).getFullYear(), y1 = y0;
+    list.forEach(function(e){ y1 = Math.max(y1, parse(e.end || e.date).getFullYear()); });
+    el.stub.textContent = "Saison " + y0 + (y1 > y0 ? " – " + y1 : "");
+  }
+  // hauteur fixe : celle du billet le plus haut de la saison, pour que rien ne saute sous le billet
+  function measure(){
+    if (!list.length) return;
+    front.style.minHeight = "";
+    var h = 0;
+    for (var i = 0; i < list.length; i++) { print(list[i]); h = Math.max(h, front.offsetHeight); }
+    front.style.minHeight = h + "px";
+    print(list[idx]);
+  }
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  var lastW = innerWidth, rz;
+  addEventListener("resize", function(){
+    if (Math.abs(innerWidth - lastW) < 2) return;
+    lastW = innerWidth; clearTimeout(rz); rz = setTimeout(measure, 200);
+  });
+
+  var announce = function(back){
+    var e = list[idx]; if (!e || !live) return;
+    var txt = "Billet : " + e.title + ", " + when(e) + ", " + sub(e);
+    live.textContent = back ? "Verso du billet. Au recto : " + txt.slice(9) : txt;
+  };
+  var next = function(){ if (list.length) { idx = (idx + 1) % list.length; print(list[idx]); } };
+
+  /* ---- Mouvement réduit : statique, le bouton change le recto sans rotation ---- */
+  if (reduce) {
+    scene.classList.add("is-presented");
+    var swap = function(){ next(); announce(false); };
+    if (btn) btn.addEventListener("click", swap);
+    scene.addEventListener("click", swap);
+    return;
+  }
+
+  /* ---- Moteur : un seul rAF, actif seulement à l'écran et quand quelque chose bouge ---- */
+  var SPEED = 360 / 13;                 // degrés par seconde : un tour en 13 s
+  var STEP = 1000 / 60;
+  var angle = -14, vel = 0, target = 0, spin = 0, mode = "auto";
+  var tiltX = 0, tiltY = 0, tX = 0, tY = 0;
+  var onScreen = false, hidden = document.hidden, raf = 0, last = 0, acc = 0;
+  var frontOn = true, idleT = 0, hold = false, scrolling = false, scrollT = 0;
+  var drag = null, flipAnnounce = false, lastOut = "";
+  var rad = Math.PI / 180;
+
+  function wake(){ if (!raf && onScreen && !hidden) { last = 0; raf = requestAnimationFrame(lcTkFrame); } }
+  function sleep(){ if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+  function resumeLater(){
+    clearTimeout(idleT);
+    idleT = setTimeout(function(){ if (!hold && !drag && mode === "rest") { mode = "auto"; spin = 0; wake(); } }, 2500);
+  }
+  function settle(){
+    angle = target; vel = 0; mode = "rest";
+    var faceFront = Math.cos(angle * rad) > 0;
+    if (flipAnnounce) { flipAnnounce = false; announce(!faceFront); }
+    if (!hold) resumeLater();
+  }
+  function step(){
+    if (mode === "auto") { spin += (SPEED - spin) * .025; vel = spin / 60; angle += vel; }
+    else if (mode === "inertia") {
+      angle += vel; vel *= .95;
+      if (Math.abs(vel) < .8) { target = Math.round(angle / 180) * 180; mode = "spring"; }
+    } else if (mode === "spring") {
+      vel += (target - angle) * .06; vel *= .78; angle += vel;
+      if (Math.abs(target - angle) < .05 && Math.abs(vel) < .03) settle();
+    }
+    tiltX += (tX - tiltX) * .08; tiltY += (tY - tiltY) * .08;
+    // réimpression : le recto vient de se détourner, il reviendra avec l'événement suivant
+    var c = Math.cos((angle + tiltY) * rad);
+    if (frontOn && c < -.02) { frontOn = false; next(); }
+    else if (!frontOn && c > .02) frontOn = true;
+  }
+  function render(){
+    var a = angle + tiltY;
+    var rel = ((a + 90) % 180 + 180) % 180 - 90;      // angle par rapport à la face visible
+    var out = "rotateX(" + (8 + tiltX).toFixed(2) + "deg) rotateY(" + a.toFixed(2) + "deg)";
+    if (out === lastOut) return;
+    lastOut = out;
+    rig.style.transform = out;
+    var gx = (30 - rel * 1.8).toFixed(1) + "% 0";            // le reflet balaie une fois par demi-tour
+    gl[0].style.backgroundPosition = gx; if (gl[1]) gl[1].style.backgroundPosition = gx;
+    shadow.style.setProperty("--lc-sh", (.35 + .65 * Math.abs(Math.cos(angle * rad))).toFixed(3));
+  }
+  function lcTkFrame(t){
+    raf = 0;
+    var dt = last ? Math.min(t - last, 100) : STEP; last = t; acc += dt;
+    if (scrolling && !fine) {
+      var r = scene.getBoundingClientRect();
+      tY = Math.max(-16, Math.min(16, (innerHeight / 2 - (r.top + r.height / 2)) / innerHeight * 28));
+    }
+    var n = 0; while (acc >= STEP && n < 6) { step(); acc -= STEP; n++; }
+    if (n === 6) acc = 0;
+    render();
+    var busy = mode !== "rest" || drag || scrolling || Math.abs(tX - tiltX) > .02 || Math.abs(tY - tiltY) > .02;
+    if (busy) raf = requestAnimationFrame(lcTkFrame);
+  }
+
+  /* ---- Retourner : clic, tap ou bouton, toujours dans le même sens ---- */
+  function flip(){
+    clearTimeout(idleT);
+    if (mode === "auto") vel = spin / 60;
+    target = (mode === "spring" && target > angle - 1) ? target + 180 : Math.round(angle / 180) * 180 + 180;
+    mode = "spring"; spin = 0; flipAnnounce = true;
+    wake();
+  }
+  if (btn) btn.addEventListener("click", flip);
+
+  /* ---- Glisser / lancer ---- */
+  scene.addEventListener("pointerdown", function(e){
+    if (e.button > 0) return;
+    drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, t: e.timeStamp, on: false, travel: 0 };
+    if (e.pointerType === "mouse") { try { scene.setPointerCapture(e.pointerId); } catch (_) {} }
+  });
+  scene.addEventListener("pointermove", function(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x, dtm = Math.max(1, e.timeStamp - drag.t);
+    drag.travel = Math.max(drag.travel, Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0));
+    drag.x = e.clientX; drag.t = e.timeStamp;
+    if (!drag.on) {
+      if (Math.abs(e.clientX - drag.x0) < 6) return;
+      drag.on = true; clearTimeout(idleT); mode = "drag"; spin = 0; vel = 0;
+      scene.classList.add("is-drag");
+      try { scene.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+    angle += dx * .45;
+    vel = vel * .5 + (dx * .45 / dtm * STEP) * .5;
+    wake();
+  });
+  function release(e, cancelled){
+    if (!drag || e.pointerId !== drag.id) return;
+    var d = drag; drag = null; scene.classList.remove("is-drag");
+    if (d.on) {
+      if (e.timeStamp - d.t > 90) vel = 0;   // relâché sans élan
+      mode = "inertia"; wake();
+    } else if (!cancelled && d.travel < 6) flip();
+  }
+  scene.addEventListener("pointerup", function(e){ release(e, false); });
+  scene.addEventListener("pointercancel", function(e){ release(e, true); });
+
+  /* ---- Ordinateur : le billet s'oriente vers le curseur, et se pose au survol pour être lu ---- */
+  if (fine && igrid) {
+    igrid.addEventListener("pointermove", function(e){
+      if (e.pointerType !== "mouse") return;
+      var r = scene.getBoundingClientRect();
+      var nx = (e.clientX - (r.left + r.width / 2)) / (r.width * .9);
+      var ny = (e.clientY - (r.top + r.height / 2)) / (r.height * 1.1);
+      tY = Math.max(-1, Math.min(1, nx)) * 14; tX = -Math.max(-1, Math.min(1, ny)) * 10;
+      wake();
+    }, { passive: true });
+    igrid.addEventListener("pointerleave", function(){ tX = tY = 0; wake(); });
+    scene.addEventListener("pointerenter", function(e){
+      if (e.pointerType !== "mouse") return;
+      hold = true; clearTimeout(idleT);
+      // au survol, il se pose recto visible (en revenant un peu, ou en finissant son tour) pour être lu
+      if (mode === "auto") { vel = spin / 60; spin = 0; target = Math.ceil((angle - 60) / 360) * 360; mode = "spring"; wake(); }
+    });
+    scene.addEventListener("pointerleave", function(e){
+      if (e.pointerType !== "mouse") return;
+      hold = false; if (mode === "rest") resumeLater();
+    });
+  } else {
+    // tactile : l'angle suit aussi le défilement, le billet montre sa tranche en passant
+    addEventListener("scroll", function(){
+      if (!onScreen) return;
+      scrolling = true; clearTimeout(scrollT);
+      scrollT = setTimeout(function(){ scrolling = false; }, 160);
+      wake();
+    }, { passive: true });
+  }
+
+  /* ---- Entrée, visibilité, onglet ---- */
+  render();
+  if (!("IntersectionObserver" in window)) { scene.classList.add("is-presented"); onScreen = true; wake(); return; }
+  var ioIn = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting) { scene.classList.add("is-presented"); ioIn.disconnect(); }
+  }, { threshold: .35 });
+  ioIn.observe(scene);
+  new IntersectionObserver(function(en){
+    onScreen = en[0].isIntersecting;
+    scene.classList.toggle("is-off", !onScreen);
+    if (onScreen) wake(); else sleep();
+  }, { rootMargin: "60px 0px" }).observe(scene);
+  document.addEventListener("visibilitychange", function(){
+    hidden = document.hidden;
+    scene.classList.toggle("is-off", hidden || !onScreen);
+    if (hidden) sleep(); else wake();
+  });
+})();
+</script>
 
 <!-- ---- -->
 
