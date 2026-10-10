@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#050507">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
 <meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
@@ -11,33 +12,40 @@
 <style>
 /* Layout : billetterie. Chaque événement est un billet (souche perforée, tribune / rang / place). */
 :root{
-  --bg:#f3f4f7;
-  --surface:#ffffff;
-  --ink:#10162a;
-  --muted:#5b6378;
-  --line:#dde0e8;
-  --accent:#2340e6;       /* bleu projecteur */
-  --accent-ink:#ffffff;
-  --gold:#b88a1e;         /* carré or / premium */
-  --wa:#1f9d55;           /* WhatsApp */
-  --stub:#e9ecf3;
+  /* Fond sombre style billetterie premium (noir profond + halos lumineux + grain) */
+  --bg:#050507;
+  --surface:#101116;
+  --ink:#f2f3f7;
+  --muted:#9a9fb0;
+  --line:#22242e;
+  --accent:#6d84ff;       /* bleu projecteur */
+  --accent-ink:#050507;
+  --gold:#e0b44a;         /* carré or / premium */
+  --wa:#33c172;           /* WhatsApp */
+  --stub:#17181f;
+  --glow-1:rgba(80,104,255,.30);
+  --glow-2:rgba(150,70,255,.22);
   --font-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --radius:14px;
   --max:1120px;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b0f1c;--surface:#141a2c;--ink:#eef0f7;--muted:#9aa2b8;--line:#262e45;
-  --accent:#6d84ff;--accent-ink:#0b0f1c;--gold:#e0b44a;--wa:#33c172;--stub:#1b2238;color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0b0f1c;--surface:#141a2c;--ink:#eef0f7;--muted:#9aa2b8;--line:#262e45;
-  --accent:#6d84ff;--accent-ink:#0b0f1c;--gold:#e0b44a;--wa:#33c172;--stub:#1b2238;color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+/* Fond : halos de lumière fixes + grain léger, derrière tout le contenu */
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(60% 50% at 15% 0%,var(--glow-1),transparent 70%),
+    radial-gradient(50% 45% at 90% 10%,var(--glow-2),transparent 70%),
+    radial-gradient(70% 60% at 50% 110%,rgba(80,104,255,.10),transparent 70%),
+    var(--bg)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
@@ -262,7 +270,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       </div>
       <div class="legend">
         <span><i class="dot" style="background:#c2410c"></i>Risque de rupture élevé</span>
-        <span><i class="dot" style="background:#10162a"></i>Forte demande</span>
+        <span><i class="dot" style="background:var(--accent)"></i>Forte demande</span>
       </div>
       <div class="events" id="events"></div>
       <div class="cta-band">
