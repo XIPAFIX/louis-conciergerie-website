@@ -563,6 +563,13 @@ grid.innerHTML = CATS.map((c, i) => {
   </button>${credit}</div>`;
 }).join("");
 
+// Message WhatsApp pré-rempli : Louis voit tout de suite pour quel événement le client écrit
+const waEventMsg = e => "Bonjour Louis, je souhaite des places pour :\n" +
+  "🎟️ " + e.title + " (" + e.cat + ")\n" +
+  "📅 " + when(e) + "\n" +
+  "📍 " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") + "\n" +
+  "Nombre de places : ";
+
 function rowHTML(e) {
   const d = parse(e.date), label = evLabel(e);
   const dateBox = e.dateLabel ? `<span class="d" style="font-size:18px">${e.dateLabel[0]}</span><span class="m">${e.dateLabel[1]}</span>`
@@ -576,7 +583,7 @@ function rowHTML(e) {
     </div>
     <span class="pill h${e.heat}">${HEAT[e.heat]}</span>
     <div class="row-actions">
-      <a class="btn btn-wa" href="${waLink("Bonjour Louis, je cherche des places pour " + label + ". Combien pour ")}" target="_blank" rel="noopener">Écrivez-moi</a>
+      <a class="btn btn-wa" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Écrivez-moi</a>
       <a class="btn btn-ghost" href="#devis" data-event="${esc(label)}">Formulaire</a>
     </div>
   </article>`;
