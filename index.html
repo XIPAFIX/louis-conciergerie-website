@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="theme-color" content="#070605">
+<script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
 <meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
@@ -33,7 +34,7 @@
   --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --radius:14px;
-  --max:1120px;
+  --max:1240px;
   color-scheme:dark;
 }
 
@@ -57,6 +58,7 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
 .wrap{max-width:var(--max);margin:0 auto;padding-inline:20px}
 h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0;text-wrap:balance}
+h1 em,h2 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-right:.04em}
 .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 15px/1 var(--font-body);padding:15px 22px;border-radius:999px;border:2px solid transparent;text-decoration:none;cursor:pointer;transition:transform .15s ease, background .15s ease}
 .btn:hover{transform:translateY(-1px)}
@@ -67,30 +69,96 @@ h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;letter-spacing
 .btn-wa{box-shadow:0 0 0 1px rgba(224,180,74,.5),0 8px 24px -10px rgba(37,184,101,.6)}
 .btn svg{width:20px;height:20px;flex:none}
 
-/* Header */
-header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(180deg,#14060a,#0d0406);border-bottom:2px solid transparent;border-image:var(--gold-grad) 1}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+/* Header : transparent sur l'accueil, fond sombre flouté dès qu'on défile (façon agence) */
+header.site{position:fixed;top:0;left:0;right:0;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .35s ease,box-shadow .35s ease}
+header.site::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold-grad);opacity:0;transition:opacity .35s ease}
+header.site.scrolled{background:rgba(14,5,7,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 12px 30px -20px rgba(0,0,0,.9)}
+header.site.scrolled::after{opacity:1}
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:20px;transition:padding .35s ease}
+header.site.scrolled .bar{padding-block:11px}
+.bar-end{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;justify-self:start}
 .logo-mark{width:38px;height:38px;border-radius:10px;background:var(--gold-grad);color:var(--accent-ink);box-shadow:0 0 0 1px rgba(255,241,184,.4);display:grid;place-items:center;font:900 22px/1 var(--font-display)}
 .logo-text{font:800 22px/1 var(--font-display);text-transform:uppercase;letter-spacing:.02em}
 .logo-text small{display:block;font:500 10px/1.4 var(--font-mono);letter-spacing:.2em;color:var(--muted)}
-nav.links{display:flex;gap:22px;font-weight:600;font-size:14px}
-nav.links a{text-decoration:none;color:var(--muted)}
+nav.links{display:flex;gap:34px;font:500 12px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase}
+nav.links a{text-decoration:none;color:#e6d6b8}
 nav.links a:hover{color:var(--accent)}
 .bar .btn{padding:11px 16px;font-size:14px}
-@media (max-width:820px){nav.links{display:none}}
+.burger{display:none;position:relative;width:46px;height:46px;flex:none;border-radius:50%;border:1px solid rgba(224,180,74,.55);background:rgba(20,6,9,.55);color:var(--ink);cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:transform .2s ease,border-color .2s ease}
+.burger:hover{border-color:#f0cf6e;transform:translateY(-2px)}
+.burger:active{transform:scale(.92)}
+.burger span{position:absolute;left:14px;right:14px;height:2px;border-radius:2px;background:currentColor;transition:transform .3s ease,top .3s ease}
+.burger span:nth-child(1){top:18px}
+.burger span:nth-child(2){top:26px}
+.burger[aria-expanded="true"] span:nth-child(1){top:22px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){top:22px;transform:rotate(-45deg)}
+@media (max-width:1020px){nav.links{display:none}.burger{display:block}.bar{grid-template-columns:1fr auto}}
 @media (max-width:420px){.bar .btn span{display:none}.bar .btn{padding:11px}}
+/* Menu plein écran (mobile) */
+.menu{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:110px 28px 48px;
+  background:radial-gradient(90% 60% at 50% 0%,rgba(194,32,54,.35),transparent 70%),linear-gradient(180deg,#160609,#0b0304);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+.menu.open{opacity:1;visibility:visible}
+.menu nav{display:grid;gap:4px}
+.menu nav a{font:900 clamp(40px,11vw,64px)/1.08 var(--font-display);text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease,color .2s ease}
+.menu nav a:hover{color:var(--accent)}
+.menu.open nav a{opacity:1;transform:none}
+.menu nav a:nth-child(2){transition-delay:.05s}.menu nav a:nth-child(3){transition-delay:.1s}.menu nav a:nth-child(4){transition-delay:.15s}.menu nav a:nth-child(5){transition-delay:.2s}
+.menu .btn{align-self:flex-start}
+@media (min-width:1021px){.menu{display:none}}
 
-/* Hero */
-.hero{padding-block:56px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
-.hero > *{min-width:0}
-.hero h1{font-size:clamp(52px,9vw,104px);font-weight:900}
-.hero h1 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-right:.04em}
-.hero p.lead{font-size:clamp(17px,2vw,19px);color:var(--muted);max-width:34em;margin:22px 0 28px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-.cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+/* Accueil plein écran, texte centré */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding:130px 0 120px}
+.hero-in{display:grid;justify-items:center}
+.hero h1{font-size:clamp(50px,8.6vw,124px);font-weight:900;line-height:.92;margin-top:22px}
+.hero h1 .l{display:block;width:fit-content;margin-inline:auto}
+.hero p.lead{font-size:clamp(17px,1.7vw,20px);color:var(--muted);max-width:36em;margin:26px auto 34px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.hero-foot{position:absolute;left:0;right:0;bottom:28px}
+.hero-foot .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:16px;font:500 11px/1.4 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero-foot .wrap > span:last-child{text-align:right}
+.scroll-cue{display:grid;justify-items:center;gap:10px;text-decoration:none;color:#e6d6b8}
+.scroll-cue i{position:relative;width:1px;height:46px;background:rgba(224,180,74,.35);overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{to{top:100%}}
+.cats{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(224,180,74,.45);background:linear-gradient(180deg,#3a0e16,#22080d);color:#ecd9b0}
-@media (max-width:860px){.hero{grid-template-columns:1fr;gap:36px;padding-block:36px 24px}}
+@media (max-width:760px){.hero{padding:120px 0 130px}.hero-foot .wrap{grid-template-columns:1fr}.hero-foot .wrap > span{display:none}}
+
+/* Bandeau défilant des événements */
+.marquee{position:relative;overflow:hidden;border-block:1px solid var(--line);background:linear-gradient(90deg,rgba(20,6,9,.92),rgba(46,12,19,.7),rgba(20,6,9,.92));padding-block:20px}
+.marquee-track{display:flex;width:max-content;animation:marquee var(--dur,80s) linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-group{display:flex;flex:none}
+.marquee-item{display:flex;align-items:center;gap:44px;padding-right:44px;white-space:nowrap;font:900 clamp(28px,3.4vw,46px)/1 var(--font-display);text-transform:uppercase;letter-spacing:.02em;transition:color .2s ease}
+.marquee-item:nth-child(even){color:transparent;-webkit-text-stroke:1px rgba(232,192,99,.85)}
+.marquee-item::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--gold-grad);flex:none}
+.marquee-item:hover{color:var(--accent);-webkit-text-stroke:0}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* La conciergerie : texte + billet */
+.intro-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.intro-grid > *{min-width:0}
+.intro-text h2{font-size:clamp(42px,5.4vw,78px);margin:16px 0 24px}
+.intro-text > p{color:var(--muted);font-size:clamp(17px,1.6vw,19px);max-width:34em;margin:0 0 30px}
+.points{list-style:none;margin:0 0 34px;padding:0;counter-reset:pt}
+.points li{counter-increment:pt;display:grid;grid-template-columns:48px 1fr;gap:2px 14px;padding:16px 0;border-top:1px solid var(--line);transition:background .2s ease,padding .2s ease}
+.points li:last-child{border-bottom:1px solid var(--line)}
+.points li::before{content:"0" counter(pt);grid-row:span 2;font:500 12px/2 var(--font-mono);letter-spacing:.1em;color:var(--gold)}
+.points li:hover{background:rgba(224,180,74,.05);padding-left:8px}
+.points b{font:800 24px/1.1 var(--font-display);text-transform:uppercase;letter-spacing:.01em}
+.points span{color:var(--muted);font-size:15px}
+.intro-visual{width:100%;max-width:520px;justify-self:center}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr;gap:28px}.intro-visual{order:-1;max-width:460px}}
+
+/* Chiffres */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(56px,8vw,96px);border-block:1px solid var(--line)}
+.stat{padding:30px 28px;display:grid;gap:8px;align-content:start;transition:background .2s ease}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat:hover{background:rgba(224,180,74,.05)}
+.stat b{font:900 clamp(64px,8vw,116px)/.9 var(--font-display);background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-top:.06em;font-variant-numeric:tabular-nums}
+.stat span{font:500 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:#e6d6b8;max-width:22em}
+@media (max-width:760px){.stats{grid-template-columns:1fr}.stat + .stat{border-left:0;border-top:1px solid var(--line)}.stat{padding:22px 4px;grid-template-columns:auto 1fr;align-items:center;gap:18px}.stat b{min-width:1.2em}}
 
 /* Billet (hero) : billet luxe doré qui tourne sur lui-même */
 .ticket-scene{perspective:1400px;padding:20px 0 40px;position:relative}
@@ -134,18 +202,26 @@ nav.links a:hover{color:var(--accent)}
 .back-tag{font:500 11px/1.4 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:#cbb98c}
 .back-no{font:500 11px/1 var(--font-mono);letter-spacing:.3em;color:#8d846f}
 
-section{padding-block:64px}
-.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
-.sec-head h2{font-size:clamp(40px,6vw,64px);font-weight:900}
-.sec-head p{color:var(--muted);max-width:30em;margin:8px 0 0}
+section{padding-block:clamp(80px,10vw,136px)}
+section[id]{scroll-margin-top:40px}
+.idx{display:inline-block;margin-right:14px;padding:4px 8px;border:1px solid rgba(224,180,74,.45);border-radius:999px;color:#f0dca6;letter-spacing:.1em}
+.sec-head{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:20px 56px;margin-bottom:48px;padding-bottom:30px;border-bottom:1px solid var(--line)}
+.sec-head > *{min-width:0}
+.sec-head h2{font-size:clamp(44px,7vw,100px);font-weight:900;margin-top:16px}
+.sec-head .eyebrow{margin:0}
+.sec-head > p{color:var(--muted);max-width:32em;margin:0;justify-self:end;font-size:16px}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr;margin-bottom:32px}.sec-head > p{justify-self:start}}
 
-/* Étapes */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
-.step{background:var(--plush);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 20px 40px -24px rgba(0,0,0,.7)}
-.step .n{font:900 56px/1 var(--font-display);background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;padding-top:.06em}
-.step h3{font-size:26px;margin:10px 0 8px}
-.step p{margin:0;color:var(--muted);font-size:15px}
-@media (max-width:760px){.steps{grid-template-columns:1fr}}
+/* Étapes : colonnes ouvertes, grand numéro qui se remplit d'or au survol */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.step{position:relative;padding-top:26px;border-top:1px solid var(--line)}
+.step::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:2px;background:var(--gold-grad);transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.step:hover::before{transform:scaleX(1)}
+.step .n{font:900 clamp(84px,10vw,140px)/.9 var(--font-display);color:transparent;-webkit-text-stroke:1.5px rgba(232,192,99,.8);background:var(--gold-grad) no-repeat 0 100%/100% 0%;-webkit-background-clip:text;background-clip:text;display:inline-block;padding-top:.06em;transition:background-size .7s cubic-bezier(.2,.7,.2,1),transform .3s ease}
+.step:hover .n{background-size:100% 100%;transform:translateY(-4px)}
+.step h3{font-size:clamp(26px,2.6vw,34px);margin:18px 0 10px}
+.step p{margin:0;color:var(--muted);font-size:16px;max-width:24em}
+@media (max-width:760px){.steps{grid-template-columns:1fr;gap:28px}.step{display:grid;grid-template-columns:auto 1fr;gap:0 20px;align-items:start}.step .n{grid-row:span 2;font-size:84px}.step h3{margin-top:6px}}
 
 /* À venir : cartes billets */
 [hidden]{display:none!important}
@@ -167,6 +243,7 @@ section{padding-block:64px}
 .cat > svg,.cat .photos{position:absolute;inset:0;width:100%;height:100%}
 .cat .photos img{object-position:50% 20%}
 .cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,4,5,.05) 30%,rgba(11,4,5,.6) 62%,rgba(11,4,5,.95))}
+.cat-num{position:absolute;left:14px;top:12px;z-index:1;font:500 12px/1 var(--font-mono);letter-spacing:.14em;color:#f5e6c0;padding:6px 8px;border:1px solid rgba(245,215,122,.5);border-radius:999px;background:rgba(11,4,5,.45)}
 .cat-body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:18px;display:grid;gap:4px}
 .cat-name{font:900 clamp(30px,3.4vw,42px)/.95 var(--font-display);text-transform:uppercase;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-top:.1em}
 .cat-count{font:500 12px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#ecd9b0}
@@ -202,30 +279,36 @@ section{padding-block:64px}
   .row .pill{grid-column:2;justify-self:start}
   .row-actions{grid-column:1 / -1}.row-actions .btn{flex:1}
 }
-.cta-band{margin-top:28px;padding:28px;border-radius:var(--radius);background:radial-gradient(120% 140% at 30% 0%,#b0182c 0%,#7a0e1c 45%,#3d050c 100%);color:var(--ink);border:1px solid rgba(245,215,122,.6);box-shadow:inset 0 0 0 4px rgba(0,0,0,.25),0 24px 50px -24px rgba(0,0,0,.8);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
-.cta-band h3{font-size:clamp(26px,4vw,36px)}
-.cta-band p{margin:4px 0 0;opacity:.85;font-size:15px}
-.cta-band h3{text-shadow:0 2px 12px rgba(0,0,0,.6)}
-@media (max-width:980px){.events{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:620px){.events{grid-template-columns:1fr}}
+/* Grand bandeau d'appel, pleine largeur */
+.cta-big{position:relative;text-align:center;overflow:hidden;background:radial-gradient(70% 130% at 50% 0%,#b0182c 0%,#7a0e1c 42%,#3d050c 78%,#1c0508 100%);border-block:1px solid rgba(245,215,122,.6)}
+.cta-big::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 60% at 50% 110%,rgba(245,200,105,.25),transparent 70%);pointer-events:none}
+.cta-big .wrap{position:relative;display:grid;justify-items:center}
+.cta-big h2{font-size:clamp(44px,8vw,116px);max-width:12ch;margin:18px 0 18px;text-shadow:0 4px 24px rgba(0,0,0,.45)}
+.cta-big p{margin:0 0 30px;font-size:clamp(17px,1.7vw,20px);color:#f0e2c8}
+.cta-big .eyebrow{color:#f5d77a}
 
-/* Passés : galerie */
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.shot{margin:0;background:var(--plush);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.ph{aspect-ratio:4/3;max-width:100%;position:relative;overflow:hidden}
-.ph img{width:100%;height:100%;object-fit:cover}
-.ph .fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff;font:500 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
+/* Passés : galerie en mosaïque, légende sur la photo */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(210px,21vw,280px);gap:14px}
+.shot{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14070a}
+.shot:first-child{grid-column:span 2;grid-row:span 2}
+.ph{position:absolute;inset:0;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.shot:hover .ph img{transform:scale(1.06)}
+.ph .credit{top:8px;bottom:auto;z-index:2}
+.ph .fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;padding:14px;color:#fff;font:500 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
 .ph.tennis .fallback{background:linear-gradient(135deg,#c2562b,#e08a4a 55%,#f1c27a)}
 .ph.foot .fallback{background:linear-gradient(135deg,#0f5a32,#1f8a4c 55%,#58b86f)}
 .ph.concert .fallback{background:linear-gradient(135deg,#1b1450,#4b2bb3 55%,#d04ab0)}
 .ph.autre .fallback{background:linear-gradient(135deg,#1c2a4a,#2f4d8a 55%,#6d8fd0)}
 .ph .fallback::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 12px,transparent 12px 24px)}
 .ph .fallback span{position:relative}
-.shot figcaption{padding:14px 16px 16px}
-.shot figcaption b{display:block;font:800 22px/1.05 var(--font-display);text-transform:uppercase}
-.shot figcaption small{color:var(--muted);font-size:13px}
-@media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.gallery{grid-template-columns:1fr}}
+.shot figcaption{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:70px 18px 16px;background:linear-gradient(180deg,transparent,rgba(11,4,5,.6) 40%,rgba(11,4,5,.94))}
+.shot figcaption b{display:block;font:800 26px/1 var(--font-display);text-transform:uppercase}
+.shot:first-child figcaption{padding:90px 26px 24px}
+.shot:first-child figcaption b{font-size:clamp(34px,4vw,56px)}
+.shot figcaption small{color:#e0d0b4;font-size:13px}
+@media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px}.shot:first-child{grid-row:span 1}.shot:last-child{grid-column:span 2}}
+@media (max-width:520px){.gallery{grid-template-columns:1fr;grid-auto-rows:240px}.shot:first-child,.shot:last-child{grid-column:auto}}
 
 /* Formulaire */
 .quote{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
@@ -250,8 +333,21 @@ textarea{min-height:110px;resize:vertical}
 @media (max-width:860px){.quote{grid-template-columns:1fr}}
 @media (max-width:560px){form.card{grid-template-columns:1fr;padding:20px}}
 
-footer{border-top:2px solid transparent;border-image:var(--gold-grad) 1;padding-block:36px 100px;color:var(--muted);font-size:14px;background:linear-gradient(180deg,#1a0609,#0b0304)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+/* Pied de page : colonnes + grand nom en filigrane */
+footer{position:relative;overflow:hidden;border-top:1px solid transparent;border-image:var(--gold-grad) 1;padding-block:76px 30px;color:var(--muted);font-size:14px;background:linear-gradient(180deg,#1a0609,#0b0304)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+.foot-grid > *{min-width:0}
+.foot-grid .logo{margin-bottom:16px}
+.foot-grid p{margin:0 0 20px;max-width:26em}
+.foot-grid h4{font:500 12px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:6px 0 18px}
+.foot-links{display:grid;gap:10px;justify-items:start}
+.foot-links a{text-decoration:none;color:#e6d6b8;transition:color .2s ease,transform .2s ease}
+.foot-links a:hover{color:var(--accent);transform:translateX(4px)}
+.foot-word{margin:64px 0 26px;text-align:center;white-space:nowrap;font:900 clamp(38px,10.2vw,148px)/.85 var(--font-display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px rgba(232,192,99,.4);transition:-webkit-text-stroke-color .4s ease}
+.foot-word:hover{-webkit-text-stroke-color:rgba(232,192,99,.9)}
+.foot-bottom{position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;padding-top:20px;font-size:13px}
+.foot-bottom::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--line)}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid > :first-child{grid-column:1 / -1}footer{padding-bottom:100px}}
 
 /* Petites animations sur tous les boutons, badges et pastilles (même ceux qui ne sont pas cliquables) */
 .btn{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,filter .18s ease}
@@ -264,10 +360,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 .chip:hover,.pill:hover,.tag:hover,.example:hover,.legend span:hover{transform:translateY(-2px);border-color:#f0cf6e;box-shadow:0 6px 16px -6px rgba(224,180,74,.55)}
 .vip:hover,.row-date:hover,.logo:hover .logo-mark{transform:translateY(-2px) rotate(-3deg);filter:brightness(1.1);box-shadow:0 6px 16px -6px rgba(224,180,74,.7)}
 .chip:active,.pill:active,.tag:active,.example:active,.legend span:active,.vip:active,.row-date:active{transform:scale(.94)}
-.step,.shot,.contact-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.step:hover,.shot:hover,.contact-card:hover{transform:translateY(-4px);border-color:rgba(224,180,74,.6);box-shadow:0 26px 44px -22px rgba(0,0,0,.85),0 0 0 1px rgba(224,180,74,.2)}
-.step:hover .n{transform:scale(1.12) rotate(-4deg)}
+.shot,.contact-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.shot:hover,.contact-card:hover{transform:translateY(-4px);border-color:rgba(224,180,74,.6);box-shadow:0 26px 44px -22px rgba(0,0,0,.85),0 0 0 1px rgba(224,180,74,.2)}
 .step:active,.shot:active,.contact-card:active{transform:scale(.98)}
+.cat .photos img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.cat:hover .photos img{transform:scale(1.06)}
 .row{transition:background .2s ease,transform .2s ease;border-radius:10px}
 .row:hover{background:rgba(224,180,74,.06);transform:translateX(4px)}
 nav.links a{position:relative;transition:color .2s ease}
@@ -278,6 +375,11 @@ nav.links a:hover::after{transform:scaleX(1)}
 .filters button,.cat{-webkit-tap-highlight-color:transparent}
 .cat:active{transform:scale(.97)}
 
+/* Apparition des blocs au défilement */
+.js .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.js .rv{opacity:1;transform:none}}
+
 /* Bouton WhatsApp flottant */
 .wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.45);transition:transform .15s ease}
 .wa-float:hover{transform:scale(1.06)}
@@ -286,38 +388,74 @@ nav.links a:hover::after{transform:scaleX(1)}
 </head>
 <body>
 <canvas id="bubbles" aria-hidden="true"></canvas>
-<header class="site">
+<header class="site" id="site-header">
   <div class="wrap bar">
     <a class="logo" href="#top" aria-label="Louis Conciergerie, accueil">
       <span class="logo-mark">L</span>
       <span class="logo-text">Louis<small>Conciergerie</small></span>
     </a>
     <nav class="links" aria-label="Navigation principale">
+      <a href="#conciergerie">La conciergerie</a>
       <a href="#a-venir">À venir</a>
-      <a href="#passes">Événements passés</a>
       <a href="#comment">Comment ça marche</a>
-      <a href="#devis">Demande de prix</a>
+      <a href="#passes">Événements passés</a>
+      <a href="#devis">Contact</a>
     </nav>
-    <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4.9 2.9.8 3.4.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+    <div class="bar-end">
+      <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4.9 2.9.8 3.4.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+      <button class="burger" type="button" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <a href="#conciergerie">La conciergerie</a>
+    <a href="#a-venir">À venir</a>
+    <a href="#comment">Comment ça marche</a>
+    <a href="#passes">Événements passés</a>
+    <a href="#devis">Contact</a>
+  </nav>
+  <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrire sur WhatsApp</a>
+</div>
+
 <main id="top">
-  <div class="wrap hero">
-    <div>
-      <p class="eyebrow">Billetterie privée · Sport &amp; concerts</p>
-      <h1>Les meilleures places, <em>sans chercher.</em></h1>
-      <p class="lead">Tennis, football, grands concerts : dites-nous quel événement vous intéresse, on vous rappelle avec un prix et on s'occupe de tout jusqu'à la remise de vos billets.</p>
-      <div class="cta">
+  <section class="hero">
+    <div class="wrap hero-in">
+      <p class="eyebrow rv">Billetterie privée · Sport &amp; concerts</p>
+      <h1 class="rv" style="--d:.1s"><span class="l">Les meilleures places,</span> <em class="l">sans chercher.</em></h1>
+      <p class="lead rv" style="--d:.2s">Tennis, football, grands concerts : dites-nous quel événement vous intéresse, on vous rappelle avec un prix et on s'occupe de tout jusqu'à la remise de vos billets.</p>
+      <div class="cta rv" style="--d:.3s">
         <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrire sur WhatsApp</a>
-        <a class="btn btn-ghost" href="#devis">Demander un prix</a>
-      </div>
-      <div class="cats" aria-label="Types d'événements">
-        <span class="chip">Tennis</span><span class="chip">Football</span><span class="chip">Concerts</span><span class="chip">Rugby &amp; autres sports</span>
+        <a class="btn btn-ghost" href="#a-venir">Voir les événements</a>
       </div>
     </div>
-    <div aria-hidden="true">
-      <div class="ticket-scene">
+    <div class="hero-foot">
+      <div class="wrap">
+        <span>Tennis · Football · Rugby · Concerts</span>
+        <a class="scroll-cue" href="#conciergerie"><span class="eyebrow">Découvrir</span><i></i></a>
+        <span>Saison 2026 – 2027</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+  <section id="conciergerie">
+    <div class="wrap intro-grid">
+      <div class="intro-text">
+        <p class="eyebrow rv"><span class="idx">01</span>La conciergerie</p>
+        <h2 class="rv">Un seul contact pour les plus <em>grands événements.</em></h2>
+        <p class="rv">Dites-moi le match, le concert ou la finale que vous voulez voir. Je cherche les places, je vous rappelle avec un prix clair et je m'occupe de tout jusqu'à la remise de vos billets.</p>
+        <ul class="points rv">
+          <li><b>Sport et concerts</b><span>Tennis, football, rugby et les plus grandes tournées.</span></li>
+          <li><b>Un prix clair</b><span>Vous connaissez le prix avant de valider quoi que ce soit.</span></li>
+          <li><b>Vos billets remis</b><span>Une fois validé, vos billets vous sont envoyés.</span></li>
+        </ul>
+        <div class="cta rv" style="justify-content:flex-start"><a class="btn btn-primary" href="#devis">Demander un prix</a></div>
+      </div>
+      <div class="intro-visual rv" style="--d:.15s" aria-hidden="true">
+        <div class="ticket-scene">
         <div class="ticket-spin">
           <div class="ticket">
             <div class="ticket-main">
@@ -343,60 +481,78 @@ nav.links a:hover::after{transform:scaleX(1)}
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <section id="comment">
     <div class="wrap">
-      <div class="sec-head"><div><p class="eyebrow">En trois étapes</p><h2>Comment ça marche</h2></div></div>
-      <div class="steps">
-        <div class="step"><div class="n">1</div><h3>Dites-nous l'événement</h3><p>Par WhatsApp ou avec le formulaire : l'événement, le nombre de places et votre budget.</p></div>
-        <div class="step"><div class="n">2</div><h3>On vous rappelle</h3><p>Louis vous contacte rapidement avec les places disponibles et un prix clair.</p></div>
-        <div class="step"><div class="n">3</div><h3>Vous recevez vos billets</h3><p>Une fois validé, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p></div>
-      </div>
+      <div class="stats" id="stats"></div>
     </div>
   </section>
 
   <section id="a-venir">
     <div class="wrap">
-      <div class="sec-head">
-        <div><p class="eyebrow">Saison 2026 – 2027</p><h2>Événements à venir</h2></div>
+      <div class="sec-head rv">
+        <div><p class="eyebrow"><span class="idx">02</span>Saison 2026 – 2027</p><h2>Événements <em>à venir</em></h2></div>
         <p>Choisissez une catégorie pour voir les dates. Ce sont les matchs et concerts où les places partent vite : écrivez-moi, je vous trouve des places.</p>
       </div>
       <div class="cat-grid" id="cat-grid"></div>
       <div class="cat-panel" id="cat-panel" hidden></div>
-      <div class="cta-band">
-        <div><h3>Votre événement n'est pas dans la liste ?</h3><p>Dites-moi lequel, je vous rappelle avec un prix.</p></div>
-        <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener">Écrivez-moi sur WhatsApp</a>
+    </div>
+  </section>
+
+  <section id="comment">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><p class="eyebrow"><span class="idx">03</span>En trois étapes</p><h2>Comment ça <em>marche</em></h2></div>
+        <p>Vous m'écrivez, je m'occupe du reste. Voici comment ça se passe, de votre premier message jusqu'à vos billets.</p>
+      </div>
+      <div class="steps">
+        <div class="step rv"><div class="n">01</div><h3>Dites-nous l'événement</h3><p>Par WhatsApp ou avec le formulaire : l'événement, le nombre de places et votre budget.</p></div>
+        <div class="step rv" style="--d:.12s"><div class="n">02</div><h3>On vous rappelle</h3><p>Louis vous contacte rapidement avec les places disponibles et un prix clair.</p></div>
+        <div class="step rv" style="--d:.24s"><div class="n">03</div><h3>Vous recevez vos billets</h3><p>Une fois validé, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p></div>
       </div>
     </div>
   </section>
 
   <section id="passes">
     <div class="wrap">
-      <div class="sec-head">
-        <div><p class="eyebrow">Ils y étaient</p><h2>Événements passés</h2></div>
+      <div class="sec-head rv">
+        <div><p class="eyebrow"><span class="idx">04</span>Ils y étaient</p><h2>Événements <em>passés</em></h2></div>
         <p>Quelques événements pour lesquels nos clients ont eu leurs places.</p>
       </div>
       <div class="gallery" id="gallery"></div>
     </div>
   </section>
 
-  <section id="devis">
-    <div class="wrap quote">
-      <aside>
-        <p class="eyebrow">Demande de prix</p>
-        <h2 style="font-size:clamp(40px,6vw,64px)">On vous rappelle</h2>
-        <p>Remplissez le formulaire, Louis reçoit votre demande directement et vous recontacte avec un prix. Vous préférez écrire tout de suite ? Passez par WhatsApp.</p>
-        <div class="contact-card">
-          <span class="eyebrow">WhatsApp</span>
-          <span class="num" id="wa-num"></span>
-          <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener">Ouvrir la conversation</a>
-        </div>
-      </aside>
+  <section class="cta-big">
+    <div class="wrap rv">
+      <p class="eyebrow">Sur demande</p>
+      <h2>Votre événement n'est pas dans la liste&nbsp;?</h2>
+      <p>Dites-moi lequel, je vous rappelle avec un prix.</p>
+      <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrivez-moi sur WhatsApp</a>
+    </div>
+  </section>
 
-      <form class="card" id="quote-form" novalidate>
+  <section id="devis">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><p class="eyebrow"><span class="idx">05</span>Demande de prix</p><h2>On vous <em>rappelle</em></h2></div>
+        <p>Remplissez le formulaire, Louis reçoit votre demande directement et vous recontacte avec un prix. Vous préférez écrire tout de suite&nbsp;? Passez par WhatsApp.</p>
+      </div>
+      <div class="quote">
+        <aside class="rv">
+          <div class="contact-card" style="margin-top:0">
+            <span class="eyebrow">WhatsApp</span>
+            <span class="num js-wa-num"></span>
+            <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener">Ouvrir la conversation</a>
+          </div>
+          <ul class="points" style="margin-top:26px">
+            <li><b>Réponse directe</b><span>Votre demande arrive directement chez Louis.</span></li>
+            <li><b>Sans engagement</b><span>Vous recevez un prix, vous décidez ensuite.</span></li>
+          </ul>
+        </aside>
+
+        <form class="card rv" style="--d:.12s" id="quote-form" novalidate>
         <div class="field"><label for="f-name">Nom et prénom</label><input id="f-name" name="nom" autocomplete="name" required></div>
         <div class="field"><label for="f-phone">Téléphone</label><input id="f-phone" name="telephone" type="tel" autocomplete="tel" required placeholder="06 12 34 56 78"></div>
         <div class="field full"><label for="f-email">Email <span class="opt">(facultatif)</span></label><input id="f-email" name="email" type="email" autocomplete="email"></div>
@@ -412,14 +568,39 @@ nav.links a:hover::after{transform:scaleX(1)}
         </div>
         <div class="notice" id="f-notice" hidden role="status"></div>
       </form>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="#top" aria-label="Louis Conciergerie, accueil"><span class="logo-mark">L</span><span class="logo-text">Louis<small>Conciergerie</small></span></a>
+      <p>Billets pour les plus grands événements sportifs et concerts. Écrivez-moi, je vous trouve des places.</p>
+      <a class="btn btn-wa js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Écrire sur WhatsApp</a>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <nav class="foot-links" aria-label="Pied de page">
+        <a href="#conciergerie">La conciergerie</a>
+        <a href="#a-venir">Événements à venir</a>
+        <a href="#comment">Comment ça marche</a>
+        <a href="#passes">Événements passés</a>
+      </nav>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <div class="foot-links">
+        <a class="js-wa js-wa-num" href="#" target="_blank" rel="noopener"></a>
+        <a href="#devis">Demande de prix</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="foot-word" aria-hidden="true">Louis Conciergerie</div></div>
+  <div class="wrap foot-bottom">
     <span>© <span id="year"></span> Louis Conciergerie</span>
-    <span>Billets pour événements sportifs et concerts</span>
+    <span>Photos : Wikimedia Commons, licences libres</span>
   </div>
 </footer>
 
@@ -480,7 +661,8 @@ const esc = s => String(s).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">"
 const waLink = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || CONFIG.waMessage);
 
 document.querySelectorAll(".js-wa").forEach(a => a.href = waLink());
-document.getElementById("wa-num").textContent = "+" + CONFIG.whatsapp.replace(/^(\d{2})(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5 $6");
+const waNum = "+" + CONFIG.whatsapp.replace(/^(\d{2})(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5 $6");
+document.querySelectorAll(".js-wa-num").forEach(el => el.textContent = waNum);
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // À venir
@@ -552,8 +734,9 @@ grid.innerHTML = CATS.map((c, i) => {
   // photo de couverture : un événement très demandé avec une photo d'artiste ou de joueur
   const cover = c.list.find(e => e.heat === 3 && e.commons && !e.photoNote) || c.list.find(e => e.commons) || c.list[0];
   const ph = photoHTML(cover), credit = (ph.match(/<a class="credit".*?<\/a>/) || [""])[0];
-  return `<div class="cat-wrap"><button type="button" class="cat" data-cat="${c.key}" aria-expanded="false" aria-controls="cat-panel">
+  return `<div class="cat-wrap rv" style="--d:${i * .08}s"><button type="button" class="cat" data-cat="${c.key}" aria-expanded="false" aria-controls="cat-panel">
     ${poster(cover, "c" + i)}${ph.replace(credit, "")}
+    <span class="cat-num">0${i + 1}</span>
     <span class="cat-body">
       <span class="cat-name">${c.name}</span>
       <span class="cat-count">${c.list.length} événement${c.list.length > 1 ? "s" : ""}</span>
@@ -562,6 +745,19 @@ grid.innerHTML = CATS.map((c, i) => {
     </span>
   </button>${credit}</div>`;
 }).join("");
+
+// Bandeau défilant : les événements à venir, en double pour une boucle sans à-coup
+const mq = document.getElementById("marquee");
+const mqGroup = `<div class="marquee-group">${[...new Set(events.map(e => e.title))].map(t => `<span class="marquee-item">${esc(t)}</span>`).join("")}</div>`;
+mq.innerHTML = mqGroup + mqGroup;
+requestAnimationFrame(() => mq.style.setProperty("--dur", Math.round(mq.firstElementChild.offsetWidth / 70) + "s"));
+
+// Chiffres (calculés à partir de la liste des événements)
+document.getElementById("stats").innerHTML = [
+  [events.length, "événements à venir cette saison"],
+  [CATS.length, "univers : " + CATS.map(c => c.name.toLowerCase()).join(", ")],
+  [1, "seul interlocuteur, du premier message à vos billets"]
+].map(([n, label], i) => `<div class="stat rv" style="--d:${i * .1}s"><b data-count="${n}">${n}</b><span>${esc(label)}</span></div>`).join("");
 
 // Message WhatsApp pré-rempli : Louis voit tout de suite pour quel événement le client écrit
 const waEventMsg = e => "Bonjour Louis, je souhaite des places pour :\n" +
@@ -605,7 +801,7 @@ grid.addEventListener("click", ev => {
 });
 
 // Passés
-document.getElementById("gallery").innerHTML = PAST.map(e => `<figure class="shot">
+document.getElementById("gallery").innerHTML = PAST.map((e, i) => `<figure class="shot rv" style="--d:${(i % 3) * .08}s">
   <div class="ph ${catClass(e.cat)}">
     <div class="fallback"><span>${esc(e.cat)}</span></div>
     ${photoHTML(e)}
@@ -649,6 +845,45 @@ form.addEventListener("submit", async ev => {
     show("err", "L'envoi n'a pas abouti. Réessayez, ou écrivez directement sur WhatsApp.");
   } finally { btn.disabled = false; btn.textContent = "Envoyer ma demande"; }
 });
+</script>
+<script>
+/* En-tête qui se fonce au défilement, menu mobile, apparitions et compteurs */
+(function(){
+  var header = document.getElementById("site-header");
+  var onScroll = function(){ header.classList.toggle("scrolled", window.scrollY > 30); };
+  onScroll(); addEventListener("scroll", onScroll, { passive: true });
+
+  var burger = document.getElementById("burger"), menu = document.getElementById("menu");
+  var setMenu = function(open){
+    menu.classList.toggle("open", open);
+    burger.setAttribute("aria-expanded", open);
+    burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+  burger.addEventListener("click", function(){ setMenu(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function(ev){ if (ev.target.closest("a")) setMenu(false); });
+  addEventListener("keydown", function(ev){ if (ev.key === "Escape") setMenu(false); });
+  addEventListener("resize", function(){ if (innerWidth > 1020) setMenu(false); });
+
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var countUp = function(el){
+    var n = +el.dataset.count; if (reduce || !n) return;
+    var t0 = performance.now(), d = 1400;
+    (function tick(t){ var k = Math.min(1, (t - t0) / d); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
+  };
+  var show = function(el){
+    el.classList.add("in");
+    el.querySelectorAll("[data-count]").forEach(countUp);
+    // une fois apparu, le bloc retrouve ses propres animations de survol
+    setTimeout(function(){ el.classList.remove("rv", "in"); el.style.removeProperty("--d"); }, 1300 + (parseFloat(getComputedStyle(el).getPropertyValue("--d")) || 0) * 1000);
+  };
+  var items = document.querySelectorAll(".rv");
+  if (!("IntersectionObserver" in window) || reduce) { items.forEach(function(el){ el.classList.remove("rv"); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting) { io.unobserve(en.target); show(en.target); } });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: .12 });
+  items.forEach(function(el){ io.observe(el); });
+})();
 </script>
 <script>
 /* Bulles de champagne : beaucoup de bulles sur 3 profondeurs, en colonnes comme dans une flûte */
