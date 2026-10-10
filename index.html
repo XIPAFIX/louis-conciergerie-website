@@ -233,17 +233,16 @@ section[id]{scroll-margin-top:40px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
-/* Catégories d'événements */
+/* Catégories d'événements (effets des vitrines : styles « Section 02 » en fin de feuille) */
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .cat-wrap{position:relative;min-width:0}
 .cat-wrap .credit{z-index:2;top:8px;bottom:auto}
-.cat{position:relative;display:block;width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14070a;cursor:pointer;padding:0;color:var(--ink);text-align:left;font:inherit;box-shadow:0 20px 40px -24px rgba(0,0,0,.8);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.cat:hover{transform:translateY(-3px);border-color:rgba(224,180,74,.6)}
+.cat{position:relative;display:block;width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:visible;border:1px solid var(--line);background:#14070a;cursor:pointer;padding:0;color:var(--ink);text-align:left;font:inherit;box-shadow:0 20px 40px -24px rgba(0,0,0,.8);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .3s ease}
+@media (hover:hover) and (pointer:fine){.cat:hover{border-color:rgba(224,180,74,.6)}}
 .cat[aria-expanded="true"]{border:2px solid #f0cf6e;box-shadow:0 0 0 4px rgba(224,180,74,.15),0 20px 40px -20px rgba(224,180,74,.35)}
-.cat > svg,.cat .photos{position:absolute;inset:0;width:100%;height:100%}
+.lc-vt-media > svg,.lc-vt-media .photos{position:absolute;inset:0;width:100%;height:100%}
 .cat .photos img{object-position:50% 20%}
-.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,4,5,.05) 30%,rgba(11,4,5,.6) 62%,rgba(11,4,5,.95))}
-.cat-num{position:absolute;left:14px;top:12px;z-index:1;font:500 12px/1 var(--font-mono);letter-spacing:.14em;color:#f5e6c0;padding:6px 8px;border:1px solid rgba(245,215,122,.5);border-radius:999px;background:rgba(11,4,5,.45)}
+.cat-num{position:absolute;left:14px;top:12px;z-index:1;font:500 12px/1 var(--font-mono);letter-spacing:.14em;color:#f5e6c0;padding:6px 8px;border:1px solid rgba(245,215,122,.5);border-radius:999px;background:rgba(11,4,5,.62)}
 .cat-body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:18px;display:grid;gap:4px}
 .cat-name{font:900 clamp(30px,3.4vw,42px)/.95 var(--font-display);text-transform:uppercase;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-top:.1em}
 .cat-count{font:500 12px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#ecd9b0}
@@ -364,16 +363,15 @@ footer{position:relative;overflow:hidden;border-top:1px solid transparent;border
 .shot:hover,.contact-card:hover{transform:translateY(-4px);border-color:rgba(224,180,74,.6);box-shadow:0 26px 44px -22px rgba(0,0,0,.85),0 0 0 1px rgba(224,180,74,.2)}
 .step:active,.shot:active,.contact-card:active{transform:scale(.98)}
 .cat .photos img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.cat:hover .photos img{transform:scale(1.06)}
 .row{transition:background .2s ease,transform .2s ease;border-radius:10px}
-.row:hover{background:rgba(224,180,74,.06);transform:translateX(4px)}
+@media (hover:hover) and (pointer:fine){.cat:hover .photos img{transform:scale(1.06)}.row:hover{background:rgba(224,180,74,.06);transform:translateX(4px)}}
 nav.links a{position:relative;transition:color .2s ease}
 nav.links a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--gold-grad);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
 nav.links a:hover::after{transform:scaleX(1)}
 .wa-float{transition:transform .18s ease}
 .wa-float:active{transform:scale(.92)}
 .filters button,.cat{-webkit-tap-highlight-color:transparent}
-.cat:active{transform:scale(.97)}
+@media (hover:none),(pointer:coarse){.cat:not(.lc-vt-on):active[aria-expanded]{transform:perspective(700px) rotateX(5deg) scale(.98)}}
 
 /* Apparition des blocs au défilement */
 .js .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
@@ -397,6 +395,69 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:cats] ==== */
+/* Section 02 : vitrines de joaillier. La photo est au fond (.lc-vt-media, seule à rogner les coins),
+   le numéro et les lettres dorées flottent devant comme sur le verre. Au repos la tuile reste plate (texte net). */
+.cat-grid{perspective:1400px}
+.cat-wrap{perspective:900px}
+.lc-vt-media{position:absolute;inset:0;border-radius:calc(var(--radius) - 1px);overflow:hidden;background:#14070a;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.lc-vt-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,4,5,.05) 30%,rgba(11,4,5,.6) 62%,rgba(11,4,5,.95))}
+/* calques pleine taille du numéro et du texte : leur échelle (d-z)/d autour du centre annule le grossissement
+   de la perspective, il ne reste que la parallaxe de l'inclinaison (la même aux quatre coins) */
+.lc-vt-layer{position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.cat-count,.cat-next,.cat-cta{text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.cat:focus-visible{border-radius:var(--radius);transform:perspective(900px) rotateX(-3deg) rotateY(4deg)}
+.cat[aria-expanded="true"]:not(.lc-vt-on){transform:translateY(-6px)}
+.cat[aria-expanded="true"]:focus-visible:not(.lc-vt-on){transform:perspective(900px) translateY(-6px) rotateX(-3deg) rotateY(4deg)}
+.lc-vt-has-open .cat[aria-expanded="false"]:not(.lc-vt-on):not(:focus-visible){opacity:.68}
+@media (hover:hover) and (pointer:fine){.lc-vt-has-open .cat[aria-expanded="false"]:hover{opacity:1}}
+/* Inclinaison sous la souris (classe posée par le script, jamais au toucher) */
+.cat.lc-vt-on{transform-style:preserve-3d;transform:translateY(var(--lc-lift,0px)) rotateX(var(--lc-rx,0deg)) rotateY(var(--lc-ry,0deg));transition:transform .12s linear,border-color .2s ease,box-shadow .2s ease;background:transparent}
+.cat.lc-vt-on:not([aria-expanded="true"]){border-color:rgba(224,180,74,.7);box-shadow:0 34px 50px -28px rgba(0,0,0,.95),0 0 0 1px rgba(224,180,74,.1)}
+.cat.lc-vt-on .lc-vt-media{transform:translateZ(-10px) scale(1.012)}
+.cat.lc-vt-on .lc-vt-l1{transform:translateZ(32px) scale(.9644)}
+.cat.lc-vt-on .lc-vt-l2{transform:translateZ(40px) scale(.9556)}
+.lc-vt-glare{--lc-gx:calc(50% + var(--lc-nx,-.4) * 50%);--lc-gy:calc(50% + var(--lc-ny,-.6) * 50%);position:absolute;inset:0;border-radius:calc(var(--radius) - 1px);pointer-events:none;z-index:2;opacity:0;transition:opacity .3s ease;
+  background:radial-gradient(60% 50% at var(--lc-gx) var(--lc-gy),rgba(255,236,190,.2),transparent 70%),
+    linear-gradient(115deg,transparent calc(var(--lc-gx) - 26%),rgba(255,240,210,.07) var(--lc-gx),transparent calc(var(--lc-gx) + 26%))}
+.cat.lc-vt-on .lc-vt-glare{opacity:1;transform:translateZ(1px)}
+.cat.lc-vt-on:active{transform:translateY(0) rotateX(var(--lc-rx,0deg)) rotateY(var(--lc-ry,0deg)) scale(.985)}
+/* Sortie : tout revient à plat en .6s, puis le script retire .lc-vt-on (échange invisible) */
+.cat.lc-vt-on.lc-vt-back{transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .2s ease,box-shadow .2s ease}
+.cat.lc-vt-back .lc-vt-media,.cat.lc-vt-back .lc-vt-layer{transform:none}
+.cat.lc-vt-back .lc-vt-glare{opacity:0}
+/* Donne : les 4 vitrines arrivent de la gauche comme des cartes, une seule fois */
+.js .lc-vt-deal{transform-origin:0 50%;transform:rotateY(-72deg) translateZ(-40px);opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1) calc(var(--i,0)*90ms),opacity .45s ease calc(var(--i,0)*90ms)}
+.lc-vt-dealt .lc-vt-deal{transform:none;opacity:1}
+
+/* Panneau des dates : titre focusable, légende = pastilles, intertitres de mois, J-n, partage */
+.panel-head h3:focus{outline:none}
+.panel-head h3:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:4px}
+.legend .dot.h3{background:#b3121f;box-shadow:0 0 0 1.5px #f5d77a}
+.legend .dot.h2{background:var(--accent);box-shadow:0 0 0 1.5px #f0cf6e}
+.pill.h2{background:rgba(224,180,74,.16);border-color:#f0cf6e;color:#f5d77a}
+.lc-pn-month{display:flex;align-items:center;gap:14px;margin:0;padding:22px 0 8px;font:500 11px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--line)}
+.lc-pn-month::before{content:"";width:6px;height:6px;flex:none;transform:rotate(45deg);background:var(--gold-grad)}
+.row:has(+ .lc-pn-month){border-bottom-color:transparent}
+.lc-pn-j{display:inline-block;margin-right:8px;padding:4px 7px 3px;border-radius:4px;font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;vertical-align:1px;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.row-actions{align-items:center}
+.row-actions .btn{min-height:44px}
+.row-actions .btn.lc-pn-share{flex:0 0 44px;width:44px;height:44px;padding:0;gap:0}
+.lc-pn-share svg{width:19px;height:19px}
+/* Livret : les lignes se déplient l'une après l'autre, la date dorée (lingot) tombe en dernier */
+.row-date{box-shadow:0 1px 0 #b8902f,0 2px 0 #8a6a1f,0 3px 0 #6b4f14,0 4px 0 #4a3510,0 10px 18px -6px rgba(0,0,0,.7)}
+@keyframes lc-vt-unfold{from{transform:perspective(1200px) rotateX(-80deg);opacity:0}to{transform:perspective(1200px) rotateX(0deg);opacity:1}}
+@keyframes lc-vt-stamp{from{transform:scale(1.22) rotate(-4deg);opacity:0}}
+.lc-vt-row{transform-origin:50% 0;animation:lc-vt-unfold .55s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*45ms + 80ms)}
+.lc-vt-row .row-date{animation:lc-vt-stamp .38s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--i,0)*45ms + 380ms)}
+@media (hover:hover) and (pointer:fine){.row .row-date:hover{box-shadow:0 1px 0 #b8902f,0 2px 0 #8a6a1f,0 3px 0 #6b4f14,0 4px 0 #4a3510,0 10px 18px -6px rgba(0,0,0,.7),0 6px 16px -6px rgba(224,180,74,.7)}}
+@media (hover:none),(pointer:coarse){
+  .row .row-date:hover{transform:none;filter:none;box-shadow:0 1px 0 #b8902f,0 2px 0 #8a6a1f,0 3px 0 #6b4f14,0 4px 0 #4a3510,0 10px 18px -6px rgba(0,0,0,.7)}
+  .cat-panel .pill:hover,.cat-panel .legend span:hover{transform:none;box-shadow:none}
+}
+@media (max-width:760px){
+  .lc-vt-row{animation-duration:.45s;animation-delay:calc(var(--i,0)*35ms + 60ms)}
+  .lc-vt-row .row-date{animation-delay:calc(var(--i,0)*35ms + 300ms)}
+}
 
 /* ---- */
 
@@ -761,15 +822,15 @@ grid.innerHTML = CATS.map((c, i) => {
   // photo de couverture : un événement très demandé avec une photo d'artiste ou de joueur
   const cover = c.list.find(e => e.heat === 3 && e.commons && !e.photoNote) || c.list.find(e => e.commons) || c.list[0];
   const ph = photoHTML(cover), credit = (ph.match(/<a class="credit".*?<\/a>/) || [""])[0];
-  return `<div class="cat-wrap rv" style="--d:${i * .08}s"><button type="button" class="cat" data-cat="${c.key}" aria-expanded="false" aria-controls="cat-panel">
-    ${poster(cover, "c" + i)}${ph.replace(credit, "")}
-    <span class="cat-num">0${i + 1}</span>
-    <span class="cat-body">
+  return `<div class="cat-wrap lc-vt-deal" style="--i:${i}"><button type="button" class="cat" data-cat="${c.key}" aria-expanded="false" aria-controls="cat-panel">
+    <span class="lc-vt-media">${poster(cover, "c" + i)}${ph.replace(credit, "")}</span><span class="lc-vt-glare" aria-hidden="true"></span>
+    <span class="lc-vt-layer lc-vt-l1"><span class="cat-num">0${i + 1}</span></span>
+    <span class="lc-vt-layer lc-vt-l2"><span class="cat-body">
       <span class="cat-name">${c.name}</span>
       <span class="cat-count">${c.list.length} événement${c.list.length > 1 ? "s" : ""}</span>
       <span class="cat-next">Prochain : ${esc(c.list[0].title)}, ${shortDate(parse(c.list[0].date))}</span>
       <span class="cat-cta">Voir les dates</span>
-    </span>
+    </span></span>
   </button>${credit}</div>`;
 }).join("");
 
@@ -793,21 +854,26 @@ const waEventMsg = e => "Bonjour Louis, je souhaite des places pour :\n" +
   "📍 " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") + "\n" +
   "Nombre de places : ";
 
-function rowHTML(e) {
+// i : rang de la ligne dans le panneau (cascade du « livret »)
+function rowHTML(e, i) {
   const d = parse(e.date), label = evLabel(e);
   const dateBox = e.dateLabel ? `<span class="d" style="font-size:18px">${e.dateLabel[0]}</span><span class="m">${e.dateLabel[1]}</span>`
     : `<span class="d">${d.getDate()}${e.end ? "+" : ""}</span><span class="m">${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</span>`;
-  return `<article class="row">
+  // Compte à rebours : J-n dans les 30 jours, « Aujourd'hui », ou « En cours » pour un événement sur plusieurs jours
+  const days = Math.round((d - today) / 864e5);
+  const soon = days === 0 ? "Aujourd'hui" : days > 0 && days <= 30 ? "J-" + days : days < 0 && e.end && parse(e.end) >= today ? "En cours" : "";
+  return `<article class="row lc-vt-row" style="--i:${Math.min(i || 0, 8)}">
     <div class="row-date">${dateBox}</div>
     <div class="row-main">
       <h4>${esc(e.title)}</h4>
-      <div class="row-meta">${esc(e.cat)} · ${when(e)} · ${esc(e.venue)}${e.city && e.city !== "France" ? ", " + esc(e.city) : ""}</div>
+      <div class="row-meta">${soon ? `<span class="lc-pn-j">${soon}</span>` : ""}${esc(e.cat)} · ${when(e)} · ${esc(e.venue)}${e.city && e.city !== "France" ? ", " + esc(e.city) : ""}</div>
       ${e.note ? `<div class="row-note">${esc(e.note)}</div>` : ""}
     </div>
     <span class="pill h${e.heat}">${HEAT[e.heat]}</span>
     <div class="row-actions">
       <a class="btn btn-wa" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Écrivez-moi</a>
       <a class="btn btn-ghost" href="#devis" data-event="${esc(label)}">Formulaire</a>
+      <button type="button" class="btn btn-ghost lc-pn-share" data-share="${events.indexOf(e)}" aria-label="Partager ${esc(e.title)}" title="Partager"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="M7.8 7.7 12 3.5l4.2 4.2"/><path d="M8.5 10.5H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5"/></svg></button>
     </div>
   </article>`;
 }
@@ -816,15 +882,24 @@ grid.addEventListener("click", ev => {
   const btn = ev.target.closest(".cat"); if (!btn) return;
   const open = btn.getAttribute("aria-expanded") === "true";
   grid.querySelectorAll(".cat").forEach(b => b.setAttribute("aria-expanded", "false"));
-  if (open) { panel.hidden = true; return; }
+  if (open) { panel.hidden = true; grid.classList.toggle("lc-vt-has-open", !panel.hidden); return; }
   btn.setAttribute("aria-expanded", "true");
   const c = CATS.find(x => x.key === btn.dataset.cat);
+  // Liste longue : un intertitre par mois. La légende ne montre que les niveaux présents, avec le texte exact des pastilles.
+  let rows = "", month = "";
+  c.list.forEach((e, k) => {
+    const m = parse(e.date).toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+    if (c.list.length > 5 && m !== month) { month = m; rows += `<h5 class="lc-pn-month lc-vt-row" style="--i:${Math.min(k, 8)}">${m.charAt(0).toUpperCase() + m.slice(1)}</h5>`; }
+    rows += rowHTML(e, k);
+  });
+  const legend = [3, 2].filter(h => c.list.some(e => e.heat === h)).map(h => `<span><i class="dot h${h}"></i>${HEAT[h]}</span>`).join("");
   panel.innerHTML = `<div class="panel-head"><h3>${c.name}</h3>
-      <div class="legend"><span><i class="dot" style="background:#b3121f;box-shadow:0 0 0 1.5px #f5d77a"></i>Risque de rupture élevé</span><span><i class="dot" style="background:var(--accent)"></i>Forte demande</span></div>
-    </div>` + c.list.map(rowHTML).join("");
+      <div class="legend">${legend}</div>
+    </div>` + rows;
   panel.hidden = false;
+  grid.classList.toggle("lc-vt-has-open", !panel.hidden);
   panel.style.animation = "none"; panel.offsetHeight; panel.style.animation = "";
-  if (matchMedia("(max-width:860px)").matches) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Titre du panneau, défilement, Échap, lien direct (#football) et partage : script « Section 02 » plus bas
 });
 
 // Passés
@@ -886,6 +961,150 @@ form.addEventListener("submit", async ev => {
 <!-- ---- -->
 
 <!-- ==== [lc-slot-js:cats] ==== -->
+<script>
+/* Section 02 : vitrines (donne, inclinaison à la souris), panneau des dates (titre, défilement, Échap, liens directs, partage) */
+(function(){
+  if (typeof grid === "undefined" || !grid || !panel) return;
+  var reduce = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var html = document.documentElement;
+  var wraps = [].slice.call(grid.querySelectorAll(".cat-wrap"));
+  // Liens directs : louis-conciergerie.fr/#football ouvre le panneau Football
+  var SLUG = { concert: "concerts", foot: "football", tennis: "tennis", rugby: "rugby" };
+  var KEY = { concerts: "concert", concert: "concert", football: "foot", foot: "foot", tennis: "tennis", rugby: "rugby" };
+  var openTile = function(){ return grid.querySelector('.cat[aria-expanded="true"]'); };
+  var setHash = function(h){ try { history.replaceState(history.state, "", "#" + h); } catch (e) {} };
+  var jump = function(){ var b = html.style.scrollBehavior; html.style.scrollBehavior = "auto"; panel.scrollIntoView({ block: "start" }); html.style.scrollBehavior = b; };
+
+  /* --- Donne : une fois, quand la grille arrive à l'écran --- */
+  var dealt = false;
+  var deal = function(now){
+    if (dealt) return; dealt = true;
+    grid.classList.add("lc-vt-dealt");
+    var done = function(){ wraps.forEach(function(w){ w.classList.remove("lc-vt-deal"); }); };
+    if (now) done(); else setTimeout(done, 1400);
+  };
+  if (reduce || !("IntersectionObserver" in window)) deal(true);
+  else {
+    var io = new IntersectionObserver(function(en){
+      if (en[0].isIntersecting) { io.disconnect(); deal(false); }
+    }, { threshold: .25 });
+    io.observe(grid);
+  }
+
+  /* --- Inclinaison : souris ou stylet seulement, une écriture de 5 variables par image --- */
+  var fine = window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)");
+  var cur = null, rect = null, dirty = false, px = 0, py = 0, raf = 0, tilting = false;
+  var clamp = function(v){ return v < -1 ? -1 : v > 1 ? 1 : v; };
+  var tileOf = function(w){ return w.querySelector(".cat"); };
+  var liftOf = function(t){ return t.getAttribute("aria-expanded") === "true" ? -6 : -4; };
+  var frame = function(){
+    raf = 0; if (!cur || !rect) return;
+    var t = tileOf(cur), s = t.style;
+    var nx = clamp((px - rect.left) / rect.width * 2 - 1), ny = clamp((py - rect.top) / rect.height * 2 - 1);
+    s.setProperty("--lc-rx", (-ny * 8).toFixed(2) + "deg");
+    s.setProperty("--lc-ry", (nx * 10).toFixed(2) + "deg");
+    s.setProperty("--lc-nx", nx.toFixed(3));
+    s.setProperty("--lc-ny", ny.toFixed(3));
+    s.setProperty("--lc-lift", liftOf(t) + "px");
+  };
+  var enter = function(w){
+    var t = tileOf(w);
+    clearTimeout(w.lcT);
+    t.classList.remove("lc-vt-back");
+    t.classList.add("lc-vt-on");
+    t.style.willChange = "transform";
+    rect = w.getBoundingClientRect(); dirty = false;
+    cur = w;
+  };
+  var move = function(ev){
+    if (ev.pointerType !== "mouse" && ev.pointerType !== "pen") return;
+    var w = ev.target.closest && ev.target.closest(".cat-wrap");
+    if (!w || w.classList.contains("lc-vt-deal")) return;
+    if (w !== cur) enter(w);
+    else if (dirty) { rect = w.getBoundingClientRect(); dirty = false; }
+    px = ev.clientX; py = ev.clientY;
+    if (!raf) raf = requestAnimationFrame(frame);
+  };
+  var leave = function(ev){
+    var w = ev.currentTarget, t = tileOf(w);
+    if (cur === w) cur = null;
+    if (!t.classList.contains("lc-vt-on")) return;
+    var s = t.style;
+    s.setProperty("--lc-rx", "0deg"); s.setProperty("--lc-ry", "0deg");
+    s.setProperty("--lc-lift", (t.getAttribute("aria-expanded") === "true" ? -6 : 0) + "px");
+    t.classList.add("lc-vt-back");
+    clearTimeout(w.lcT);
+    w.lcT = setTimeout(function(){
+      if (cur === w) return;
+      t.classList.remove("lc-vt-on", "lc-vt-back");
+      s.willChange = "";
+      ["--lc-rx", "--lc-ry", "--lc-nx", "--lc-ny", "--lc-lift"].forEach(function(p){ s.removeProperty(p); });
+    }, 600);
+  };
+  var startTilt = function(){
+    if (tilting || reduce || !fine || !fine.matches) return;
+    tilting = true;
+    grid.addEventListener("pointermove", move, { passive: true });
+    wraps.forEach(function(w){ w.addEventListener("pointerleave", leave); });
+    addEventListener("scroll", function(){ if (cur) dirty = true; }, { passive: true });
+  };
+  startTilt();
+  if (fine && !tilting) { if (fine.addEventListener) fine.addEventListener("change", startTilt); else if (fine.addListener) fine.addListener(startTilt); }
+
+  /* --- Ouverture : le titre prend le focus, le panneau vient à l'écran, l'adresse devient #football --- */
+  var fromHash = false;
+  grid.addEventListener("click", function(ev){
+    var btn = ev.target.closest(".cat"); if (!btn) return;
+    if (cur && !raf) raf = requestAnimationFrame(frame);
+    if (panel.hidden) { setHash("a-venir"); return; }
+    setHash(SLUG[btn.dataset.cat] || "a-venir");
+    var h = panel.querySelector(".panel-head h3");
+    if (h) h.tabIndex = -1;
+    if (fromHash) return;
+    if (h) { try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
+    if (panel.getBoundingClientRect().top > innerHeight * .7 || matchMedia("(max-width:860px)").matches)
+      panel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  });
+
+  /* --- Échap dans le panneau (ou sur les vitrines) : on referme et on revient sur la vitrine --- */
+  var onKey = function(ev){
+    if (ev.key !== "Escape" || panel.hidden) return;
+    var t = openTile(); if (!t || (ev.currentTarget === grid && ev.target !== t)) return;
+    ev.preventDefault();
+    t.click(); t.focus();
+  };
+  panel.addEventListener("keydown", onKey);
+  grid.addEventListener("keydown", onKey);
+
+  /* --- Partager une date : feuille de partage du téléphone, sinon WhatsApp --- */
+  panel.addEventListener("click", function(ev){
+    var b = ev.target.closest(".lc-pn-share"); if (!b) return;
+    var e = events[+b.dataset.share]; if (!e) return;
+    var t = openTile();
+    var url = location.protocol + "//" + location.host + location.pathname + "#" + (t && SLUG[t.dataset.cat] || "a-venir");
+    var text = e.title + " · " + when(e) + " · " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "");
+    if (navigator.share) { navigator.share({ title: e.title, text: text, url: url }).catch(function(){}); return; }
+    window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
+  });
+
+  /* --- Arrivée sur /#football (ou changement d'ancre) : panneau ouvert et affiché --- */
+  var fromLocation = function(){
+    var k = KEY[decodeURIComponent(location.hash.slice(1)).toLowerCase()]; if (!k) return false;
+    var btn = grid.querySelector('.cat[data-cat="' + k + '"]'); if (!btn) return false;
+    deal(true);
+    if (btn.getAttribute("aria-expanded") !== "true") { fromHash = true; btn.click(); fromHash = false; }
+    jump();
+    return true;
+  };
+  if (fromLocation()) {
+    var y0 = scrollY;
+    var again = function(){ if (Math.abs(scrollY - y0) < 4) { jump(); y0 = scrollY; } };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
+    addEventListener("load", again, { once: true });
+  }
+  addEventListener("hashchange", fromLocation);
+})();
+</script>
 
 <!-- ---- -->
 
