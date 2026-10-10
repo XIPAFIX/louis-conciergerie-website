@@ -7,6 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
 <meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a6a1f'/%3E%3Cstop offset='.5' stop-color='%23f5d77a'/%3E%3Cstop offset='1' stop-color='%23a07a26'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0e'/%3E%3Cpath d='M22 14h9v29h14v7H22z' fill='url(%23g)'/%3E%3C/svg%3E">
+<meta property="og:title" content="Louis Conciergerie : billets sport et concerts">
+<meta property="og:description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Demandez un prix sur WhatsApp ou via le formulaire.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://louis-conciergerie.fr/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Louis Conciergerie">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -291,11 +299,11 @@ section[id]{scroll-margin-top:40px}
 .shot:hover .ph img{transform:scale(1.06)}
 .ph .credit{top:8px;bottom:auto;z-index:2}
 .ph .fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;padding:14px;color:#fff;font:500 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
-.ph.tennis .fallback{background:linear-gradient(135deg,#c2562b,#e08a4a 55%,#f1c27a)}
-.ph.foot .fallback{background:linear-gradient(135deg,#0f5a32,#1f8a4c 55%,#58b86f)}
-.ph.concert .fallback{background:linear-gradient(135deg,#1b1450,#4b2bb3 55%,#d04ab0)}
-.ph.autre .fallback{background:linear-gradient(135deg,#1c2a4a,#2f4d8a 55%,#6d8fd0)}
-.ph .fallback::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 12px,transparent 12px 24px)}
+.ph.tennis .fallback{background:linear-gradient(135deg,#3a1208,#7a2e14 55%,#b8902f)}
+.ph.foot .fallback{background:linear-gradient(135deg,#0e1a12,#1d3a26 55%,#8a6a1f)}
+.ph.concert .fallback{background:linear-gradient(135deg,#1a0610,#4a0710 55%,#b8902f)}
+.ph.autre .fallback{background:linear-gradient(135deg,#140a0c,#2e0c13 55%,#a07a26)}
+.ph .fallback::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(245,215,122,.06) 0 12px,transparent 12px 24px)}
 .ph .fallback span{position:relative}
 .shot figcaption{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:70px 18px 16px;background:linear-gradient(180deg,transparent,rgba(11,4,5,.6) 40%,rgba(11,4,5,.94))}
 .shot figcaption b{display:block;font:800 26px/1 var(--font-display);text-transform:uppercase}
@@ -303,7 +311,16 @@ section[id]{scroll-margin-top:40px}
 .shot:first-child figcaption b{font-size:clamp(34px,4vw,56px)}
 .shot figcaption small{color:#e0d0b4;font-size:13px}
 @media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px}.shot:first-child{grid-row:span 1}.shot:last-child{grid-column:span 2}}
-@media (max-width:520px){.gallery{grid-template-columns:1fr;grid-auto-rows:240px}.shot:first-child,.shot:last-child{grid-column:auto}}
+@media (max-width:520px){
+  /* téléphone : bande qu'on fait glisser au doigt plutôt que 6 cartes empilées */
+  .gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-20px;padding:0 20px 8px;scrollbar-width:none;overscroll-behavior-x:contain}
+  .gallery::-webkit-scrollbar{display:none}
+  .shot,.shot:first-child,.shot:last-child{flex:0 0 82%;height:300px;scroll-snap-align:center;grid-column:auto;grid-row:auto}
+  .shot:first-child figcaption{padding:70px 18px 16px}
+  .shot:first-child figcaption b{font-size:26px}
+}
+.gal-count{display:none;margin-top:14px;text-align:center;font:500 12px/1 var(--font-mono);letter-spacing:.16em;color:var(--muted)}
+@media (max-width:520px){.gal-count{display:block}}
 
 /* Formulaire */
 .quote{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
@@ -503,6 +520,24 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:misc] ==== */
+/* Finitions : bouton WhatsApp flottant discret, rubrique active, crédits photo, filigrane du pied de page */
+.wa-float{transition:transform .25s ease,opacity .25s ease}
+.wa-float.lc-hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
+@media (max-width:420px){header.site .bar-end .btn-wa{display:none}}
+nav.links a.is-active{color:var(--accent)}
+nav.links a.is-active::after{transform:scaleX(1)}
+.menu nav a.is-active{color:var(--accent)}
+.credit{font:500 9.5px/1.2 var(--font-mono);letter-spacing:.06em;background:none;padding:2px 4px;text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 6px rgba(0,0,0,.6);opacity:.6;transition:opacity .2s ease}
+.credit:hover,.credit:focus-visible{opacity:1}
+.credit .cr-short{display:none}
+@media (max-width:480px){.cat-wrap .credit .cr-long{display:none}.cat-wrap .credit .cr-short{display:inline}.cat-wrap .credit{font-size:12px}}
+.foot-word{-webkit-text-stroke-color:rgba(232,192,99,.65)}
+.foot-word.lc-sweep{background:linear-gradient(100deg,transparent 40%,rgba(255,236,190,.85) 50%,transparent 60%) -100% 0/250% 100% no-repeat;-webkit-background-clip:text;background-clip:text;animation:lc-sweep 1.6s ease .2s 1 forwards}
+@keyframes lc-sweep{to{background-position:200% 0}}
+/* le repère « Découvrir » ne recalcule plus la mise en page à chaque image */
+.scroll-cue i::after{top:0;transform:translateY(-100%);animation-name:lc-cue}
+@keyframes lc-cue{to{transform:translateY(250%)}}
+.marquee.lc-off .marquee-track{animation-play-state:paused}
 
 /* ---- */
 </style>
@@ -647,10 +682,11 @@ nav.links a:hover::after{transform:scaleX(1)}
   <section id="passes">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><p class="eyebrow"><span class="idx">04</span>Ils y étaient</p><h2>Événements <em>passés</em></h2></div>
-        <p>Quelques événements pour lesquels nos clients ont eu leurs places.</p>
+        <div><p class="eyebrow"><span class="idx">04</span><span id="passes-eyebrow">Ils y étaient</span></p><h2>Événements <em>passés</em></h2></div>
+        <p id="passes-intro">Quelques événements pour lesquels mes clients ont eu leurs places.</p>
       </div>
-      <div class="gallery" id="gallery"></div>
+      <div class="gallery" id="gallery" role="region" aria-label="Événements passés, faites défiler" tabindex="0"></div>
+      <div class="gal-count" id="gal-count" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -804,39 +840,42 @@ const when = e => e.dateLabel ? "De janvier à mars 2027" : e.end ? "Du " + fmt(
 const evLabel = e => e.title + " (" + (e.dateLabel ? "janv. – mars 2027" : e.end ? parse(e.date).toLocaleDateString("fr-FR") + " – " + parse(e.end).toLocaleDateString("fr-FR") : parse(e.date).toLocaleDateString("fr-FR")) + ")";
 
 // Photo : fichier local (photo) en priorité, sinon photo libre Wikimedia Commons (crédit affiché)
-const commonsUrl = f => "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f) + "?width=900";
-const photos = e => e.photo ? [e.photo] : (e.commons ? [].concat(e.commons).map(commonsUrl) : []);
-const photoHTML = e => {
+const commonsUrl = (f, w = 900) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f) + "?width=" + w;
+const photos = e => e.photo ? [e.photo] : (e.commons ? [].concat(e.commons) : []);
+const photoHTML = (e, sizes = "(max-width:860px) 50vw, 25vw") => {
   const list = photos(e); if (!list.length) return "";
-  const imgs = list.map(u => `<img src="${esc(u)}" alt="${esc(e.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`).join("");
-  const credit = e.commons && !e.photo ? `<a class="credit" href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent([].concat(e.commons)[0])}" target="_blank" rel="noopener">${e.photoNote ? esc(e.photoNote) + " · " : ""}Photo${list.length > 1 ? "s" : ""} Wikimedia Commons</a>` : "";
+  const imgs = list.map(f => {
+    const src = e.photo ? `src="${esc(f)}"` : `src="${esc(commonsUrl(f))}" srcset="${[480, 900, 1400].map(w => esc(commonsUrl(f, w)) + " " + w + "w").join(", ")}" sizes="${sizes}"`;
+    return `<img ${src} alt="${esc(e.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`;
+  }).join("");
+  const credit = e.commons && !e.photo ? `<a class="credit" href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent([].concat(e.commons)[0])}" target="_blank" rel="noopener" aria-label="Photo Wikimedia Commons"><span class="cr-long">${e.photoNote ? esc(e.photoNote) + " · " : ""}Photo${list.length > 1 ? "s" : ""} Wikimedia Commons</span><span class="cr-short">©</span></a>` : "";
   return `<div class="photos n${list.length}">${imgs}</div>${credit}`;
 };
 
 function poster(e, i) {
-  const [c1, c2] = e.colors || ["#2340e6", "#10162a"], id = "g" + i;
+  const c1 = "#4a0710", c2 = "#130508", id = "g" + i;   // velours du site, plus de couleurs de clubs
   const grad = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>`;
-  const W = 'stroke="#fff" stroke-opacity=".75" fill="none" stroke-width="3"';
+  const W = 'stroke="#f5d77a" stroke-opacity=".55" fill="none" stroke-width="3"';
   let art = "";
   if (e.kind === "foot") {
-    art = `<rect width="320" height="200" fill="#167a3e"/>` +
-      [0,1,2,3,4,5,6,7].map(k => k % 2 ? `<rect x="${k*40}" width="40" height="200" fill="#1b8a47"/>` : "").join("") +
+    art = `<rect width="320" height="200" fill="#2a0a10"/>` +
+      [0,1,2,3,4,5,6,7].map(k => k % 2 ? `<rect x="${k*40}" width="40" height="200" fill="#330c14"/>` : "").join("") +
       `<rect width="320" height="200" fill="url(#${id})" opacity=".55"/>
        <g ${W}><rect x="16" y="16" width="288" height="168"/><line x1="160" y1="16" x2="160" y2="184"/><circle cx="160" cy="100" r="30"/>
-       <rect x="16" y="62" width="40" height="76"/><rect x="264" y="62" width="40" height="76"/></g><circle cx="160" cy="100" r="4" fill="#fff"/>`;
+       <rect x="16" y="62" width="40" height="76"/><rect x="264" y="62" width="40" height="76"/></g><circle cx="160" cy="100" r="4" fill="#f5d77a"/>`;
   } else if (e.kind === "rugby") {
-    art = `<rect width="320" height="200" fill="#1a7d42"/><rect width="320" height="200" fill="url(#${id})" opacity=".55"/>
+    art = `<rect width="320" height="200" fill="#2a0a10"/><rect width="320" height="200" fill="url(#${id})" opacity=".55"/>
        <g ${W}><rect x="16" y="16" width="288" height="168"/><line x1="44" y1="16" x2="44" y2="184"/><line x1="276" y1="16" x2="276" y2="184"/>
        <line x1="110" y1="16" x2="110" y2="184" stroke-dasharray="8 8"/><line x1="210" y1="16" x2="210" y2="184" stroke-dasharray="8 8"/><line x1="160" y1="16" x2="160" y2="184"/></g>
-       <g stroke="#fff" stroke-width="4"><line x1="28" y1="70" x2="28" y2="130"/><line x1="292" y1="70" x2="292" y2="130"/></g>
+       <g stroke="#f5d77a" stroke-width="4"><line x1="28" y1="70" x2="28" y2="130"/><line x1="292" y1="70" x2="292" y2="130"/></g>
        <ellipse cx="160" cy="100" rx="14" ry="9" fill="#f5e6c8" transform="rotate(-25 160 100)"/>`;
   } else if (e.kind === "tennis" || e.kind === "clay") {
-    const court = e.kind === "clay" ? "#c65a2e" : "#2b4fb3", out = e.kind === "clay" ? "#a8471f" : "#1f3a85";
+    const court = e.kind === "clay" ? "#5a2412" : "#3a1a10", out = e.kind === "clay" ? "#3a1208" : "#26100b";
     art = `<rect width="320" height="200" fill="${out}"/><rect width="320" height="200" fill="url(#${id})" opacity=".35"/>
        <rect x="40" y="30" width="240" height="140" fill="${court}"/>
        <g ${W} stroke-opacity=".9"><rect x="40" y="30" width="240" height="140"/><line x1="40" y1="48" x2="280" y2="48"/><line x1="40" y1="152" x2="280" y2="152"/>
        <line x1="95" y1="48" x2="95" y2="152"/><line x1="225" y1="48" x2="225" y2="152"/><line x1="95" y1="100" x2="225" y2="100"/></g>
-       <line x1="160" y1="24" x2="160" y2="176" stroke="#fff" stroke-width="5"/><circle cx="214" cy="72" r="7" fill="#d9f154"/>`;
+       <line x1="160" y1="24" x2="160" y2="176" stroke="#f5d77a" stroke-opacity=".8" stroke-width="5"/><circle cx="214" cy="72" r="7" fill="#e8c063"/>`;
   } else {
     const beams = [40,100,160,220,280].map((x,k) => `<polygon points="${x-6},0 ${x+6},0 ${x+60-k*30},170 ${x-60-k*10},170" fill="#fff" opacity="${.07 + (k%2)*.05}"/>`).join("");
     const crowd = Array.from({length: 34}, (_, k) => `<circle cx="${k*10 - 4}" cy="${186 - (k*7 % 9)}" r="${9 + (k*13 % 5)}" fill="#05070f"/>`).join("");
@@ -930,13 +969,18 @@ grid.addEventListener("click", ev => {
   if (matchMedia("(max-width:860px)").matches) panel.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-// Passés
+// Passés : tant que ce sont des exemples, le titre le dit (pas de faux historique client)
+const allExamples = PAST.every(e => e.example);
+if (allExamples) {
+  document.getElementById("passes-eyebrow").textContent = "Le genre d'événements que je couvre";
+  document.getElementById("passes-intro").textContent = "Quelques exemples d'événements pour lesquels je peux vous trouver des places.";
+}
 document.getElementById("gallery").innerHTML = PAST.map((e, i) => `<figure class="shot rv" style="--d:${(i % 3) * .08}s">
   <div class="ph ${catClass(e.cat)}">
     <div class="fallback"><span>${esc(e.cat)}</span></div>
-    ${photoHTML(e)}
+    ${photoHTML(e, "(max-width:520px) 82vw, 33vw")}
   </div>
-  <figcaption><b>${esc(e.title)}</b><small>${esc(e.venue)} · ${esc(e.when)}</small>${e.example ? ` <span class="example">Exemple</span>` : ""}</figcaption>
+  <figcaption><b>${esc(e.title)}</b><small>${esc(e.venue)} · ${esc(e.when)}</small>${e.example && !allExamples ? ` <span class="example">Exemple</span>` : ""}</figcaption>
 </figure>`).join("");
 
 // Formulaire
@@ -955,13 +999,30 @@ document.addEventListener("click", ev => {
 const form = document.getElementById("quote-form");
 const notice = document.getElementById("f-notice");
 const show = (cls, txt) => { notice.className = "notice " + cls; notice.textContent = txt; notice.hidden = false; };
+// Tant que Formspree n'est pas branché, la demande part sur WhatsApp, déjà rédigée
+const viaWhatsApp = CONFIG.formspreeId.startsWith("VOTRE");
+const submitLabel = viaWhatsApp ? "Envoyer ma demande sur WhatsApp" : "Envoyer ma demande";
+document.getElementById("f-submit").textContent = submitLabel;
+if (viaWhatsApp) form.querySelector(".form-foot small").textContent = "Votre demande s'ouvre dans WhatsApp, prête à envoyer à Louis.";
+const formMsg = () => {
+  const v = n => (form[n].value || "").trim();
+  const ev = sel.value === "__autre" ? "Autre : " + (v("autre_evenement") || "non précisé") : sel.value;
+  return ["Bonjour Louis, je souhaite un prix pour des billets.",
+    "Nom : " + v("nom"), "Téléphone : " + v("telephone"), v("email") && "Email : " + v("email"),
+    "Événement : " + ev, v("places") && "Nombre de places : " + v("places"),
+    v("budget") && "Budget par place : " + v("budget"), v("message") && "Message : " + v("message")
+  ].filter(Boolean).join("\n");
+};
 form.addEventListener("submit", async ev => {
   ev.preventDefault();
   const name = form.nom.value.trim(), phone = form.telephone.value.trim();
   if (!name || !phone) return show("err", "Indiquez votre nom et votre téléphone pour qu'on puisse vous rappeler.");
   if (!sel.value) return show("err", "Choisissez un événement, ou « Autre événement » s'il n'est pas dans la liste.");
-  if (CONFIG.formspreeId.startsWith("VOTRE")) {
-    return show("ok", "Aperçu : le formulaire fonctionne. Il enverra les demandes sur l'email de Louis dès qu'il sera configuré.");
+  const msg = formMsg();
+  if (viaWhatsApp) {
+    const w = window.open(waLink(msg), "_blank");   // pas de "noopener" ici : avec, window.open renvoie toujours null
+    if (w) w.opener = null; else location.href = waLink(msg);
+    return show("ok", "Votre demande est prête dans WhatsApp : il ne reste qu'à appuyer sur Envoyer.");
   }
   const btn = document.getElementById("f-submit"); btn.disabled = true; btn.textContent = "Envoi…";
   const data = new FormData(form);
@@ -972,8 +1033,11 @@ form.addEventListener("submit", async ev => {
     form.reset(); otherWrap.hidden = true;
     show("ok", "Merci " + name.split(" ")[0] + ", votre demande est envoyée. Louis vous rappelle très vite.");
   } catch {
-    show("err", "L'envoi n'a pas abouti. Réessayez, ou écrivez directement sur WhatsApp.");
-  } finally { btn.disabled = false; btn.textContent = "Envoyer ma demande"; }
+    show("err", "L'envoi n'a pas abouti. Réessayez, ou ");
+    const a = document.createElement("a");
+    a.href = waLink(msg); a.target = "_blank"; a.rel = "noopener"; a.textContent = "envoyez-la plutôt sur WhatsApp";
+    notice.append(a, ".");
+  } finally { btn.disabled = false; btn.textContent = submitLabel; }
 });
 </script>
 <!-- ==== [lc-slot-js:hero] ==== -->
@@ -1407,6 +1471,71 @@ form.addEventListener("submit", async ev => {
 <!-- ---- -->
 
 <!-- ==== [lc-slot-js:misc] ==== -->
+<script>
+/* Finitions : rubrique active dans le menu, bouton WhatsApp flottant qui s'efface, compteur de la galerie, filigrane */
+(function(){
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!("IntersectionObserver" in window)) return;
+
+  // Rubrique active
+  var links = [].slice.call(document.querySelectorAll('nav.links a[href^="#"], .menu nav a[href^="#"]'));
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      var id = "#" + en.target.id;
+      links.forEach(function(a){
+        var on = a.getAttribute("href") === id;
+        a.classList.toggle("is-active", on);
+        if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+      });
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("main section[id]").forEach(function(s){ spy.observe(s); });
+
+  // Le bouton flottant se cache quand un autre bouton WhatsApp est déjà à l'écran
+  var fab = document.querySelector(".wa-float"), menu = document.getElementById("menu");
+  var seen = new Set();
+  var refresh = function(){ fab.classList.toggle("lc-hide", seen.size > 0 || menu.classList.contains("open")); };
+  var watch = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting && !en.target.hidden) seen.add(en.target); else seen.delete(en.target); });
+    refresh();
+  });
+  [".hero .cta", "#cat-panel", ".cta-big", "#devis .contact-card", "footer"].forEach(function(sel){
+    var el = document.querySelector(sel); if (el) watch.observe(el);
+  });
+  new MutationObserver(function(){
+    var p = document.getElementById("cat-panel");
+    if (p && p.hidden) seen.delete(p);
+    refresh();
+  }).observe(menu, { attributes: true, attributeFilter: ["class"] });
+  var p = document.getElementById("cat-panel");
+  if (p) new MutationObserver(function(){ if (p.hidden) { seen.delete(p); refresh(); } else { watch.unobserve(p); watch.observe(p); } }).observe(p, { attributes: true, attributeFilter: ["hidden"] });
+
+  // Compteur « 1 / 6 » de la galerie sur téléphone
+  var gal = document.getElementById("gallery"), count = document.getElementById("gal-count");
+  if (gal && count) {
+    var n = gal.children.length, tick = 0;
+    var upd = function(){
+      tick = 0;
+      var w = gal.firstElementChild ? gal.firstElementChild.offsetWidth + 12 : 1;
+      count.textContent = Math.min(n, Math.round(gal.scrollLeft / w) + 1) + " / " + n;
+    };
+    gal.addEventListener("scroll", function(){ if (!tick) tick = requestAnimationFrame(upd); }, { passive: true });
+    upd();
+  }
+
+  // Bandeau défilant en pause hors de l'écran
+  var mq = document.querySelector(".marquee");
+  if (mq) new IntersectionObserver(function(en){ mq.classList.toggle("lc-off", !en[0].isIntersecting); }).observe(mq);
+
+  // Un reflet doré passe une fois sur le grand nom du pied de page
+  var word = document.querySelector(".foot-word");
+  if (word && !reduce) {
+    var wo = new IntersectionObserver(function(en){ if (en[0].isIntersecting) { word.classList.add("lc-sweep"); wo.disconnect(); } }, { threshold: .6 });
+    wo.observe(word);
+  }
+})();
+</script>
 
 <!-- ---- -->
 <script>
@@ -1463,20 +1592,28 @@ form.addEventListener("submit", async ev => {
   g.fillStyle=fill;g.beginPath();g.arc(S/2,S/2,r,0,Math.PI*2);g.fill();
   g.strokeStyle='rgba(255,236,190,.85)';g.lineWidth=2;g.stroke();
   g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.arc(S*.36,S*.33,r*.2,0,Math.PI*2);g.fill();
-  var FREE=200,HARD=1000,lastW=0;
+  // Bulles floues au premier plan (profondeur de champ), dessinées une fois
+  var B=96,bokeh=document.createElement('canvas');bokeh.width=bokeh.height=B;
+  var gb=bokeh.getContext('2d'),bf=gb.createRadialGradient(B/2,B/2,0,B/2,B/2,B/2);
+  bf.addColorStop(0,'rgba(255,236,190,.22)');bf.addColorStop(.6,'rgba(250,215,140,.10)');bf.addColorStop(1,'rgba(250,215,140,0)');
+  gb.fillStyle=bf;gb.fillRect(0,0,B,B);
+  var FREE=200,HARD=1000,lastW=0,baseFREE=200,baseHARD=1000;
   function resize(){
-    var dpr=Math.min(window.devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;
+    W=innerWidth;H=innerHeight;var dpr=Math.min(window.devicePixelRatio||1,W<700?1.25:1.5);
     c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-    FREE=Math.round(Math.min(420,Math.max(160,W*H/2400)));
-    HARD=W<700?550:1000;
+    // ordinateur : autant de bulles qu'avant ; téléphone : un peu moins pour rester fluide (le régulateur ajuste si besoin)
+    FREE=baseFREE=W<700?140:Math.round(Math.min(420,Math.max(160,W*H/2400)));
+    HARD=baseHARD=W<700?400:1000;
     if(Math.abs(W-lastW)>40){                  // colonnes recalculées seulement si la largeur change
-      lastW=W;var n=Math.max(8,Math.round(W/70));streams=[];
+      lastW=W;var n=Math.max(6,Math.round(W/(W<700?90:70)));streams=[];
       for(var i=0;i<n;i++)streams.push({x:(i+.15+Math.random()*.7)*W/n,z:Math.random(),every:.12+Math.random()*.25,t:Math.random()});
     }
   }
   function make(x,y,z,small){
-    return{x:x,y:y,z:z,r:(small?.7+Math.random()*1.2:1+Math.random()*3)*(.45+z*.9),
-      v:(40+Math.random()*50)*(.55+z*.9),ph:Math.random()*6.28,f:1.5+Math.random()*2.5,a:.6+Math.random()*2.4}
+    var b={x:x,y:y,z:z,r:(small?.7+Math.random()*1.2:1+Math.random()*3)*(.45+z*.9),
+      v:(40+Math.random()*50)*(.55+z*.9),ph:Math.random()*6.28,f:1.5+Math.random()*2.5,a:.6+Math.random()*2.4};
+    if(!small&&z>.92&&Math.random()<.5){b.bk=1;b.r*=3;b.v*=.6}
+    return b;
   }
   var clock=0;
   function step(dt,draw){
@@ -1497,20 +1634,38 @@ form.addEventListener("submit", async ev => {
       if(!draw)continue;
       var rr=b.r*(1+k*.5);                      // grossit en montant
       var x=b.x+Math.sin(clock*b.f+b.ph)*b.a;
-      ctx.globalAlpha=(.3+b.z*.7)*Math.min(1,(H+6-b.y)/60)*Math.min(1,(b.y+8)/40);
-      ctx.drawImage(sprite,x-rr,b.y-rr,rr*2,rr*2);
+      ctx.globalAlpha=(.3+b.z*.7)*Math.min(1,(H+6-b.y)/60)*Math.min(1,(b.y+8)/40)*(b.bk?.35:1);
+      ctx.drawImage(b.bk?bokeh:sprite,x-rr,b.y-rr,rr*2,rr*2);
     }
     ctx.globalAlpha=1;
   }
+  // Régulateur : si le téléphone peine, on retire des bulles ; on les remet quand ça va mieux
+  var acc=0,cnt=0,lastTune=0,raf=0;
+  function govern(dt,t){
+    acc+=dt;cnt++;if(cnt<60)return;
+    var mean=acc/cnt*1000;acc=cnt=0;
+    if(t-lastTune<5000)return;
+    if(mean>22&&FREE>60){FREE=Math.max(60,Math.round(FREE*.6));HARD=Math.max(120,Math.round(HARD*.6));lastTune=t}
+    else if(mean<18&&FREE<baseFREE){FREE=baseFREE;HARD=baseHARD;lastTune=t}
+  }
   function frame(t){
     var dt=Math.min(.05,(t-(last||t))/1000);last=t;
-    ctx.clearRect(0,0,W,H);step(dt,true);
-    requestAnimationFrame(frame);
+    ctx.clearRect(0,0,W,H);step(dt,true);govern(dt,t);
+    raf=requestAnimationFrame(frame);
   }
-  function warm(){bubbles=[];for(var i=0;i<800;i++)step(.025,false)}  // le verre est déjà plein au chargement
+  function warm(){bubbles=[];for(var i=0;i<500;i++)step(.025,false)}  // le verre est déjà plein au chargement
+  // En pause quand l'onglet est caché ou que le menu plein écran est ouvert
+  var menu=document.getElementById('menu');
+  function sync(){
+    var stop=document.hidden||(menu&&menu.classList.contains('open'));
+    if(stop&&raf){cancelAnimationFrame(raf);raf=0}
+    else if(!stop&&!raf){last=0;raf=requestAnimationFrame(frame)}
+  }
   resize();warm();
   var rw;addEventListener('resize',function(){var w=lastW;resize();if(lastW!==w){clearTimeout(rw);rw=setTimeout(warm,150)}});
-  requestAnimationFrame(frame);
+  document.addEventListener('visibilitychange',sync);
+  if(menu&&window.MutationObserver)new MutationObserver(sync).observe(menu,{attributes:true,attributeFilter:['class']});
+  sync();
 })();
 </script>
 </body>
