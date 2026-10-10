@@ -40,10 +40,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body)
 /* Fond : halos dorés fixes + grain léger, derrière tout le contenu (les bulles sont dans #bubbles) */
 body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(70% 55% at 50% 115%,rgba(240,200,110,.22),transparent 70%),
+    radial-gradient(80% 60% at 50% 115%,rgba(245,200,105,.32),transparent 70%),
     radial-gradient(55% 45% at 10% 0%,var(--glow-1),transparent 70%),
     radial-gradient(45% 40% at 95% 15%,var(--glow-2),transparent 70%),
-    linear-gradient(180deg,#060505 0%,#0c0906 60%,#140f08 100%)}
+    linear-gradient(180deg,#0a0805 0%,#151007 50%,#251a0a 100%)}
 #bubbles{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -560,51 +560,67 @@ form.addEventListener("submit", async ev => {
 });
 </script>
 <script>
-/* Bulles de champagne qui remontent en fond */
+/* Bulles de champagne : beaucoup de bulles sur 3 profondeurs, en colonnes comme dans une flûte */
 (function(){
   var c=document.getElementById('bubbles');
   if(!c||!c.getContext)return;
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){c.remove();return}
-  var ctx=c.getContext('2d'),W=0,H=0,dpr=1,bubbles=[],streams=[],last=0;
+  var ctx=c.getContext('2d'),W=0,H=0,bubbles=[],streams=[],last=0;
   // Bulle dessinée une seule fois puis réutilisée à toutes les tailles
   var S=64,sprite=document.createElement('canvas');sprite.width=sprite.height=S;
   var g=sprite.getContext('2d'),r=S/2-2;
   var fill=g.createRadialGradient(S*.42,S*.4,r*.1,S/2,S/2,r);
-  fill.addColorStop(0,'rgba(255,240,200,.04)');fill.addColorStop(.75,'rgba(250,215,140,.10)');fill.addColorStop(1,'rgba(255,225,160,.55)');
+  fill.addColorStop(0,'rgba(255,240,200,.06)');fill.addColorStop(.7,'rgba(250,215,140,.14)');fill.addColorStop(1,'rgba(255,228,170,.7)');
   g.fillStyle=fill;g.beginPath();g.arc(S/2,S/2,r,0,Math.PI*2);g.fill();
-  g.strokeStyle='rgba(255,232,180,.7)';g.lineWidth=1.5;g.stroke();
-  g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.arc(S*.36,S*.33,r*.18,0,Math.PI*2);g.fill();
+  g.strokeStyle='rgba(255,236,190,.85)';g.lineWidth=2;g.stroke();
+  g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.arc(S*.36,S*.33,r*.2,0,Math.PI*2);g.fill();
+  var FREE=200,HARD=1000,lastW=0;
   function resize(){
-    dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+    var dpr=Math.min(window.devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;
     c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-    var n=Math.max(4,Math.round(W/160));streams=[];
-    for(var i=0;i<n;i++)streams.push(W*(i+.5)/n+(Math.random()-.5)*W/n*.6);
+    FREE=Math.round(Math.min(420,Math.max(160,W*H/2400)));
+    HARD=W<700?550:1000;
+    if(Math.abs(W-lastW)>40){                  // colonnes recalculées seulement si la largeur change
+      lastW=W;var n=Math.max(8,Math.round(W/70));streams=[];
+      for(var i=0;i<n;i++)streams.push({x:(i+.15+Math.random()*.7)*W/n,z:Math.random(),every:.12+Math.random()*.25,t:Math.random()});
+    }
   }
-  function spawn(y){
-    var inStream=Math.random()<.7;
-    return{x:inStream?streams[(Math.random()*streams.length)|0]+(Math.random()-.5)*6:Math.random()*W,
-      y:y==null?H+10:y,r:1.2+Math.random()*(inStream?2.6:4.5),v:25+Math.random()*45,
-      ph:Math.random()*6.28,f:1+Math.random()*2,a:2+Math.random()*4}
+  function make(x,y,z,small){
+    return{x:x,y:y,z:z,r:(small?.7+Math.random()*1.2:1+Math.random()*3)*(.45+z*.9),
+      v:(40+Math.random()*50)*(.55+z*.9),ph:Math.random()*6.28,f:1.5+Math.random()*2.5,a:.6+Math.random()*2.4}
   }
-  function count(){return Math.round(Math.min(140,Math.max(45,W*H/9000)))}
-  function frame(t){
-    var dt=Math.min(.05,(t-(last||t))/1000);last=t;
-    ctx.clearRect(0,0,W,H);
-    while(bubbles.length<count())bubbles.push(spawn(Math.random()*H));
-    for(var i=0;i<bubbles.length;i++){
-      var b=bubbles[i],k=1-b.y/H;            // 0 en bas, 1 en haut
-      b.y-=b.v*(1+k*.8)*dt;                   // accélère en montant
-      var rr=b.r*(1+k*.6);                    // grossit en montant
-      var x=b.x+Math.sin(t/1000*b.f+b.ph)*b.a;
-      var alpha=Math.min(1,(H-b.y)/80)*Math.min(1,b.y/(H*.25));
-      if(b.y<-10){bubbles[i]=spawn();continue}
-      ctx.globalAlpha=Math.max(0,alpha);
+  var clock=0;
+  function step(dt,draw){
+    clock+=dt;
+    var free=0;for(var q=0;q<bubbles.length;q++)if(!bubbles[q].s)free++;
+    // les colonnes lâchent des chapelets de petites bulles en continu
+    for(var j=0;j<streams.length;j++){
+      var st=streams[j];st.t-=dt;
+      if(st.t<=0&&bubbles.length<HARD){st.t=st.every;var nb=make(st.x+(Math.random()-.5)*3,H+6,st.z,true);nb.s=1;bubbles.push(nb)}
+    }
+    // et des bulles libres un peu partout
+    if(free<FREE*.7)for(var f=free;f<FREE;f++)bubbles.push(make(Math.random()*W,Math.random()*H,Math.random(),false));
+    else if(free<FREE&&Math.random()<.8)bubbles.push(make(Math.random()*W,H+6,Math.random(),false));
+    for(var i=bubbles.length-1;i>=0;i--){
+      var b=bubbles[i],k=1-b.y/H;              // 0 en bas, 1 en haut
+      b.y-=b.v*(1+k*.7)*dt;                     // accélère en montant
+      if(b.y<-8){bubbles.splice(i,1);continue}
+      if(!draw)continue;
+      var rr=b.r*(1+k*.5);                      // grossit en montant
+      var x=b.x+Math.sin(clock*b.f+b.ph)*b.a;
+      ctx.globalAlpha=(.3+b.z*.7)*Math.min(1,(H+6-b.y)/60)*Math.min(1,(b.y+8)/40);
       ctx.drawImage(sprite,x-rr,b.y-rr,rr*2,rr*2);
     }
     ctx.globalAlpha=1;
+  }
+  function frame(t){
+    var dt=Math.min(.05,(t-(last||t))/1000);last=t;
+    ctx.clearRect(0,0,W,H);step(dt,true);
     requestAnimationFrame(frame);
   }
-  resize();addEventListener('resize',resize);
+  function warm(){bubbles=[];for(var i=0;i<800;i++)step(.025,false)}  // le verre est déjà plein au chargement
+  resize();warm();
+  var rw;addEventListener('resize',function(){var w=lastW;resize();if(lastW!==w){clearTimeout(rw);rw=setTimeout(warm,150)}});
   requestAnimationFrame(frame);
 })();
 </script>
