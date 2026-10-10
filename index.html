@@ -581,6 +581,8 @@ nav.links a:hover::after{transform:scaleX(1)}
 /* ---- */
 
 /* ==== [lc-slot-css:misc] ==== */
+/* garde-fou : rien ne dépasse sur les côtés (les objets 3D qui tournent peuvent déborder de quelques pixels) */
+main{overflow-x:clip}
 /* Finitions : bouton WhatsApp flottant discret, rubrique active, crédits photo, filigrane du pied de page */
 .wa-float{transition:transform .25s ease,opacity .25s ease}
 .wa-float.lc-hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
