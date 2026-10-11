@@ -1108,7 +1108,7 @@ const UPCOMING = [
 
 // Événements passés : mets tes photos dans le dossier images/ et indique le nom du fichier.
 const PAST = [
-  { title: "Roland-Garros",      cat: "Tennis",   when: "Juin 2026",    venue: "Court Philippe-Chatrier", commons: ["Carlos_Alcaraz_-_Roland_Garros_2025_-_serving_(cropped).jpg"], example: true },
+  { title: "Roland-Garros",      cat: "Tennis",   when: "Juin 2026",    venue: "Court Philippe-Chatrier", photo: "images/tennis-roland-garros.jpg", photoPos: "50% 30%", example: true },
   { title: "France – Espagne",   cat: "Football", when: "Juillet 2026", venue: "Coupe du monde",          photo: "images/passe-france-espagne.jpg", photoPos: "50% 40%", example: true },
   { title: "Ninho",              cat: "Concert",  when: "2026",         venue: "Paris",                    photo: "images/passe-ninho.jpg", photoPos: "50% 58%", example: true },
   { title: "Céline Dion",        cat: "Concert",  when: "2026",         venue: "Paris",                    photo: "images/passe-celine-dion.jpg", photoPos: "50% 18%", example: true },
@@ -1221,7 +1221,7 @@ const events = UPCOMING.filter(e => lastDay(e) >= today).sort((a,b) => a.date.lo
 const CATS = [
   { key: "concert", name: "Concerts", test: e => e.type === "concert" },
   { key: "foot",    name: "Football", test: e => e.kind === "foot", photo: "images/football-equipe-de-france.jpg", photoPos: "50% 30%" },
-  { key: "tennis",  name: "Tennis",   test: e => e.kind === "tennis" || e.kind === "clay" },
+  { key: "tennis",  name: "Tennis",   test: e => e.kind === "tennis" || e.kind === "clay", photo: "images/tennis-roland-garros.jpg", photoPos: "50% 25%" },
   { key: "rugby",   name: "Rugby",    test: e => e.kind === "rugby" },
   { key: "us",      name: "Sports US", test: e => e.kind === "nfl" || e.kind === "nba" }
 ].map(c => ({ ...c, list: events.filter(c.test) })).filter(c => c.list.length);
