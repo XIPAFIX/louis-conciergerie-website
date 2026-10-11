@@ -2156,12 +2156,13 @@ form.addEventListener("submit", async ev => {
 </script>
 <script>
 /* Bulles de champagne : de vraies bulles vues dans le vin (bord doré qui réfracte, cœur transparent, reflet de lumière),
-   qui montent en chapelets réguliers depuis des points du fond de la flûte, accélèrent et grossissent en montant */
+   qui montent en chapelets réguliers depuis des points du fond de la flûte, accélèrent et grossissent en montant.
+   Au défilement, elles suivent la page en profondeur : les bulles proches bougent plus que les lointaines */
 (function(){
   var c=document.getElementById('bubbles');
   if(!c||!c.getContext)return;
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){c.remove();return}
-  var ctx=c.getContext('2d'),W=0,H=0,bubbles=[],streams=[],last=0;
+  var ctx=c.getContext('2d'),W=0,H=0,bubbles=[],streams=[],last=0,lastSY=window.scrollY||0;
   // Bulle dessinée une seule fois puis réutilisée à toutes les tailles.
   // Dans le champagne, une bulle est une petite lentille : cœur clair, bord plus sombre et doré (réfraction), reflet net en haut à gauche
   var S=64,sprite=document.createElement('canvas');sprite.width=sprite.height=S;
@@ -2199,7 +2200,7 @@ form.addEventListener("submit", async ev => {
     return b;
   }
   var clock=0;
-  function step(dt,draw){
+  function step(dt,draw,ds){
     clock+=dt;
     var free=0;for(var q=0;q<bubbles.length;q++)if(!bubbles[q].s)free++;
     // les colonnes lâchent des chapelets de petites bulles en continu
@@ -2212,7 +2213,13 @@ form.addEventListener("submit", async ev => {
     if(free<FREE*.7)for(var f=free;f<FREE;f++)bubbles.push(make(Math.random()*W,Math.random()*H,Math.random(),false));
     else if(free<FREE&&Math.random()<.8)bubbles.push(make(Math.random()*W,H+6,Math.random(),false));
     for(var i=bubbles.length-1;i>=0;i--){
-      var b=bubbles[i],k=1-b.y/H;              // 0 en bas, 1 en haut
+      var b=bubbles[i];
+      if(ds){                                   // parallaxe : on descend, les bulles montent avec la page ; on remonte, elles redescendent
+        b.y-=ds*(b.s?.1:b.bk?.9:.15+b.z*.55);    // chapelets accrochés au verre : à peine ; bulles libres : selon la profondeur
+        if(b.y>H+10){if(b.s){bubbles.splice(i,1);continue}b.y-=H+20}   // sortie en bas : la bulle libre revient par le haut
+        else if(b.y<-10&&!b.s)b.y+=H+20;                                // sortie en haut : elle revient par le bas
+      }
+      var k=1-b.y/H;                            // 0 en bas, 1 en haut
       b.y-=b.v*(1+k*.7)*dt;                     // accélère en montant
       if(b.y<-8){bubbles.splice(i,1);continue}
       if(!draw)continue;
@@ -2234,7 +2241,8 @@ form.addEventListener("submit", async ev => {
   }
   function frame(t){
     var dt=Math.min(.05,(t-(last||t))/1000);last=t;
-    ctx.clearRect(0,0,W,H);step(dt,true);govern(dt,t);
+    var sy=window.scrollY||0,ds=Math.max(-140,Math.min(140,sy-lastSY));lastSY=sy;   // saut d'ancre : déplacement plafonné
+    ctx.clearRect(0,0,W,H);step(dt,true,ds);govern(dt,t);
     raf=requestAnimationFrame(frame);
   }
   function warm(){bubbles=[];for(var i=0;i<600;i++)step(.025,false)}  // le verre est déjà plein au chargement
@@ -2243,7 +2251,7 @@ form.addEventListener("submit", async ev => {
   function sync(){
     var stop=document.hidden||(menu&&menu.classList.contains('open'));
     if(stop&&raf){cancelAnimationFrame(raf);raf=0}
-    else if(!stop&&!raf){last=0;raf=requestAnimationFrame(frame)}
+    else if(!stop&&!raf){last=0;lastSY=window.scrollY||0;raf=requestAnimationFrame(frame)}
   }
   resize();warm();
   var rw;addEventListener('resize',function(){var w=lastW;resize();if(lastW!==w){clearTimeout(rw);rw=setTimeout(warm,150)}});
