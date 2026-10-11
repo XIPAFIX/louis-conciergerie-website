@@ -6,10 +6,10 @@
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Louis Conciergerie</title>
-<meta name="description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
+<meta name="description" content="Louis Conciergerie : billets pour le tennis, le football, le rugby, la NBA, la NFL et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a6a1f'/%3E%3Cstop offset='.5' stop-color='%23f5d77a'/%3E%3Cstop offset='1' stop-color='%23a07a26'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0e'/%3E%3Cpath d='M22 14h9v29h14v7H22z' fill='url(%23g)'/%3E%3C/svg%3E">
 <meta property="og:title" content="Louis Conciergerie : billets sport et concerts">
-<meta property="og:description" content="Louis Conciergerie : billets pour le tennis, le football et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
+<meta property="og:description" content="Louis Conciergerie : billets pour le tennis, le football, le rugby, la NBA, la NFL et les plus grands concerts. Écrivez-nous sur WhatsApp ou via le formulaire.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://louis-conciergerie.fr/">
 <meta property="og:locale" content="fr_FR">
@@ -140,6 +140,7 @@ nav.links a:hover{color:var(--accent)}
 @keyframes cue{to{top:100%}}
 .cats{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(224,180,74,.45);background:linear-gradient(180deg,#261e10,#1a150c);color:#ecd9b0}
+@media (max-width:999px){.hero-foot .wrap > span:first-child{visibility:hidden}}
 @media (max-width:760px){.hero{padding:120px 0 130px}.hero-foot .wrap{grid-template-columns:1fr}.hero-foot .wrap > span{display:none}}
 
 /* Bandeau défilant des événements */
@@ -247,6 +248,12 @@ section[id]{scroll-margin-top:40px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 /* Catégories d'événements (effets des vitrines : styles « Section 02 » en fin de feuille) */
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* 5 univers : une rangée sur grand écran, 3 + 2 sur tablette, 2 + 2 + 1 large sur mobile ; rangées égales (1fr), les tuiles larges prennent la hauteur de la rangée */
+.cat-grid.n5{grid-template-columns:repeat(5,1fr)}
+.cat-body{grid-template-columns:minmax(0,1fr)}
+@media (min-width:1100px){.cat-grid.n5 .cat-name{font-size:clamp(28px,calc(3.6vw - 11px),36px)}}
+@media (min-width:1100px) and (max-width:1299px){.cat-grid.n5 .cat-wrap .credit .cr-long{display:none}.cat-grid.n5 .cat-wrap .credit .cr-short{display:inline}.cat-grid.n5 .cat-wrap .credit{font-size:12px}}
+@media (max-width:1099px){.cat-grid.n5{grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr}.cat-grid.n5>.cat-wrap{grid-column:span 2}.cat-grid.n5>.cat-wrap:nth-child(n+4){grid-column:span 3}.cat-grid.n5>.cat-wrap:nth-child(n+4) .cat{aspect-ratio:auto;height:100%}}
 .cat-wrap{position:relative;min-width:0}
 .cat-wrap .credit{z-index:2;top:8px;bottom:auto}
 .cat{position:relative;display:block;width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:visible;border:1px solid var(--line);background:#100d08;cursor:pointer;padding:0;color:var(--ink);text-align:left;font:inherit;box-shadow:0 20px 40px -24px rgba(0,0,0,.8);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .3s ease}
@@ -262,7 +269,7 @@ section[id]{scroll-margin-top:40px}
 .cat-cta{margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--accent)}
 .cat-cta::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
 .cat[aria-expanded="true"] .cat-cta::after{transform:rotate(-135deg) translateY(-2px)}
-@media (max-width:860px){.cat-grid{grid-template-columns:repeat(2,1fr);gap:12px}.cat-body{padding:14px}}
+@media (max-width:860px){.cat-grid{grid-template-columns:repeat(2,1fr);gap:12px}.cat-body{padding:14px}.cat-grid.n5{grid-template-columns:repeat(2,1fr)}.cat-grid.n5>.cat-wrap,.cat-grid.n5>.cat-wrap:nth-child(n+4){grid-column:auto}.cat-grid.n5>.cat-wrap:nth-child(n+4) .cat{aspect-ratio:4/5;height:auto}.cat-grid.n5>.cat-wrap:last-child{grid-column:1/-1}.cat-grid.n5>.cat-wrap:last-child .cat{aspect-ratio:auto;height:100%}}
 @media (max-width:480px){.cat-next{display:none}.cat-wrap .credit{font-size:9px;top:6px;right:6px}}
 
 /* Liste des dates d'une catégorie */
@@ -480,12 +487,14 @@ nav.links a:hover::after{transform:scaleX(1)}
 .lc-tk .t-sub{margin-bottom:20px}
 .lc-tk .seat{margin-top:auto;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 22px}
 .lc-tk .seat b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc-tk .seat b.lc-tk-sm{font-size:17px;line-height:1.53}
 .lc-tk .t-title.lc-tk-long{font-size:32px}
 .lc-tk .back-tag{text-wrap:balance}
 .lc-tk-shadow{position:absolute;left:12%;right:12%;bottom:6px;height:28px;border-radius:50%;pointer-events:none;
   background:radial-gradient(closest-side,rgba(224,180,74,.30),rgba(224,180,74,.08) 60%,transparent);
   transform:scaleX(var(--lc-sh,1));opacity:calc(.5 + var(--lc-sh,1)*.5)}
-@media (max-width:520px){
+/* billet compact dès que la colonne du billet est étroite (340 px sous 860 px, moins de 420 px jusqu'à 1000 px) */
+@media (max-width:1000px){
   .lc-tk .ticket{grid-template-columns:1fr 64px;--notch:calc(100% - 64px)}
   .lc-tk .ticket.back{grid-template-columns:64px 1fr;--notch:64px}
   .lc-tk-edge{--notch:calc(100% - 64px)}
@@ -494,7 +503,8 @@ nav.links a:hover::after{transform:scaleX(1)}
   .lc-tk .t-title{font-size:clamp(26px,8.4vw,36px)}
   .lc-tk .t-title.lc-tk-long{font-size:clamp(22px,6.6vw,28px)}
   .lc-tk .seat{gap:8px 14px}
-  .lc-tk .seat b{font-size:clamp(17px,4.6vw,24px)}
+  .lc-tk .seat b{font-size:clamp(17px,4.6vw,21px)}
+  .lc-tk .seat b.lc-tk-sm{font-size:clamp(12px,3.2vw,16px);line-height:1.44}
   .lc-tk .ticket.back .back-main{padding:18px 14px}
   .lc-tk .back-name{font-size:26px}
 }
@@ -917,7 +927,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
     </div>
     <div class="hero-foot">
       <div class="wrap">
-        <span>Tennis · Football · Rugby · Concerts</span>
+        <span>Tennis · Football · Rugby · NBA · NFL · Concerts</span>
         <a class="scroll-cue" href="#conciergerie"><span class="eyebrow">Découvrir</span><i></i></a>
         <span>Saison 2026 – 2027</span>
       </div>
@@ -933,7 +943,7 @@ nav.links a.is-active::after{transform:scaleX(1)}
         <h2 class="rv">Un seul contact pour les plus <em>grands événements.</em></h2>
         <p class="rv">Dites-moi le match, le concert ou la finale que vous voulez voir. Je cherche les places, je vous rappelle rapidement et je m'occupe de tout jusqu'à la remise de vos billets.</p>
         <ul class="points rv">
-          <li><b>Sport et concerts</b><span>Tennis, football, rugby et les plus grandes tournées.</span></li>
+          <li><b>Sport et concerts</b><span>Tennis, football, rugby, NBA, NFL et les plus grandes tournées.</span></li>
           <li><b>Un service sur mesure</b><span>Catégorie, places côte à côte, horaires : on s'adapte à votre demande.</span></li>
           <li><b>Vos billets remis</b><span>Une fois validé, vos billets vous sont envoyés.</span></li>
         </ul>
@@ -1146,28 +1156,74 @@ const CONFIG = {
 // Événements à venir. date / end au format AAAA-MM-JJ. heat :
 // 3 = risque de rupture élevé, 2 = forte demande. photo (facultatif) : "images/nom.jpg" remplace le visuel.
 const UPCOMING = [
+  /* ---- Football ---- */
   { title: "PSG – FC Barcelone", commons: ["Ousmane_Dembele_France_v_Senegal_16_June_2026-341_(cropped).jpg", "Lamine_Yamal_in_2025_(cropped).jpg"], type: "sport", kind: "foot", cat: "Ligue des champions", date: "2026-10-20", venue: "Parc des Princes", city: "Paris", heat: 3, colors: ["#004170","#a50044"] },
   { title: "PSG – OL", commons: ["Vitinha_(PSG).jpg"], type: "sport", kind: "foot", cat: "Ligue 1", date: "2026-10-25", venue: "Parc des Princes", city: "Paris", heat: 2, colors: ["#004170","#1d4ed8"] },
-  { title: "Rolex Paris Masters", commons: ["Jannik_Sinner_US_Open_2025_(cropped).jpg", "Carlos_Alcaraz_-_Roland_Garros_2025_-_serving_(cropped).jpg"], type: "sport", kind: "tennis", cat: "Tennis · ATP Masters 1000", date: "2026-10-31", end: "2026-11-08", venue: "Plenitude Arena (ex-Paris La Défense Arena)", city: "Nanterre", heat: 3, note: "Demi-finales et finale les plus demandées", colors: ["#1e3a8a","#7c3aed"] },
   { title: "PSG – AS Roma", commons: ["Achraf_Hakimi_PSG.jpg"], type: "sport", kind: "foot", cat: "Ligue des champions", date: "2026-11-25", venue: "Parc des Princes", city: "Paris", heat: 3, colors: ["#004170","#8e1f2f"] },
   { title: "PSG – Galatasaray", commons: ["Vitinha.jpg", "Victor-osimhen-nigeria-2024-3-4.jpg"], type: "sport", kind: "foot", cat: "Ligue des champions", date: "2027-01-27", venue: "Parc des Princes", city: "Paris", heat: 2, colors: ["#004170","#e2a400"] },
-  { title: "France – Galles", commons: ["Antoine_Dupont_February_2023.jpg"], type: "sport", kind: "rugby", cat: "Rugby · Tournoi des Six Nations", date: "2027-02-06", venue: "Match du XV de France à domicile", city: "France", heat: 3, colors: ["#1e3a8a","#c8102e"] },
   { title: "PSG – OM", commons: ["Ousmane_Dembélé_2018_(cropped).jpg", "Achraf_Hakimi_PSG.jpg"], type: "sport", kind: "foot", cat: "Ligue 1 · Le Classique", date: "2027-02-07", venue: "Parc des Princes", city: "Paris", heat: 3, note: "Le match le plus attendu de la saison à Paris", colors: ["#004170","#2faee0"] },
-  { title: "France – Écosse", commons: ["Antoine_Dupont_2017.jpg"], type: "sport", kind: "rugby", cat: "Rugby · Tournoi des Six Nations", date: "2027-02-21", venue: "Match du XV de France à domicile", city: "France", heat: 3, colors: ["#1e3a8a","#0b3d91"] },
-  { title: "Roland-Garros", commons: ["Carlos_Alcaraz_-_Vainqueur_Roland_Garros_2024.jpg"], type: "sport", kind: "clay", cat: "Tennis · Grand Chelem", date: "2027-05-23", end: "2027-06-06", venue: "Stade Roland-Garros", city: "Paris", heat: 3, note: "Qualifications dès le 17 mai, finales les 5 et 6 juin", colors: ["#c2562b","#0f5a32"] },
+  { title: "Finale de la Coupe de France", type: "sport", kind: "foot", cat: "Football · Coupe de France", date: "2027-05-15", venue: "Stade de France", city: "Saint-Denis", heat: 3 },
+  { title: "Finale de la Ligue des champions", type: "sport", kind: "foot", cat: "Football · Ligue des champions", date: "2027-06-05", venue: "Madrid", city: "Madrid", heat: 3 },
 
+  /* ---- Tennis ---- */
+  { title: "Rolex Paris Masters", commons: ["Jannik_Sinner_US_Open_2025_(cropped).jpg", "Carlos_Alcaraz_-_Roland_Garros_2025_-_serving_(cropped).jpg"], type: "sport", kind: "tennis", cat: "Tennis · ATP Masters 1000", date: "2026-10-31", end: "2026-11-08", venue: "Plenitude Arena (ex-Paris La Défense Arena)", city: "Nanterre", heat: 3, note: "Demi-finales et finale les plus demandées", colors: ["#1e3a8a","#0f766e"] },
+  { title: "Rolex Monte-Carlo Masters", type: "sport", kind: "clay", cat: "Tennis · ATP Masters 1000", date: "2027-04-03", end: "2027-04-11", venue: "Monte-Carlo Country Club", city: "Monaco", heat: 2 },
+  { title: "Roland-Garros", commons: ["Carlos_Alcaraz_-_Vainqueur_Roland_Garros_2024.jpg"], type: "sport", kind: "clay", cat: "Tennis · Grand Chelem", date: "2027-05-17", end: "2027-06-06", venue: "Stade Roland-Garros", city: "Paris", heat: 3, note: "Qualifications du 17 au 21 mai, tableau final du 23 mai au 6 juin, finale dames le 5 juin et finale hommes le 6 juin", colors: ["#c2562b","#0f5a32"] },
+
+  /* ---- Rugby ---- */
+  { title: "France – Fidji", type: "sport", kind: "rugby", cat: "Rugby · Test-match", date: "2026-11-07", venue: "Groupama Stadium", city: "Lyon", heat: 2 },
+  { title: "France – Afrique du Sud", type: "sport", kind: "rugby", cat: "Rugby · Test-match", date: "2026-11-13", venue: "Stade de France", city: "Saint-Denis", heat: 3 },
+  { title: "France – Argentine", type: "sport", kind: "rugby", cat: "Rugby · Test-match", date: "2026-11-21", venue: "Stade de France", city: "Saint-Denis", heat: 2 },
+  { title: "Stade Français – Northampton", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2026-12-11", venue: "Paris", city: "Paris", heat: 2 },
+  { title: "Racing 92 – Gloucester", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2026-12-13", venue: "La Défense Arena", city: "Paris", heat: 2 },
+  { title: "Stade Français – Cardiff", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2027-01-09", venue: "Stade Jean-Bouin", city: "Paris", heat: 2 },
+  { title: "France – Galles", commons: ["Antoine_Dupont_February_2023.jpg"], type: "sport", kind: "rugby", cat: "Rugby · Tournoi des Six Nations", date: "2027-02-06", venue: "Stade de France", city: "Saint-Denis", heat: 3, colors: ["#1e3a8a","#c8102e"] },
+  { title: "France – Écosse", commons: ["Antoine_Dupont_2017.jpg"], type: "sport", kind: "rugby", cat: "Rugby · Tournoi des Six Nations", date: "2027-02-21", venue: "Stade de France", city: "Saint-Denis", heat: 3, colors: ["#1e3a8a","#0b3d91"] },
+  { title: "Finales Champions Cup", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup et Challenge Cup", date: "2027-05-21", end: "2027-05-22", venue: "Groupama Stadium", city: "Lyon", heat: 2, note: "Finales de la Challenge Cup et de la Champions Cup" },
+  // date exacte pas encore annoncée : tbc = « à confirmer », date sert seulement au classement
+  { title: "Demi-finales du Top 14", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-06-14", tbc: true, dateLabel: ["Juin", "2027"], whenText: "Juin 2027, date à confirmer", labelText: "juin 2027", venue: "Bordeaux", city: "Bordeaux", heat: 2 },
+  { title: "Finale du Top 14", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-06-26", venue: "Stade de France", city: "Saint-Denis", heat: 3 },
+
+  /* ---- Sports US ---- */
+  { title: "Steelers – Saints", type: "sport", kind: "nfl", cat: "NFL · Paris Game", date: "2026-10-25", venue: "Stade de France", city: "Saint-Denis", heat: 3 },
+  { title: "Spurs – Pelicans", type: "sport", kind: "nba", cat: "NBA · Paris Game", date: "2027-01-14", venue: "Accor Arena", city: "Paris", heat: 3 },
+
+  /* ---- Concerts ---- */
+  { title: "Céline Dion", commons: ["Celine_Dion_Live_2017.jpg"], type: "concert", cat: "Concert · 5 dates", date: "2026-10-09", end: "2026-10-17", venue: "Paris", city: "Paris", heat: 3, note: "Concerts les 9, 10, 14, 16 et 17 octobre" },
+  { title: "Stevie Wonder", type: "concert", cat: "Concert", date: "2026-10-15", venue: "Accor Arena", city: "Paris", heat: 3 },
+  { title: "Gradur", type: "concert", cat: "Concert", date: "2026-10-16", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "Bigflo & Oli", commons: ["AccorHotels_Arena_(Bercy_Arena).jpg"], photoNote: "L'Accor Arena", type: "concert", cat: "Concert", date: "2026-10-19", end: "2026-10-20", venue: "Accor Arena", city: "Paris", heat: 2, colors: ["#f59e0b","#db2777"] },
   { title: "The Strokes", commons: ["Julian_Casablancas_-_Lollapalooza_Chile_2014_(13672393704).jpg"], type: "concert", cat: "Concert", date: "2026-10-22", venue: "Accor Arena", city: "Paris", heat: 3, colors: ["#e11d48","#1e1b4b"] },
   { title: "Korn", commons: ["Jonathan_Davis_of_Korn.jpg"], type: "concert", cat: "Concert", date: "2026-10-23", venue: "Accor Arena", city: "Paris", heat: 3, note: "Très demandé, places rares", colors: ["#dc2626","#111827"] },
+  { title: "Don Toliver", type: "concert", cat: "Concert", date: "2026-10-25", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "The World of Hans Zimmer", type: "concert", cat: "Concert", date: "2026-11-02", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "J. Cole", commons: ["J._Cole_(DJ_Zeke_cropped_out).jpg"], type: "concert", cat: "Concert · The Fall-Off Tour", date: "2026-11-05", venue: "Accor Arena", city: "Paris", heat: 3, colors: ["#eab308","#7c2d12"] },
+  { title: "Pitbull", type: "concert", cat: "Concert", date: "2026-11-11", venue: "Lyon", city: "Lyon", heat: 2 },
+  { title: "Fontaines D.C.", type: "concert", cat: "Concert", date: "2026-11-13", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "PLK", type: "concert", cat: "Concert", date: "2026-11-20", venue: "LDLC Arena", city: "Lyon", heat: 2 },
   { title: "Placebo", commons: ["Brian_Molko_Placebo.jpg"], type: "concert", cat: "Concert · 30 ans", date: "2026-11-25", venue: "Accor Arena", city: "Paris", heat: 3, note: "Très demandé, places rares", colors: ["#a855f7","#0f172a"] },
+  { title: "Muse", type: "concert", cat: "Concert", date: "2026-11-27", venue: "La Défense Arena", city: "Paris", heat: 3 },
+  { title: "Triangle des Bermudes", type: "concert", cat: "Concert", date: "2026-11-27", end: "2026-11-28", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "Muse", type: "concert", cat: "Concert · 2 dates", date: "2026-12-03", end: "2026-12-04", venue: "Sud de France Arena", city: "Montpellier", note: "Concerts les 3 et 4 décembre", heat: 2 },
+  { title: "Noah Kahan", type: "concert", cat: "Concert", date: "2026-12-07", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "Orelsan", commons: ["Portrait_Photographique_d'Orelsan.jpg"], type: "concert", cat: "Concert · 15 dates", date: "2026-12-09", end: "2026-12-28", venue: "Accor Arena", city: "Paris", heat: 3, note: "Résidence de 15 soirs, les week-ends partent en premier", colors: ["#22d3ee","#312e81"] },
-  { title: "Gims", commons: ["Maître_Gims_Cannes_2016.jpg"], type: "concert", cat: "Concert", date: "2026-12-16", end: "2026-12-17", venue: "Plenitude Arena", city: "Nanterre", heat: 3, colors: ["#f97316","#1e1b4b"] },
-  { title: "Ninho", commons: ["Ninho.jpg"], type: "concert", cat: "Concert · Quattro Tour", date: "2027-01-15", end: "2027-03-31", dateLabel: ["Janv.","→ mars 27"], venue: "Zéniths, tournée dans toute la France", city: "France", heat: 3, colors: ["#10b981","#0f172a"] },
+  { title: "Gims", commons: ["Maître_Gims_Cannes_2016.jpg"], type: "concert", cat: "Concert · 2 dates", date: "2026-12-16", end: "2026-12-17", venue: "Plenitude Arena", city: "Paris", note: "Concerts les 16 et 17 décembre", heat: 3, colors: ["#f97316","#1e1b4b"] },
+  { title: "Ninho", commons: ["Ninho.jpg"], type: "concert", cat: "Concert · Quattro Tour", date: "2027-01-15", end: "2027-03-31", dateLabel: ["Janv.","→ mars 27"], whenText: "De janvier à mars 2027", labelText: "janv. – mars 2027", venue: "Zéniths, tournée dans toute la France", city: "France", heat: 3, colors: ["#10b981","#0f172a"] },
+  { title: "aespa", type: "concert", cat: "Concert", date: "2027-02-02", venue: "Accor Arena", city: "Paris", heat: 3 },
+  { title: "Charli XCX", type: "concert", cat: "Concert", date: "2027-02-24", venue: "Accor Arena", city: "Paris", heat: 3 },
+  { title: "Angèle", type: "concert", cat: "Concert · 5 dates", date: "2027-03-08", end: "2027-03-13", venue: "Accor Arena", city: "Paris", heat: 2, note: "Concerts les 8, 9, 10, 12 et 13 mars" },
+  { title: "Sienna Spiro", type: "concert", cat: "Concert", date: "2027-03-21", end: "2027-03-22", venue: "Paris", city: "Paris", heat: 2 },
+  { title: "Teddy Swims", type: "concert", cat: "Concert · 2 dates", date: "2027-03-30", end: "2027-03-31", venue: "Accor Arena", city: "Paris", note: "Concerts les 30 et 31 mars", heat: 2 },
+  { title: "Gracie Abrams", type: "concert", cat: "Concert", date: "2027-04-08", end: "2027-04-12", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "Niska", type: "concert", cat: "Concert", date: "2027-04-09", end: "2027-04-11", venue: "Stade de France", city: "Saint-Denis", heat: 2 },
+  { title: "Olivia Rodrigo", type: "concert", cat: "Concert", date: "2027-04-23", end: "2027-04-24", venue: "La Défense Arena", city: "Paris", heat: 3 },
   { title: "SCH", commons: ["Muse_TIFO_Stade_de_France.jpg"], photoNote: "Le Stade de France en concert", type: "concert", cat: "Concert", date: "2027-04-24", venue: "Stade de France", city: "Saint-Denis", heat: 3, colors: ["#64748b","#0b1020"] },
-  { title: "Céline Dion", commons: ["Celine_Dion_Live_2017.jpg"], type: "concert", cat: "Concert · 10 dates", date: "2027-05-08", end: "2027-05-29", venue: "Plenitude Arena", city: "Nanterre", heat: 3, note: "Nouvelles dates après des concerts 2026 pris d'assaut", colors: ["#f0c75e","#4c1d95"] },
-  { title: "SDM", commons: ["SDM_(rappeur).jpg"], type: "concert", cat: "Concert", date: "2027-05-29", end: "2027-05-30", venue: "Stade de France", city: "Saint-Denis", heat: 2, colors: ["#38bdf8","#0b1020"] },
-  { title: "Oasis", commons: ["Oasis_Liam_and_Noel.jpg"], type: "concert", cat: "Concert", date: "2027-07-23", end: "2027-07-24", venue: "Stade de France", city: "Saint-Denis", heat: 3, note: "Places très recherchées", colors: ["#60a5fa","#111827"] }
+  { title: "Céline Dion", commons: ["Celine_Dion_Live_2017.jpg"], type: "concert", cat: "Concert · 10 dates", date: "2027-05-08", end: "2027-05-29", venue: "La Défense Arena", city: "Paris", heat: 3, note: "Concerts les 8, 12, 14, 15, 19, 21, 22, 26, 28 et 29 mai", colors: ["#f0c75e","#4c1d95"] },
+  { title: "Kaaris", type: "concert", cat: "Concert", date: "2027-05-22", venue: "Stade de France", city: "Saint-Denis", heat: 2 },
+  { title: "SDM", commons: ["SDM_(rappeur).jpg"], type: "concert", cat: "Concert · 2 dates", date: "2027-05-29", end: "2027-05-30", venue: "Stade de France", city: "Saint-Denis", note: "Concerts les 29 et 30 mai", heat: 2, colors: ["#38bdf8","#0b1020"] },
+  { title: "Karol G", type: "concert", cat: "Concert", date: "2027-07-01", venue: "Plenitude Arena", city: "Paris", heat: 2 },
+  { title: "Harry Styles", type: "concert", cat: "Concert · 4 dates", date: "2027-07-16", end: "2027-07-24", venue: "Plenitude Arena", city: "Paris", heat: 3, note: "Concerts les 16, 17, 23 et 24 juillet" },
+  { title: "Oasis", commons: ["Oasis_Liam_and_Noel.jpg"], type: "concert", cat: "Concert · 2 dates", date: "2027-07-20", end: "2027-07-23", venue: "Stade de France", city: "Saint-Denis", heat: 3, note: "Concerts les 20 et 23 juillet, places très recherchées", colors: ["#60a5fa","#111827"] }
 ];
 
 // Événements passés : mets tes photos dans le dossier images/ et indique le nom du fichier.
@@ -1196,8 +1252,12 @@ const today = new Date(); today.setHours(0,0,0,0);
 const HEAT = {3:"Risque de rupture", 2:"Forte demande"};
 const parse = d => new Date(d + "T00:00");
 const fmt = d => parse(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-const when = e => e.dateLabel ? "De janvier à mars 2027" : e.end ? "Du " + fmt(e.date).replace(/ \d{4}$/, "") + " au " + fmt(e.end) : fmt(e.date);
-const evLabel = e => e.title + " (" + (e.dateLabel ? "janv. – mars 2027" : e.end ? parse(e.date).toLocaleDateString("fr-FR") + " – " + parse(e.end).toLocaleDateString("fr-FR") : parse(e.date).toLocaleDateString("fr-FR")) + ")";
+const sameMonth = e => e.end && e.date.slice(0, 7) === e.end.slice(0, 7);
+const when = e => e.whenText ? e.whenText : e.end ? "Du " + (sameMonth(e) ? parse(e.date).getDate() : fmt(e.date).replace(/ \d{4}$/, "")) + " au " + fmt(e.end) : fmt(e.date);
+// Ville affichée après le lieu, sauf si elle le répète (« Paris, Paris ») ou si c'est toute la France
+const cityTxt = e => e.city && e.city !== "France" && e.city !== e.venue ? e.city : "";
+const placeTxt = e => e.venue + (cityTxt(e) ? ", " + cityTxt(e) : "");
+const evLabel = e => e.title + " (" + (e.labelText ? e.labelText : e.end ? parse(e.date).toLocaleDateString("fr-FR") + " – " + parse(e.end).toLocaleDateString("fr-FR") : parse(e.date).toLocaleDateString("fr-FR")) + ")";
 
 // Photo : fichier local (photo) en priorité, sinon photo libre Wikimedia Commons (crédit affiché)
 const commonsUrl = (f, w = 900) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f) + "?width=" + w;
@@ -1230,6 +1290,26 @@ function poster(e, i) {
        <line x1="110" y1="16" x2="110" y2="184" stroke-dasharray="8 8"/><line x1="210" y1="16" x2="210" y2="184" stroke-dasharray="8 8"/><line x1="160" y1="16" x2="160" y2="184"/></g>
        <g stroke="#f5d77a" stroke-width="4"><line x1="28" y1="70" x2="28" y2="130"/><line x1="292" y1="70" x2="292" y2="130"/></g>
        <ellipse cx="160" cy="100" rx="14" ry="9" fill="#f5e6c8" transform="rotate(-25 160 100)"/>`;
+  } else if (e.kind === "nfl") {
+    const yards = [1,2,3,4,5,6,7,8,9].map(k => `<line x1="${50 + k*22}" y1="16" x2="${50 + k*22}" y2="184" stroke-width="${k === 5 ? 3 : 1.6}"/>`).join("");
+    const hash = [1,2,3,4,5,6,7,8,9,10].map(k => `<line x1="${39 + k*22}" y1="78" x2="${39 + k*22}" y2="84"/><line x1="${39 + k*22}" y1="116" x2="${39 + k*22}" y2="122"/>`).join("");
+    art = `<rect width="320" height="200" fill="#1c160c"/><rect width="320" height="200" fill="url(#${id})" opacity=".55"/>
+       <rect x="16" y="16" width="34" height="168" fill="#f5d77a" fill-opacity=".1"/><rect x="270" y="16" width="34" height="168" fill="#f5d77a" fill-opacity=".1"/>
+       <g ${W}><rect x="16" y="16" width="288" height="168"/><line x1="50" y1="16" x2="50" y2="184"/><line x1="270" y1="16" x2="270" y2="184"/></g>
+       <g stroke="#f5d77a" stroke-opacity=".4" fill="none">${yards}${hash}</g>
+       <g transform="rotate(-25 160 100)"><path d="M134 100 Q160 80 186 100 Q160 120 134 100 Z" fill="#f5e6c8"/>
+       <g stroke="#3a2c12" stroke-width="1.6" stroke-linecap="round"><line x1="150" y1="100" x2="170" y2="100"/><line x1="153" y1="96.5" x2="153" y2="103.5"/><line x1="158" y1="96.5" x2="158" y2="103.5"/><line x1="163" y1="96.5" x2="163" y2="103.5"/><line x1="168" y1="96.5" x2="168" y2="103.5"/></g></g>`;
+  } else if (e.kind === "nba") {
+    art = `<rect width="320" height="200" fill="#1c160c"/>` +
+      [0,1,2,3,4,5,6,7,8,9].map(k => k % 2 ? `<rect y="${k*20}" width="320" height="20" fill="#221a0e"/>` : "").join("") +
+      `<rect width="320" height="200" fill="url(#${id})" opacity=".5"/>
+       <rect x="16" y="72" width="56" height="56" fill="#f5d77a" fill-opacity=".1"/><rect x="248" y="72" width="56" height="56" fill="#f5d77a" fill-opacity=".1"/>
+       <g ${W}><rect x="16" y="16" width="288" height="168"/><line x1="160" y1="16" x2="160" y2="184"/><circle cx="160" cy="100" r="24"/>
+       <rect x="16" y="72" width="56" height="56"/><rect x="248" y="72" width="56" height="56"/><circle cx="72" cy="100" r="18"/><circle cx="248" cy="100" r="18"/>
+       <path d="M16 34 H44 A66 66 0 0 1 44 166 H16"/><path d="M304 34 H276 A66 66 0 0 0 276 166 H304"/></g>
+       <g stroke="#f5d77a" stroke-width="3" fill="none"><circle cx="30" cy="100" r="5"/><circle cx="290" cy="100" r="5"/></g>
+       <circle cx="160" cy="100" r="12" fill="#e8c063"/>
+       <g stroke="#3a2c12" stroke-width="1.4" fill="none"><line x1="148" y1="100" x2="172" y2="100"/><line x1="160" y1="88" x2="160" y2="112"/><path d="M151.5 91.5 Q156 100 151.5 108.5"/><path d="M168.5 91.5 Q164 100 168.5 108.5"/></g>`;
   } else if (e.kind === "tennis" || e.kind === "clay") {
     const court = e.kind === "clay" ? "#5a2412" : "#3a1a10", out = e.kind === "clay" ? "#3a1208" : "#26100b";
     art = `<rect width="320" height="200" fill="${out}"/><rect width="320" height="200" fill="url(#${id})" opacity=".35"/>
@@ -1248,18 +1328,22 @@ function poster(e, i) {
   return `<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(e.title)}">${grad}${art}</svg>`;
 }
 
-const events = UPCOMING.filter(e => parse(e.end || e.date) >= today).sort((a,b) => a.date.localeCompare(b.date));
+const lastDay = e => { const d = parse(e.date); return e.tbc ? new Date(d.getFullYear(), d.getMonth() + 1, 0) : parse(e.end || e.date); };
+const events = UPCOMING.filter(e => lastDay(e) >= today).sort((a,b) => a.date.localeCompare(b.date));
 
 // Regroupement par catégorie
 const CATS = [
   { key: "concert", name: "Concerts", test: e => e.type === "concert" },
   { key: "foot",    name: "Football", test: e => e.kind === "foot" },
   { key: "tennis",  name: "Tennis",   test: e => e.kind === "tennis" || e.kind === "clay" },
-  { key: "rugby",   name: "Rugby",    test: e => e.kind === "rugby" }
+  { key: "rugby",   name: "Rugby",    test: e => e.kind === "rugby" },
+  { key: "us",      name: "Sports US", test: e => e.kind === "nfl" || e.kind === "nba" }
 ].map(c => ({ ...c, list: events.filter(c.test) })).filter(c => c.list.length);
 
 const shortDate = d => d.getDate() + " " + MONTHS[d.getMonth()];
+const nextTxt = e => e.labelText ? e.labelText : parse(e.date) < today ? "jusqu'au " + shortDate(parse(e.end || e.date)) : shortDate(parse(e.date));
 const grid = document.getElementById("cat-grid"), panel = document.getElementById("cat-panel");
+grid.classList.add("n" + CATS.length);
 grid.innerHTML = CATS.map((c, i) => {
   // photo de couverture : un événement très demandé avec une photo d'artiste ou de joueur
   const cover = c.list.find(e => e.heat === 3 && e.commons && !e.photoNote) || c.list.find(e => e.commons) || c.list[0];
@@ -1270,7 +1354,7 @@ grid.innerHTML = CATS.map((c, i) => {
     <span class="lc-vt-layer lc-vt-l2"><span class="cat-body">
       <span class="cat-name">${c.name}</span>
       <span class="cat-count">${c.list.length} événement${c.list.length > 1 ? "s" : ""}</span>
-      <span class="cat-next">Prochain : ${esc(c.list[0].title)}, ${shortDate(parse(c.list[0].date))}</span>
+      <span class="cat-next">Prochain : ${esc(c.list[0].title)}, ${nextTxt(c.list[0])}</span>
       <span class="cat-cta">Voir les dates</span>
     </span></span>
   </button>${credit}</div>`;
@@ -1288,7 +1372,7 @@ requestAnimationFrame(() => mq.style.setProperty("--dur", Math.round(mq.firstEle
 const waEventMsg = e => "Bonjour Louis, j'ai vu cet événement sur votre site et j'aimerais y assister :\n" +
   "🎟️ " + e.title + " (" + e.cat + ")\n" +
   "📅 " + when(e) + "\n" +
-  "📍 " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") + "\n" +
+  "📍 " + placeTxt(e) + "\n" +
   "Nombre de places : ";
 
 // i : rang de la ligne dans le panneau (cascade du « livret »)
@@ -1298,12 +1382,12 @@ function rowHTML(e, i) {
     : `<span class="d">${d.getDate()}${e.end ? "+" : ""}</span><span class="m">${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</span>`;
   // Compte à rebours : J-n dans les 30 jours, « Aujourd'hui », ou « En cours » pour un événement sur plusieurs jours
   const days = Math.round((d - today) / 864e5);
-  const soon = days === 0 ? "Aujourd'hui" : days > 0 && days <= 30 ? "J-" + days : days < 0 && e.end && parse(e.end) >= today ? "En cours" : "";
+  const soon = e.tbc ? "" : days === 0 ? "Aujourd'hui" : days > 0 && days <= 30 ? "J-" + days : days < 0 && e.end && parse(e.end) >= today ? "En cours" : "";
   return `<article class="row lc-vt-row" style="--i:${Math.min(i || 0, 8)}">
     <div class="row-date">${dateBox}</div>
     <div class="row-main">
       <h4>${esc(e.title)}</h4>
-      <div class="row-meta">${soon ? `<span class="lc-pn-j">${soon}</span>` : ""}${esc(e.cat)} · ${when(e)} · ${esc(e.venue)}${e.city && e.city !== "France" ? ", " + esc(e.city) : ""}</div>
+      <div class="row-meta">${soon ? `<span class="lc-pn-j">${soon}</span>` : ""}${esc(e.cat)} · ${when(e)} · ${esc(placeTxt(e))}</div>
       ${e.note ? `<div class="row-note">${esc(e.note)}</div>` : ""}
     </div>
     <span class="pill h${e.heat}">${HEAT[e.heat]}</span>
@@ -1423,14 +1507,14 @@ form.addEventListener("submit", async ev => {
 
   // Données : le premier événement "risque de rupture" de chaque univers, puis les suivants par date
   var picked = [];
-  ["foot", "concert", "tennis", "rugby"].forEach(function(k){
+  ["foot", "concert", "tennis", "rugby", "us"].forEach(function(k){
     var c = CATS.find(function(c){ return c.key === k; }); if (!c) return;
     var e = c.list.find(function(x){ return x.heat === 3; }); if (e) picked.push(e);
   });
   events.forEach(function(e){ if (e.heat === 3 && picked.indexOf(e) < 0) picked.push(e); });
-  var kindName = function(e){ return e.type === "concert" ? "Concert" : ({ foot: "Football", tennis: "Tennis", clay: "Tennis", rugby: "Rugby" })[e.kind] || ""; };
+  var kindName = function(e){ return e.type === "concert" ? "Concert" : ({ foot: "Football", tennis: "Tennis", clay: "Tennis", rugby: "Rugby", nfl: "Football américain", nba: "Basket" })[e.kind] || ""; };
   var place = function(e){ var v = e.venue.replace(/\s*\(.*?\)/g, "").trim(); return v.length <= 22 ? v : e.cat.split("·").pop().trim(); };
-  var dateTxt = function(e){ return e.dateLabel ? "Janv. → mars" : shortDate(parse(e.date)) + (e.end ? " → " + shortDate(parse(e.end)) : ""); };
+  var dateTxt = function(e){ return e.dateLabel ? e.dateLabel.join(" ") : shortDate(parse(e.date)) + (e.end ? " → " + shortDate(parse(e.end)) : ""); };
 
   // [zone, axe ("w" = largeur de l'accueil, "z" = largeur de la zone), cx, cy, z, rotateZ, rotateY, voile]
   var DESK = [["SL","z",.48,.62,-60,-7,20,.10],["SR","z",.52,.72,-140,6,-22,.18],["TOP","w",.20,.5,-380,5,14,.38],
@@ -1606,23 +1690,24 @@ form.addEventListener("submit", async ev => {
     seats: front.querySelectorAll(".seat b"), stub: q(".ticket-stub span") };
   var kindLabel = function(e){
     if (e.type === "concert") return "Concert";
-    return ({ foot: "Football", tennis: "Tennis", clay: "Tennis", rugby: "Rugby" })[e.kind] || "Sport";
+    return ({ foot: "Football", tennis: "Tennis", clay: "Tennis", rugby: "Rugby", nfl: "Football américain", nba: "Basket" })[e.kind] || "Sport";
   };
   var dayMs = 864e5;
   var jourJ = function(e){
+    if (e.tbc) return "J-?";
     var d = parse(e.date), end = e.end ? parse(e.end) : d;
     if (d <= today && today <= end) return "En cours";
     var n = Math.round((d - today) / dayMs);
     return n === 0 ? "Aujourd'hui" : "J-" + n;
   };
   var dateCell = function(e){
-    if (e.dateLabel) return "Janv.";
+    if (e.dateLabel) return e.dateLabel[0];
     var d = parse(e.date);
     return d.getDate() + " " + MONTHS[d.getMonth()] + (e.end ? "+" : "");
   };
   var sub = function(e){
     var v = String(e.venue || "").replace(/\s*\([^)]*\)/g, "").trim();
-    return e.city && e.city !== "France" ? v + ", " + e.city : v;
+    return cityTxt(e) ? v + ", " + cityTxt(e) : v;
   };
   function print(e){
     if (!e) return;
@@ -1634,6 +1719,16 @@ form.addEventListener("submit", async ev => {
     el.seats[0].textContent = dateCell(e);
     el.seats[1].textContent = e.city;
     el.seats[2].textContent = jourJ(e);
+    el.seats[2].classList.toggle("lc-tk-sm", el.seats[2].textContent.length > 5);
+    fitSeat(el.seats[1]);
+  }
+  // une ville longue (Saint-Denis, Montpellier) rapetisse jusqu'à 60 % pour tenir, avant d'être coupée
+  function fitSeat(b){
+    b.style.fontSize = "";
+    var cw = b.clientWidth, sw = b.scrollWidth;
+    if (!cw || sw <= cw) return;
+    var fs = parseFloat(getComputedStyle(b).fontSize);
+    b.style.fontSize = Math.max(fs * .6, fs * cw / sw - .5).toFixed(1) + "px";
   }
   if (list.length) {
     var y0 = parse(list[0].date).getFullYear(), y1 = y0;
@@ -1855,12 +1950,12 @@ form.addEventListener("submit", async ev => {
     var w = when(e);
     return {
       e: e,
-      date: pad2(d.getDate()) + " " + MON[d.getMonth()],
+      date: e.dateLabel ? e.dateLabel[0].toLocaleUpperCase("fr-FR") : pad2(d.getDate()) + " " + MON[d.getMonth()],
       title: e.title.toLocaleUpperCase("fr-FR"),
-      j: "J-" + Math.max(0, days),
+      j: e.tbc || live ? "" : "J-" + Math.max(0, days),
       heat: heat, heatClass: "h" + e.heat, venue: venue,
-      label: e.title + ", " + w.charAt(0).toLowerCase() + w.slice(1) + ", " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "") +
-        ". " + (live ? (e.end ? "En cours. " : "Aujourd'hui. ") : "Dans " + days + " jour" + (days > 1 ? "s" : "") + ". ") + (hot ? hot + ". " : "") + "Voir les dates"
+      label: e.title + ", " + w.charAt(0).toLowerCase() + w.slice(1) + ", " + placeTxt(e) +
+        ". " + (live ? (e.end ? "En cours. " : "Aujourd'hui. ") : e.tbc ? "" : "Dans " + days + " jour" + (days > 1 ? "s" : "") + ". ") + (hot ? hot + ". " : "") + "Voir les dates"
     };
   });
   var N = Math.min(20, items.reduce(function(m, it){ return Math.max(m, chars(it.title).length); }, 0));
@@ -1869,7 +1964,7 @@ form.addEventListener("submit", async ev => {
   var fitR = function(s, n){ var a = chars(s).slice(0, n); while (a.length < n) a.unshift(" "); return a; };   // compte à rebours calé à droite
   var figs = [events.length, CATS.length, 1];
   var FW = figs.reduce(function(m, n){ return Math.max(m, String(n).length); }, 2);
-  var labels = ["événements à venir cette saison", "univers : " + CATS.map(function(c){ return c.name.toLowerCase(); }).join(", "), "seul interlocuteur, du premier message à vos billets"];
+  var labels = ["événements à venir cette saison", "univers : " + CATS.map(function(c){ return c.name.replace(/^[A-Z](?=[a-z])/, function(ch){ return ch.toLowerCase(); }); }).join(", "), "seul interlocuteur, du premier message à vos billets"];
 
   /* ---------- Construction ---------- */
   var CELL = '<span class="lc-fl-t"><b></b></span><span class="lc-fl-b"><b></b></span><span class="lc-fl-lt"><b></b><i class="lc-fl-sh"></i></span><span class="lc-fl-lb"><b></b><i class="lc-fl-sh"></i></span>';
@@ -2177,8 +2272,8 @@ form.addEventListener("submit", async ev => {
   var html = document.documentElement;
   var wraps = [].slice.call(grid.querySelectorAll(".cat-wrap"));
   // Liens directs : louis-conciergerie.fr/#football ouvre le panneau Football
-  var SLUG = { concert: "concerts", foot: "football", tennis: "tennis", rugby: "rugby" };
-  var KEY = { concerts: "concert", concert: "concert", football: "foot", foot: "foot", tennis: "tennis", rugby: "rugby" };
+  var SLUG = { concert: "concerts", foot: "football", tennis: "tennis", rugby: "rugby", us: "sports-us" };
+  var KEY = { concerts: "concert", concert: "concert", football: "foot", foot: "foot", tennis: "tennis", rugby: "rugby", "sports-us": "us", nfl: "us", nba: "us" };
   var openTile = function(){ return grid.querySelector('.cat[aria-expanded="true"]'); };
   var setHash = function(h){ try { history.replaceState(history.state, "", "#" + h); } catch (e) {} };
   var jump = function(){ var b = html.style.scrollBehavior; html.style.scrollBehavior = "auto"; panel.scrollIntoView({ block: "start" }); html.style.scrollBehavior = b; };
@@ -2290,7 +2385,7 @@ form.addEventListener("submit", async ev => {
     var e = events[+b.dataset.share]; if (!e) return;
     var t = openTile();
     var url = location.protocol + "//" + location.host + location.pathname + "#" + (t && SLUG[t.dataset.cat] || "a-venir");
-    var text = e.title + " · " + when(e) + " · " + e.venue + (e.city && e.city !== "France" ? ", " + e.city : "");
+    var text = e.title + " · " + when(e) + " · " + placeTxt(e);
     if (navigator.share) { navigator.share({ title: e.title, text: text, url: url }).catch(function(){}); return; }
     window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
   });
@@ -2326,7 +2421,7 @@ form.addEventListener("submit", async ev => {
   if (stepEls.length !== 3) return;
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   // l'événement le plus demandé à venir (données réelles de la liste)
-  var e = events.find(function(x){ return x.heat === 3; }) || events[0];
+  var e = events.find(function(x){ return x.heat === 3 && !x.tbc && parse(x.date) >= today; }) || events[0];
 
   var how = document.createElement("div"); how.className = "lc-how";
   steps.parentNode.insertBefore(how, steps); how.appendChild(steps);
