@@ -2157,7 +2157,7 @@ form.addEventListener("submit", async ev => {
 <script>
 /* Bulles de champagne : de vraies bulles vues dans le vin (bord doré qui réfracte, cœur transparent, reflet de lumière),
    qui montent en chapelets réguliers depuis des points du fond de la flûte, accélèrent et grossissent en montant.
-   Au défilement, elles suivent la page en profondeur : les bulles proches bougent plus que les lointaines */
+   Au défilement, toutes les bulles suivent la page en profondeur : les proches bougent plus que les lointaines */
 (function(){
   var c=document.getElementById('bubbles');
   if(!c||!c.getContext)return;
@@ -2182,6 +2182,7 @@ form.addEventListener("submit", async ev => {
   bf.addColorStop(0,'rgba(255,255,248,.30)');bf.addColorStop(.72,'rgba(255,250,230,.20)');bf.addColorStop(.88,'rgba(190,146,52,.16)');bf.addColorStop(1,'rgba(190,146,52,0)');
   gb.fillStyle=bf;gb.fillRect(0,0,B,B);
   var FREE=200,HARD=1000,lastW=0,baseFREE=200,baseHARD=1000;
+  var SPEED=.6;                                // montée plus lente et plus calme (1 = vitesse d'origine)
   function resize(){
     W=innerWidth;H=innerHeight;var dpr=Math.min(window.devicePixelRatio||1,W<700?1.25:1.5);
     c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -2190,12 +2191,12 @@ form.addEventListener("submit", async ev => {
     HARD=baseHARD=W<700?650:1600;
     if(Math.abs(W-lastW)>40){                  // colonnes recalculées seulement si la largeur change
       lastW=W;var n=Math.max(8,Math.round(W/(W<700?60:48)));streams=[];
-      for(var i=0;i<n;i++)streams.push({x:(i+.15+Math.random()*.7)*W/n,z:Math.random(),every:.09+Math.random()*.2,t:Math.random(),sz:.9+Math.random()*.7});
+      for(var i=0;i<n;i++)streams.push({x:(i+.15+Math.random()*.7)*W/n,z:Math.random(),every:(.09+Math.random()*.2)/SPEED,t:Math.random(),sz:.9+Math.random()*.7});
     }
   }
   function make(x,y,z,small){
     var b={x:x,y:y,z:z,r:(small?.7+Math.random()*1.2:1.2+Math.random()*3.2)*(.5+z*.9),
-      v:(40+Math.random()*50)*(.55+z*.9),ph:Math.random()*6.28,f:1.5+Math.random()*2.5,a:.6+Math.random()*2.4};
+      v:(40+Math.random()*50)*(.55+z*.9)*SPEED,ph:Math.random()*6.28,f:(1.5+Math.random()*2.5)*.7,a:.6+Math.random()*2.4};
     if(!small&&z>.92&&Math.random()<.5){b.bk=1;b.r*=3;b.v*=.6}
     return b;
   }
@@ -2207,7 +2208,7 @@ form.addEventListener("submit", async ev => {
     for(var j=0;j<streams.length;j++){
       var st=streams[j];st.t-=dt;
       if(st.t<=0&&bubbles.length<HARD){st.t=st.every*(.85+Math.random()*.3);var nb=make(st.x+(Math.random()-.5)*1.2,H+6,st.z,true);
-        nb.s=1;nb.r=st.sz*(.7+st.z*1.1)*(.9+Math.random()*.2);nb.a*=.18;nb.v=(70+st.z*40)*(.9+Math.random()*.2);bubbles.push(nb)}
+        nb.s=1;nb.r=st.sz*(.7+st.z*1.1)*(.9+Math.random()*.2);nb.a*=.18;nb.v=(70+st.z*40)*(.9+Math.random()*.2)*SPEED;bubbles.push(nb)}
     }
     // et des bulles libres un peu partout
     if(free<FREE*.7)for(var f=free;f<FREE;f++)bubbles.push(make(Math.random()*W,Math.random()*H,Math.random(),false));
@@ -2215,9 +2216,9 @@ form.addEventListener("submit", async ev => {
     for(var i=bubbles.length-1;i>=0;i--){
       var b=bubbles[i];
       if(ds){                                   // parallaxe : on descend, les bulles montent avec la page ; on remonte, elles redescendent
-        b.y-=ds*(b.s?.1:b.bk?.9:.15+b.z*.55);    // chapelets accrochés au verre : à peine ; bulles libres : selon la profondeur
-        if(b.y>H+10){if(b.s){bubbles.splice(i,1);continue}b.y-=H+20}   // sortie en bas : la bulle libre revient par le haut
-        else if(b.y<-10&&!b.s)b.y+=H+20;                                // sortie en haut : elle revient par le bas
+        b.y-=ds*(b.bk?.9:.15+b.z*.55);           // toutes les bulles, chapelets compris, selon leur profondeur
+        if(b.y>H+10)b.y-=H+20;                    // sortie en bas : la bulle revient par le haut, dans sa colonne
+        else if(b.y<-10)b.y+=H+20;                // sortie en haut : elle revient par le bas
       }
       var k=1-b.y/H;                            // 0 en bas, 1 en haut
       b.y-=b.v*(1+k*.7)*dt;                     // accélère en montant
@@ -2245,7 +2246,7 @@ form.addEventListener("submit", async ev => {
     ctx.clearRect(0,0,W,H);step(dt,true,ds);govern(dt,t);
     raf=requestAnimationFrame(frame);
   }
-  function warm(){bubbles=[];for(var i=0;i<600;i++)step(.025,false)}  // le verre est déjà plein au chargement
+  function warm(){bubbles=[];for(var i=0;i<900;i++)step(.025,false)}  // le verre est déjà plein au chargement
   // En pause quand l'onglet est caché ou que le menu plein écran est ouvert
   var menu=document.getElementById('menu');
   function sync(){
