@@ -1223,7 +1223,7 @@ const CATS = [
   { key: "foot",    name: "Football", test: e => e.kind === "foot", photo: "images/football-equipe-de-france.jpg", photoPos: "50% 30%" },
   { key: "tennis",  name: "Tennis",   test: e => e.kind === "tennis" || e.kind === "clay", photo: "images/tennis-roland-garros.jpg", photoPos: "50% 25%" },
   { key: "rugby",   name: "Rugby",    test: e => e.kind === "rugby" },
-  { key: "us",      name: "Sports US", test: e => e.kind === "nfl" || e.kind === "nba" }
+  { key: "us",      name: "Sports US", test: e => e.kind === "nfl" || e.kind === "nba", photo: "images/sports-us-nfl.jpg", photoPos: "40% 50%" }
 ].map(c => ({ ...c, list: events.filter(c.test) })).filter(c => c.list.length);
 
 const shortDate = d => d.getDate() + " " + MONTHS[d.getMonth()];
