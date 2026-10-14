@@ -158,6 +158,15 @@ h3{font-weight:650;font-size:22px;line-height:1.2;letter-spacing:-.02em}
 .wall-foot p{margin:0 auto 12px;max-width:34em;color:var(--text-2);font-size:19px}
 @media (max-width:760px){.wall-grid{grid-template-columns:repeat(3,1fr);gap:6px}.wall-grid figure{border-radius:12px;aspect-ratio:1}.wall{border-radius:20px}}
 
+/* ---------- vidéo de présentation ---------- */
+.film{position:relative;margin:0 auto clamp(40px,6vw,64px);max-width:1040px;aspect-ratio:16/9;border-radius:var(--r-xl);overflow:hidden;background:#0a1236 center/cover;box-shadow:0 0 0 1px var(--line),0 40px 120px -40px rgba(90,110,255,.55)}
+.film video{display:block;width:100%;height:100%;object-fit:cover;cursor:pointer}
+.film-btn{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;cursor:pointer;color:#fff;background:rgba(20,26,60,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.film-btn svg{width:16px;height:16px}
+.film-btn .i-play,.film.paused .film-btn .i-pause{display:none}
+.film.paused .film-btn .i-play{display:block}
+@media (max-width:760px){.film{border-radius:20px}.film-btn{right:10px;bottom:10px;width:38px;height:38px}}
+
 /* ---------- cartes en verre ---------- */
 .card{background:var(--glass);border-radius:var(--r-l);box-shadow:inset 0 0 0 1px var(--line),inset 0 1px 0 rgba(255,255,255,.08)}
 .features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
@@ -440,7 +449,7 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
 @media (hover:hover) and (pointer:fine){
   .btn,.circ,.copy,.stepper button,.mini-step button,.seg button,.nav-links a,.foot-cols a,.brand,.more,.burger,
   .card.feat,.card.step,.card.ask,.wa-card,.fgroup,.fcard,.pcard,.wall-grid figure,.hero-lc,.ev .cal,.ev .badge,.ev .chev,
-  .next,.tk,.stats>div,.faq summary{
+  .next,.tk,.stats>div,.faq summary,.film,.film-btn{
     transition:scale .5s cubic-bezier(.34,1.56,.64,1),translate .5s cubic-bezier(.34,1.56,.64,1),transform .2s ease,background-color .2s ease,color .2s ease,opacity .2s ease,box-shadow .3s ease}
   .btn:hover,.copy:hover{scale:1.05}
   .circ:hover,.stepper button:hover,.mini-step button:hover{scale:1.12}
@@ -453,6 +462,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
   .wall-grid figure:hover{scale:1.06;position:relative;z-index:2}
   .hero-lc:hover{scale:1.07}
   .next:hover{scale:1.04}
+  .film:hover{scale:1.015}
+  .film-btn:hover{scale:1.12}
   .tk:hover{scale:1.07}
   .stats>div:hover{scale:1.06}
   .faq summary:hover{translate:4px 0}
@@ -537,6 +548,13 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
         <h2><span class="ph">Un message. Vos places.</span> <span class="ph">C'est tout.</span></h2>
         <p class="lead">Finies les heures passées à guetter les mises en vente. Dites-nous ce que vous voulez voir&nbsp;: on cherche, on vous rappelle, on organise tout.</p>
       </div>
+      <figure class="film rv paused" id="film">
+        <video muted loop playsinline preload="none" poster="videos/video-louis-conciergerie-poster.jpg" aria-label="Louis Conciergerie en vidéo">
+          <source src="videos/video-louis-conciergerie.webm" type='video/webm; codecs="vp9"'>
+          <source src="videos/video-louis-conciergerie.mp4" type="video/mp4">
+        </video>
+        <button class="film-btn" type="button" aria-label="Lire la vidéo"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.4" height="12" rx="1" fill="currentColor"/><rect x="9.6" y="2" width="3.4" height="12" rx="1" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.4v11.2a.8.8 0 0 0 1.2.7l9-5.6a.8.8 0 0 0 0-1.4l-9-5.6a.8.8 0 0 0-1.2.7z" fill="currentColor"/></svg></button>
+      </figure>
       <div class="features">
         <div class="card feat rv">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="9.5" ry="6.5"/><ellipse cx="12" cy="12" rx="5" ry="3"/><path d="M12 5.5v13"/></svg></div>
@@ -1193,6 +1211,21 @@ function autoScroll(id, SPEED) {          // SPEED : pixels par seconde
 }
 autoScroll("featured", 70);
 autoScroll("past", 70);
+
+/* ---------- vidéo : se lance toute seule (sans son) quand elle est à l'écran ---------- */
+(() => {
+  const box = $("#film"), v = box.querySelector("video"), btn = box.querySelector(".film-btn");
+  let stopped = reduce, seen = false;           // stopped : mise en pause par le visiteur
+  v.muted = true;
+  const sync = () => { const p = v.paused; box.classList.toggle("paused", p); btn.setAttribute("aria-label", p ? "Lire la vidéo" : "Mettre la vidéo en pause"); };
+  const run = () => { if (seen && !stopped && !document.hidden) { const r = v.play(); if (r) r.catch(() => {}); } else v.pause(); };
+  const toggle = () => { stopped = !v.paused; if (stopped) v.pause(); else { const r = v.play(); if (r) r.catch(() => {}); } };
+  ["play", "pause"].forEach(e => v.addEventListener(e, sync));
+  btn.addEventListener("click", toggle);
+  v.addEventListener("click", toggle);
+  document.addEventListener("visibilitychange", run);
+  new IntersectionObserver(([en]) => { seen = en.isIntersecting; run(); }, {threshold: .35}).observe(box);
+})();
 
 /* ---------- typographie française : apostrophes courbes, espaces insécables ---------- */
 (() => {
