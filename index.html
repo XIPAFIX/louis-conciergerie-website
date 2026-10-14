@@ -1176,12 +1176,12 @@ function autoScroll(id, SPEED) {          // SPEED : pixels par seconde
   let pos = el.scrollLeft, held = false, idle = 0, seen = true, last = 0;
   const loopW = () => el.children[items.length].offsetLeft - el.children[0].offsetLeft;
   const hold = () => { held = true; clearTimeout(idle); };
-  const release = () => { clearTimeout(idle); idle = setTimeout(() => { const w = loopW(); pos = w ? el.scrollLeft % w : el.scrollLeft; held = false; }, 2500); };
+  const release = (delay = 2500) => { clearTimeout(idle); idle = setTimeout(() => { const w = loopW(); pos = w ? el.scrollLeft % w : el.scrollLeft; held = false; }, delay); };
   el.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") hold(); });
-  el.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") release(); });
+  el.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") release(0); });   // la souris part : ça repart tout de suite
   el.addEventListener("touchstart", hold, {passive: true});
-  el.addEventListener("touchend", release, {passive: true});
-  el.addEventListener("focusin", hold); el.addEventListener("focusout", release);
+  el.addEventListener("touchend", () => release(), {passive: true});
+  el.addEventListener("focusin", hold); el.addEventListener("focusout", () => release());
   $$(`[data-scroll="${id}"]`).forEach(b => b.addEventListener("click", () => { hold(); release(); }));
   new IntersectionObserver(([en]) => { seen = en.isIntersecting; }).observe(el);
   const step = t => {
@@ -1191,8 +1191,8 @@ function autoScroll(id, SPEED) {          // SPEED : pixels par seconde
   };
   requestAnimationFrame(t => { last = t; requestAnimationFrame(step); });
 }
-autoScroll("featured", 60);
-autoScroll("past", 60);
+autoScroll("featured", 70);
+autoScroll("past", 70);
 
 /* ---------- typographie française : apostrophes courbes, espaces insécables ---------- */
 (() => {
