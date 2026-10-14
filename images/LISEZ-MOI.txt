@@ -1,3 +1,0 @@
-Mets ici les photos de tes événements passés (format .jpg conseillé, paysage).
-Les noms attendus sont dans index.html, tableau PAST (ex. images/roland-garros.jpg).
-Si une photo manque, un visuel de couleur s'affiche à la place.
