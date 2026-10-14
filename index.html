@@ -393,8 +393,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
 .foot-cols a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;padding-top:18px}
 @media (max-width:899px){footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}}
-/* ---------- défilement lent de « Les plus attendus » ---------- */
-.featured.auto{scroll-snap-type:none}
+/* ---------- défilement automatique des carrousels ---------- */
+.featured.auto,.past.auto{scroll-snap-type:none}
 
 /* ---------- marketing : urgence réelle, confiance, chiffres, questions ---------- */
 .next{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:0 0 26px;padding:7px 7px 7px 14px;border:0;border-radius:999px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--text);font:500 14px/1.2 var(--font);cursor:pointer;text-align:left}
@@ -1167,13 +1167,12 @@ let ticking = false;
 addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; onScroll(); }); } }, {passive: true});
 onScroll();
 
-/* ---------- défilement lent et continu de « Les plus attendus » ---------- */
-(() => {
-  const el = $("#featured"), items = [...el.children];
+/* ---------- défilement continu des carrousels « Les plus attendus » et « Ils n'ont rien manqué » ---------- */
+function autoScroll(id, SPEED) {          // SPEED : pixels par seconde
+  const el = $("#" + id), items = [...el.children];
   if (reduce || items.length < 2) return;
   items.forEach(c => { const k = c.cloneNode(true); k.setAttribute("aria-hidden", "true"); k.tabIndex = -1; el.appendChild(k); });
   el.classList.add("auto");
-  const SPEED = 24;                       // pixels par seconde
   let pos = el.scrollLeft, held = false, idle = 0, seen = true, last = 0;
   const loopW = () => el.children[items.length].offsetLeft - el.children[0].offsetLeft;
   const hold = () => { held = true; clearTimeout(idle); };
@@ -1183,7 +1182,7 @@ onScroll();
   el.addEventListener("touchstart", hold, {passive: true});
   el.addEventListener("touchend", release, {passive: true});
   el.addEventListener("focusin", hold); el.addEventListener("focusout", release);
-  $$('[data-scroll="featured"]').forEach(b => b.addEventListener("click", () => { hold(); release(); }));
+  $$(`[data-scroll="${id}"]`).forEach(b => b.addEventListener("click", () => { hold(); release(); }));
   new IntersectionObserver(([en]) => { seen = en.isIntersecting; }).observe(el);
   const step = t => {
     const dt = Math.min(50, t - last); last = t;
@@ -1191,7 +1190,9 @@ onScroll();
     requestAnimationFrame(step);
   };
   requestAnimationFrame(t => { last = t; requestAnimationFrame(step); });
-})();
+}
+autoScroll("featured", 60);
+autoScroll("past", 60);
 
 /* ---------- typographie française : apostrophes courbes, espaces insécables ---------- */
 (() => {
