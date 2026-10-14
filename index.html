@@ -71,6 +71,8 @@ main,footer{position:relative;z-index:1}
 .narrow{max-width:760px;margin-inline:auto}
 .eyebrow{margin:0 0 14px;font:600 17px/1.2 var(--font-display);letter-spacing:-.01em;color:var(--sky)}
 h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance}
+p,li,dd,summary,figcaption,small,.lead{text-wrap:pretty}
+.ph{display:inline-block}
 h1{font-weight:700;font-size:clamp(46px,8.6vw,104px);line-height:1.02;letter-spacing:-.035em}
 h2{font-weight:700;font-size:clamp(36px,6.2vw,68px);line-height:1.04;letter-spacing:-.03em}
 h3{font-weight:650;font-size:22px;line-height:1.2;letter-spacing:-.02em}
@@ -119,8 +121,8 @@ h3{font-weight:650;font-size:22px;line-height:1.2;letter-spacing:-.02em}
 @media (max-width:899px){.nav-links,.nav .btn{display:none}.burger{display:block}}
 
 /* ---------- hero ---------- */
-.hero{padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(64px,11vw,120px));padding-bottom:clamp(64px,9vw,110px);text-align:center}
-.hero-lc{height:clamp(84px,11vw,120px);width:auto;margin:0 auto 26px;filter:drop-shadow(0 10px 40px rgba(110,140,255,.45))}
+.hero{padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(44px,7vw,84px));padding-bottom:clamp(64px,9vw,110px);text-align:center}
+.hero-lc{height:clamp(76px,9vw,108px);width:auto;margin:0 auto 24px;filter:drop-shadow(0 10px 40px rgba(110,140,255,.45))}
 .hero .eyebrow{color:var(--text-2)}
 .hero h1 .l{display:block}
 .hero-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 28px;margin-top:36px}
@@ -391,10 +393,54 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
 .foot-cols a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;padding-top:18px}
 @media (max-width:899px){footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}}
+/* ---------- défilement lent de « Les plus attendus » ---------- */
+.featured.auto{scroll-snap-type:none}
+
+/* ---------- marketing : urgence réelle, confiance, chiffres, questions ---------- */
+.next{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:0 0 26px;padding:7px 7px 7px 14px;border:0;border-radius:999px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--text);font:500 14px/1.2 var(--font);cursor:pointer;text-align:left}
+.next .dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex:none}
+.next .txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.next .txt span{color:var(--text-2)}
+@media (max-width:480px){.next .lbl{display:none}}
+.next .go{flex:none;display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:#fff;color:var(--pill-ink);font-weight:600;font-size:13px}
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:30px 0 0;padding:0;list-style:none;font-size:15px;color:var(--text-2)}
+.trust li{display:flex;align-items:center;gap:7px}
+.trust svg{width:17px;height:17px;flex:none}
+@media (prefers-reduced-motion:no-preference){
+  .next .dot{animation:pulse 1.8s ease-out infinite}
+  .ticker-track{animation:tick var(--dur,90s) linear infinite}
+  .ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
+}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,69,58,.7)}70%,100%{box-shadow:0 0 0 9px rgba(255,69,58,0)}}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ticker{position:relative;overflow:hidden;margin:0 0 clamp(40px,6vw,64px);padding:14px 0;border-block:1px solid var(--line);background:rgba(255,255,255,.03);-webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.ticker-track{display:flex;width:max-content}
+.tk{display:inline-flex;align-items:center;gap:8px;margin:0 6px;padding:8px 14px;border:0;border-radius:999px;background:none;color:var(--text-2);font:500 15px/1 var(--font);white-space:nowrap;cursor:pointer}
+.tk b{color:var(--text);font-weight:600}
+.tk i{width:7px;height:7px;border-radius:50%;background:var(--orange);flex:none}
+.tk i.h3{background:var(--red)}
+.tk:hover{background:rgba(255,255,255,.08)}
+@media (prefers-reduced-motion:reduce){.ticker{overflow-x:auto;scrollbar-width:none}}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(56px,8vw,90px);text-align:center}
+.stats>div{padding:8px}
+.stats b{display:block;font:700 clamp(54px,8vw,96px)/1 var(--font-display);letter-spacing:-.045em;background:linear-gradient(180deg,#fff 20%,#9db4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats span{display:block;margin-top:10px;color:var(--text-2);font-size:17px}
+@media (max-width:600px){.stats{gap:6px}.stats>div{padding:4px}.stats b{font-size:clamp(40px,12vw,54px)}.stats span{font-size:13px;margin-top:8px}}
+.cta-row{margin-top:clamp(44px,6vw,64px);text-align:center}
+.faq{max-width:820px;margin:0 auto;padding:6px clamp(18px,3vw,30px)}
+.faq details+details{border-top:1px solid var(--line)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0;list-style:none;cursor:pointer;font:600 clamp(17px,2vw,20px)/1.3 var(--font-display);letter-spacing:-.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:30px;height:30px;border-radius:50%;background:var(--glass-2);display:grid;place-items:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.faq summary i svg{width:12px;height:12px}
+.faq details[open] summary i{transform:rotate(45deg)}
+.faq details p{margin:-6px 0 22px;max-width:40em;color:var(--text-2);font-size:17px}
+
 /* ---------- léger rebond au survol de la souris (ordinateur) ---------- */
 @media (hover:hover) and (pointer:fine){
   .btn,.circ,.copy,.stepper button,.mini-step button,.seg button,.nav-links a,.foot-cols a,.brand,.more,.burger,
-  .card.feat,.card.step,.card.ask,.wa-card,.fgroup,.fcard,.pcard,.wall-grid figure,.hero-lc,.ev .cal,.ev .badge,.ev .chev{
+  .card.feat,.card.step,.card.ask,.wa-card,.fgroup,.fcard,.pcard,.wall-grid figure,.hero-lc,.ev .cal,.ev .badge,.ev .chev,
+  .next,.tk,.stats>div,.faq summary{
     transition:scale .5s cubic-bezier(.34,1.56,.64,1),translate .5s cubic-bezier(.34,1.56,.64,1),transform .2s ease,background-color .2s ease,color .2s ease,opacity .2s ease,box-shadow .3s ease}
   .btn:hover,.copy:hover{scale:1.05}
   .circ:hover,.stepper button:hover,.mini-step button:hover{scale:1.12}
@@ -406,6 +452,10 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
   .fcard:hover,.pcard:hover{scale:1.035}
   .wall-grid figure:hover{scale:1.06;position:relative;z-index:2}
   .hero-lc:hover{scale:1.07}
+  .next:hover{scale:1.04}
+  .tk:hover{scale:1.07}
+  .stats>div:hover{scale:1.06}
+  .faq summary:hover{translate:4px 0}
   .ev:hover .cal{scale:1.14}
   .ev:hover .badge{scale:1.06}
   .ev:hover .chev{translate:3px 0}
@@ -449,16 +499,21 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
   <section class="hero">
     <div class="wrap">
       <img class="hero-lc" src="images/logo-lc-blanc.png" alt="Louis Conciergerie" width="204" height="240">
-      <p class="eyebrow fade" style="--d:.15s">Billetterie privée · Sport &amp; concerts</p>
-      <h1 id="hero-title"><span class="l">Les meilleures places.</span> <span class="l grad">Sans chercher.</span></h1>
-      <p class="lead fade" style="--d:.75s">Tennis, football, rugby, NBA, NFL et les plus grands concerts. Dites-nous où vous voulez être&nbsp;: on vous rappelle et on s'occupe de tout jusqu'à la remise de vos billets.</p>
+      <button class="next fade" type="button" id="next" style="--d:.15s" hidden></button>
+      <h1 id="hero-title"><span class="l">Les meilleures places.</span> <span class="l grad">On s'occupe du reste.</span></h1>
+      <p class="lead fade" style="--d:.75s">Le match, le concert ou la finale dont vous rêvez&nbsp;: dites-le-nous sur WhatsApp. On trouve vos places et on gère tout, jusqu'à vos billets.</p>
       <div class="hero-cta fade" style="--d:.9s">
-        <a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.3-.1-1.5-.7-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.3-.6-2.3-1.5-3-2.7-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2 0 1.3.9 2.6 1 2.8 1.3 1.9 2.9 3.2 5 3.9.6.2 1.3.3 1.9.2.6-.1 1.5-.6 1.7-1.2.2-.5.2-1 .1-1.1l-.4-.3z"/></svg>Écrire sur WhatsApp</a>
-        <a class="more" href="#evenements">Voir les événements<svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.3-.1-1.5-.7-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.3-.6-2.3-1.5-3-2.7-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2 0 1.3.9 2.6 1 2.8 1.3 1.9 2.9 3.2 5 3.9.6.2 1.3.3 1.9.2.6-.1 1.5-.6 1.7-1.2.2-.5.2-1 .1-1.1l-.4-.3z"/></svg>Je veux mes places</a>
+        <a class="more" href="#evenements">Voir les <span class="js-count"></span>événements<svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <p class="hero-sports fade" style="--d:1.05s">Saison 2026 – 2027</p>
+      <ul class="trust fade" style="--d:1.05s">
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#30d158"/><path d="M4.6 8.3l2.2 2.2 4.6-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Réponse directe</li><li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#30d158"/><path d="M4.6 8.3l2.2 2.2 4.6-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Sans engagement</li><li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#30d158"/><path d="M4.6 8.3l2.2 2.2 4.6-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Un seul interlocuteur</li>
+      </ul>
     </div>
   </section>
+
+  <!-- Bandeau des prochains événements -->
+  <div class="ticker" id="ticker" aria-label="Prochains événements"></div>
 
   <!-- 2. Mur de photos -->
   <section class="wall-sec" aria-labelledby="wall-title">
@@ -468,8 +523,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
         <div class="wall-shade"><h2 id="wall-title">Tout ce qui vous fait vibrer.</h2></div>
       </div>
       <div class="wall-foot rv">
-        <p>Du Parc des Princes à l'Accor Arena, du Stade de France à Roland-Garros&nbsp;: dites-nous où vous voulez être.</p>
-        <a class="more" href="#evenements">Voir les prochaines dates<svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p>Du Parc des Princes à l'Accor Arena, du Stade de France à Roland-Garros&nbsp;: vous choisissez, on s'en charge.</p>
+        <a class="more" href="#evenements">Trouver mon événement<svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </section>
@@ -479,26 +534,32 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="wrap">
       <div class="sec-head narrow rv">
         <p class="eyebrow">La conciergerie</p>
-        <h2>Un seul contact pour les plus grands événements.</h2>
-        <p class="lead">Dites-moi le match, le concert ou la finale que vous voulez voir. Je cherche les places, je vous rappelle rapidement et je m'occupe de tout.</p>
+        <h2><span class="ph">Un message. Vos places.</span> <span class="ph">C'est tout.</span></h2>
+        <p class="lead">Finies les heures passées à guetter les mises en vente. Dites-nous ce que vous voulez voir&nbsp;: on cherche, on vous rappelle, on organise tout.</p>
       </div>
       <div class="features">
         <div class="card feat rv">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="9.5" ry="6.5"/><ellipse cx="12" cy="12" rx="5" ry="3"/><path d="M12 5.5v13"/></svg></div>
-          <h3>Sport et concerts</h3>
+          <h3>Tous les grands rendez-vous</h3>
           <p>Tennis, football, rugby, NBA, NFL et les plus grandes tournées.</p>
         </div>
         <div class="card feat rv">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></div>
-          <h3>Un service sur mesure</h3>
-          <p>Catégorie, places côte à côte, horaires&nbsp;: on s'adapte à votre demande.</p>
+          <h3>Du sur-mesure</h3>
+          <p>Catégorie, places côte à côte, horaires&nbsp;: vous dites ce que vous voulez, on s'adapte.</p>
         </div>
         <div class="card feat rv">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5V6.5a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v2a2.5 2.5 0 0 0 0 5v2a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-2a2.5 2.5 0 0 0 0-5z"/><path d="M14.5 6v2M14.5 11v2M14.5 16v2" stroke-linecap="round"/></svg></div>
-          <h3>Vos billets remis</h3>
-          <p>Une fois validé, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p>
+          <h3>Zéro stress</h3>
+          <p>Une fois la proposition validée avec vous, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p>
         </div>
       </div>
+      <div class="stats rv" aria-label="En chiffres">
+        <div><b class="js-count-n"></b><span>événements à&nbsp;venir</span></div>
+        <div><b class="js-venues"></b><span>stades et salles</span></div>
+        <div><b>1</b><span>seul contact pour&nbsp;tout</span></div>
+      </div>
+      <div class="cta-row rv"><a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.3-.1-1.5-.7-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.3-.6-2.3-1.5-3-2.7-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2 0 1.3.9 2.6 1 2.8 1.3 1.9 2.9 3.2 5 3.9.6.2 1.3.3 1.9.2.6-.1 1.5-.6 1.7-1.2.2-.5.2-1 .1-1.1l-.4-.3z"/></svg>Je veux mes places</a></div>
     </div>
   </section>
 
@@ -507,11 +568,11 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="wrap">
       <div class="sec-head narrow rv">
         <p class="eyebrow">Saison 2026 – 2027</p>
-        <h2>Événements à venir.</h2>
-        <p class="lead">Pour ces matchs et ces concerts, les places partent vite. Touchez un événement, on s'occupe de vous trouver les meilleures.</p>
+        <h2>Les places partent vite.</h2>
+        <p class="lead">Les badges vous montrent ce qui part en premier. Choisissez un événement&nbsp;: votre demande est prête en un message.</p>
       </div>
 
-      <div class="feat-title"><h3>À la une</h3><div class="feat-nav"><button class="circ" type="button" data-scroll="featured" data-dir="-1" aria-label="Précédent"><svg viewBox="0 0 8 14"><path d="M7 1L1 7l6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="circ" type="button" data-scroll="featured" data-dir="1" aria-label="Suivant"><svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+      <div class="feat-title"><h3>Les plus attendus</h3><div class="feat-nav"><button class="circ" type="button" data-scroll="featured" data-dir="-1" aria-label="Précédent"><svg viewBox="0 0 8 14"><path d="M7 1L1 7l6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="circ" type="button" data-scroll="featured" data-dir="1" aria-label="Suivant"><svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
       <div class="featured" id="featured" role="list"></div>
 
       <div class="tools">
@@ -531,9 +592,9 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
   <section class="sec" id="comment" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head narrow rv">
-        <p class="eyebrow">En trois étapes</p>
-        <h2>Comment ça marche.</h2>
-        <p class="lead">Vous m'écrivez, je m'occupe du reste. De votre premier message jusqu'à vos billets.</p>
+        <p class="eyebrow">Comment ça marche</p>
+        <h2>Simple comme un message.</h2>
+        <p class="lead">Trois étapes, aucune prise de tête.</p>
       </div>
       <div class="steps">
         <div class="card step rv">
@@ -543,8 +604,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
             <div class="typing"><span class="field">Message<span class="caret"></span></span><span class="send"><svg viewBox="0 0 24 24"><path d="M3 11.5L21 3l-8.5 18-2-7.5z" fill="#0a1236"/></svg></span></div>
           </div>
           <p class="n">Étape 1</p>
-          <h3>Dites-nous l'événement</h3>
-          <p>Par WhatsApp ou avec le formulaire&nbsp;: l'événement, le nombre de places et vos envies.</p>
+          <h3>Vous écrivez</h3>
+          <p>Sur WhatsApp ou via le formulaire&nbsp;: l'événement, le nombre de places, vos envies.</p>
         </div>
         <div class="card step rv">
           <div class="demo" aria-hidden="true">
@@ -552,8 +613,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
             <p class="call-note">Les places disponibles, expliquées de vive voix.</p>
           </div>
           <p class="n">Étape 2</p>
-          <h3>On vous rappelle</h3>
-          <p>Louis vous contacte rapidement avec les places disponibles.</p>
+          <h3>Louis vous rappelle</h3>
+          <p>Il vous présente les places disponibles et répond à toutes vos questions.</p>
         </div>
         <div class="card step rv">
           <div class="demo" aria-hidden="true">
@@ -562,12 +623,13 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
             <div class="toast"><span class="ti"><img src="images/logo-lc-blanc.png" alt=""></span>Vos billets sont prêts.<u>Voir</u></div>
           </div>
           <p class="n">Étape 3</p>
-          <h3>Vous recevez vos billets</h3>
-          <p>Une fois validé, vos billets vous sont envoyés. Il ne reste qu'à profiter.</p>
+          <h3>Vous profitez</h3>
+          <p>Vous validez, vos billets vous sont envoyés. Le jour J, vous y êtes.</p>
         </div>
       </div>
 
       <p class="statement" id="statement"><span class="sp">Football. Tennis. Rugby. Concerts.</span>Vous n'avez plus qu'à vivre le moment.</p>
+      <div class="cta-row rv"><a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.3-.1-1.5-.7-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.3-.6-2.3-1.5-3-2.7-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2 0 1.3.9 2.6 1 2.8 1.3 1.9 2.9 3.2 5 3.9.6.2 1.3.3 1.9.2.6-.1 1.5-.6 1.7-1.2.2-.5.2-1 .1-1.1l-.4-.3z"/></svg>Je fais ma demande</a></div>
     </div>
   </section>
 
@@ -576,8 +638,8 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="wrap">
       <div class="sec-head narrow rv">
         <p class="eyebrow">Ils y étaient</p>
-        <h2>Événements passés.</h2>
-        <p class="lead">Quelques événements pour lesquels mes clients ont eu leurs places.</p>
+        <h2>Ils n'ont rien manqué.</h2>
+        <p class="lead">Roland-Garros, la Coupe du monde, la Ligue des champions, Céline Dion… Nos clients y étaient. Le prochain, c'est vous&nbsp;?</p>
       </div>
       <div class="feat-title"><h3 class="sr">Galerie</h3><span></span><div class="feat-nav"><button class="circ" type="button" data-scroll="past" data-dir="-1" aria-label="Précédent"><svg viewBox="0 0 8 14"><path d="M7 1L1 7l6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="circ" type="button" data-scroll="past" data-dir="1" aria-label="Suivant"><svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
       <div class="past" id="past" role="list" tabindex="0" aria-label="Événements passés, faites défiler"></div>
@@ -589,19 +651,37 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="wrap">
       <div class="card ask rv">
         <p class="eyebrow">Sur demande</p>
-        <h2>Votre événement n'est pas dans la liste&nbsp;?</h2>
-        <p class="lead">Dites-moi lequel, je m'occupe de vous trouver des places.</p>
+        <h2><span class="ph">Pas dans la liste&nbsp;?</span> <span class="ph">Demandez quand même.</span></h2>
+        <p class="lead">Un concert, un match, une finale&nbsp;: écrivez son nom, on cherche vos places.</p>
         <form class="ask-form" id="ask" novalidate>
           <label class="sr" for="ask-ev">Quel événement&nbsp;?</label>
-          <input class="in" id="ask-ev" type="text" maxlength="80" autocomplete="off" enterkeyhint="send" placeholder="Ex. : finale du Top 14">
+          <input class="in" id="ask-ev" type="text" maxlength="80" autocomplete="off" enterkeyhint="send" placeholder="Ex. : finale du Top 14">
           <div class="stepper" role="group" aria-label="Nombre de places">
             <button type="button" data-step="-1" aria-label="Une place de moins"><svg viewBox="0 0 16 16"><path d="M3 8h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <output id="ask-qty" aria-live="polite">2 places</output>
             <button type="button" data-step="1" aria-label="Une place de plus"><svg viewBox="0 0 16 16"><path d="M3 8h10M8 3v10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
           </div>
-          <a class="btn btn-white" id="ask-go" href="#" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
+          <a class="btn btn-white" id="ask-go" href="#" target="_blank" rel="noopener">Je demande mes places</a>
         </form>
         <p class="hint" id="ask-hint" role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions fréquentes -->
+  <section class="sec" id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head narrow rv">
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2>Tout ce que vous voulez savoir.</h2>
+      </div>
+      <div class="card faq rv">
+          <details><summary>Est-ce que je m'engage en vous écrivant&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>Non. Vous posez vos questions, Louis vous présente les places disponibles, et vous décidez ensuite.</p></details>
+          <details><summary>Comment se passe une demande&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>Envoyez l'événement et le nombre de places sur WhatsApp ou via le formulaire. Louis vous rappelle rapidement avec les places disponibles.</p></details>
+          <details><summary>Comment vais-je recevoir mes billets&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>Dès que la proposition est validée avec vous, vos billets vous sont envoyés.</p></details>
+          <details><summary>Et si mon événement n'est pas sur le site&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>Demandez-le quand même&nbsp;: écrivez son nom et le nombre de places, Louis cherche pour vous.</p></details>
+          <details><summary>Puis-je avoir des places côte à côte&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>Précisez-le dans votre demande, avec la catégorie souhaitée&nbsp;: Louis en tient compte dans sa recherche.</p></details>
+          <details><summary>Que signifient les badges&nbsp;?<i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></i></summary><p>«&nbsp;Risque de rupture&nbsp;»&nbsp;: les places partent très vite, mieux vaut demander tôt. «&nbsp;Forte demande&nbsp;»&nbsp;: l'événement est très recherché.</p></details>
       </div>
     </div>
   </section>
@@ -611,15 +691,15 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="wrap">
       <div class="sec-head narrow rv">
         <p class="eyebrow">Contact</p>
-        <h2>On vous rappelle.</h2>
-        <p class="lead">Remplissez le formulaire, votre demande arrive directement chez Louis. Vous préférez écrire tout de suite&nbsp;? Passez par WhatsApp.</p>
+        <h2>Prêt à y être&nbsp;?</h2>
+        <p class="lead">Laissez votre numéro, Louis vous rappelle. Pressé&nbsp;? Écrivez directement sur WhatsApp.</p>
       </div>
       <div class="contact">
         <aside class="card wa-card rv">
           <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.9 5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.3-.1-1.5-.7-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.3-.6-2.3-1.5-3-2.7-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2 0 1.3.9 2.6 1 2.8 1.3 1.9 2.9 3.2 5 3.9.6.2 1.3.3 1.9.2.6-.1 1.5-.6 1.7-1.2.2-.5.2-1 .1-1.1l-.4-.3z"/></svg></div>
           <h3>WhatsApp</h3>
           <p class="num"><span id="wa-num"></span><button class="copy" type="button" id="copy-num">Copier</button></p>
-          <a class="btn btn-green js-wa" href="#" target="_blank" rel="noopener">Ouvrir la conversation</a>
+          <a class="btn btn-green js-wa" href="#" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
           <ul class="points">
             <li><b>Réponse directe</b><span>Votre demande arrive directement chez Louis.</span></li>
             <li><b>Sans engagement</b><span>Posez toutes vos questions, vous décidez ensuite.</span></li>
@@ -630,22 +710,22 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
           <div class="fgroup">
             <div class="frow"><label for="f-name">Nom et prénom</label><input id="f-name" name="nom" autocomplete="name" placeholder="Jean Dupont" required></div>
             <div class="frow"><label for="f-phone">Téléphone</label><input id="f-phone" name="telephone" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" required></div>
-            <div class="frow"><label for="f-email">Email <span class="opt">(facultatif)</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr"></div>
+            <div class="frow"><label for="f-email">E-mail <span class="opt">(facultatif)</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr"></div>
           </div>
           <div class="fgroup">
             <div class="frow"><label for="f-event">Événement</label><select id="f-event" name="evenement" required></select></div>
-            <div class="frow" id="other-row" hidden><label for="f-other">Quel événement&nbsp;?</label><input id="f-other" name="autre" placeholder="Ex. : Finale de la Coupe de France"></div>
+            <div class="frow" id="other-row" hidden><label for="f-other">Quel événement&nbsp;?</label><input id="f-other" name="autre" placeholder="Ex. : finale de la Coupe de France"></div>
             <div class="frow frow-split"><label for="f-qty-out" style="margin:0">Nombre de places</label>
               <span class="mini-step" role="group" aria-label="Nombre de places"><button type="button" data-q="-1" aria-label="Une place de moins"><svg viewBox="0 0 16 16"><path d="M3 8h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button><output id="f-qty-out">2</output><button type="button" data-q="1" aria-label="Une place de plus"><svg viewBox="0 0 16 16"><path d="M3 8h10M8 3v10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button></span>
             </div>
-            <div class="frow"><label for="f-when">Quand vous rappeler&nbsp;? <span class="opt">(facultatif)</span></label><input id="f-when" name="rappel" placeholder="Ex. : en soirée, après 18 h"></div>
+            <div class="frow"><label for="f-when">Quand vous rappeler&nbsp;? <span class="opt">(facultatif)</span></label><input id="f-when" name="rappel" placeholder="Ex. : en soirée, après 18 h"></div>
           </div>
           <div class="fgroup">
             <div class="frow"><label for="f-msg">Message <span class="opt">(facultatif)</span></label><textarea id="f-msg" name="message" placeholder="Catégorie souhaitée, places côte à côte, une question…"></textarea></div>
           </div>
           <div class="form-foot">
             <small>Votre demande s'ouvre dans WhatsApp, prête à envoyer à Louis. Vos informations servent uniquement à vous recontacter.</small>
-            <button class="btn btn-white" type="submit">Envoyer ma demande</button>
+            <button class="btn btn-white" type="submit">Je veux être rappelé</button>
           </div>
         </form>
       </div>
@@ -658,10 +738,10 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="foot-top">
       <div>
         <a class="foot-brand" href="#top" aria-label="Louis Conciergerie, accueil"><img class="lc" src="images/logo-lc-blanc.png" alt="" width="204" height="240" loading="lazy"><img class="wm" src="images/logo-texte-blanc.png" alt="" width="953" height="72" loading="lazy"></a>
-        <p>Billets pour les plus grands événements sportifs et concerts. Écrivez-moi, je vous trouve des places.</p>
+        <p>Les meilleures places pour le sport et les concerts. Un message suffit.</p>
       </div>
       <div class="foot-cols">
-        <div><h4>Explorer</h4><a href="#evenements">Événements à venir</a><a href="#comment">Comment ça marche</a><a href="#passes">Événements passés</a></div>
+        <div><h4>Explorer</h4><a href="#evenements">Événements à venir</a><a href="#comment">Comment ça marche</a><a href="#passes">Événements passés</a><a href="#faq">Questions fréquentes</a></div>
         <div><h4>Contact</h4><a class="js-wa js-wa-num" href="#" target="_blank" rel="noopener"></a><a href="#contact">Nous contacter</a></div>
       </div>
     </div>
@@ -772,7 +852,7 @@ const PAST = [
   { title: "Ninho", cat: "Concert", when: "2026", venue: "Paris", photo: "images/passe-ninho.jpg", photoPos: "50% 58%" },
   { title: "Céline Dion", cat: "Concert", when: "2026", venue: "Paris", photo: "images/passe-celine-dion.jpg", photoPos: "50% 18%" },
   { title: "Finale du Top 14", cat: "Rugby", when: "Juin 2026", venue: "Stade de France", photo: "images/passe-top14.jpg", photoPos: "36% 45%" },
-  { title: "Ligue des champions et Ligue 1", cat: "Football", when: "Saison 2025-2026", venue: "Parc des Princes", photo: "images/passe-ligue-des-champions.jpg", photoPos: "50% 45%" }
+  { title: "Ligue des champions et Ligue 1", cat: "Football", when: "Saison 2025 – 2026", venue: "Parc des Princes", photo: "images/passe-ligue-des-champions.jpg", photoPos: "50% 45%" }
 ];
 // Photos « À la une » : titre|date de l'événement → photo
 const FEATURED = {
@@ -831,9 +911,34 @@ const waEventMsg = e => "Bonjour Louis, j'ai vu cet événement sur votre site e
 (() => {
   let i = 0;
   $$("#hero-title .l").forEach(l => {
-    if (l.classList.contains("grad")) { l.classList.remove("grad"); l.innerHTML = `<span class="hw grad" style="--i:${i++}">${esc(l.textContent)}</span>`; return; }
-    l.innerHTML = l.textContent.split(" ").map(w => `<span class="hw" style="--i:${i++}">${esc(w)}</span>`).join(" ");
+    const g = l.classList.contains("grad"); l.classList.remove("grad");
+    l.innerHTML = l.textContent.split(" ").map(w => `<span class="hw${g ? " grad" : ""}" style="--i:${i++}">${esc(w)}</span>`).join(" ");
   });
+})();
+
+/* ---------- chiffres réels, calculés depuis la liste ---------- */
+$$(".js-count").forEach(el => el.textContent = events.length + " ");
+$$(".js-count-n").forEach(el => el.textContent = events.length);
+$$(".js-venues").forEach(el => el.textContent = new Set(events.map(e => e.venue)).size);
+
+/* ---------- à ne pas manquer : le prochain événement « risque de rupture » ---------- */
+const shortDate = e => { const d = parse(e.date); return e.tbc || e.whenText ? MONTHS[d.getMonth()] + " " + d.getFullYear() : d.getDate() + " " + MONTHS[d.getMonth()]; };
+(() => {
+  const n = events.find(e => e.heat === 3 && !e.tbc && parse(e.date) >= today) || events.find(e => !e.tbc && parse(e.date) >= today);
+  if (!n) return;
+  const b = $("#next"), s = soonTxt(n) || shortDate(n);
+  b.dataset.ev = events.indexOf(n); b.hidden = false;
+  b.setAttribute("aria-label", "À ne pas manquer : " + n.title + ", " + s);
+  b.innerHTML = `<span class="dot" aria-hidden="true"></span><span class="txt"><span class="lbl">À ne pas manquer · </span>${esc(n.title)} <span>· ${esc(s)}</span></span><span class="go">J'y vais</span>`;
+})();
+
+/* ---------- bandeau défilant des prochains événements ---------- */
+(() => {
+  const list = events.slice(0, 24);
+  if (!list.length) return;
+  const item = (e, hide) => `<button class="tk" type="button" data-ev="${events.indexOf(e)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ""}><i class="h${e.heat}" aria-hidden="true"></i><b>${esc(e.title)}</b>${esc(shortDate(e))}</button>`;
+  const row = hide => list.map(e => item(e, hide)).join("");
+  $("#ticker").innerHTML = `<div class="ticker-track" style="--dur:${list.length * 4.5}s">${row(false)}${reduce ? "" : row(true)}</div>`;
 })();
 
 /* ---------- mur de photos ---------- */
@@ -951,8 +1056,8 @@ function eventSheet(e) {
   if (e.note) rows.push(["À savoir", e.note]);
   return `<p class="k">${esc(e.cat)}</p><h3 id="sheet-title">${esc(e.title)}</h3><span class="badge h${e.heat}">${HEAT[e.heat]}</span>
     <dl class="info">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-    <a class="btn btn-green" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Demander des places sur WhatsApp</a>
-    <button class="btn btn-glass" type="button" data-form="${events.indexOf(e)}">Utiliser le formulaire</button>`;
+    <a class="btn btn-green" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Je demande mes places</a>
+    <button class="btn btn-glass" type="button" data-form="${events.indexOf(e)}">Je préfère être rappelé</button>`;
 }
 document.addEventListener("click", ev => {
   const b = ev.target.closest("[data-ev]");
@@ -1028,7 +1133,7 @@ form.addEventListener("submit", async ev => {
       <p class="note">Votre demande est bien arrivée. Louis vous rappelle très vite.</p>
       <button class="btn btn-glass" type="button" data-close>Fermer</button>`);
   } catch { waSheet("L'envoi n'a pas abouti", "Passez par WhatsApp."); }
-  finally { btn.disabled = false; btn.textContent = "Envoyer ma demande"; }
+  finally { btn.disabled = false; btn.textContent = "Je veux être rappelé"; }
 });
 ["nom", "telephone"].forEach(n => form[n].addEventListener("input", () => fieldError(form[n], "")));
 sel.addEventListener("change", () => fieldError(sel, ""));
@@ -1061,6 +1166,47 @@ function onScroll() {
 let ticking = false;
 addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; onScroll(); }); } }, {passive: true});
 onScroll();
+
+/* ---------- défilement lent et continu de « Les plus attendus » ---------- */
+(() => {
+  const el = $("#featured"), items = [...el.children];
+  if (reduce || items.length < 2) return;
+  items.forEach(c => { const k = c.cloneNode(true); k.setAttribute("aria-hidden", "true"); k.tabIndex = -1; el.appendChild(k); });
+  el.classList.add("auto");
+  const SPEED = 24;                       // pixels par seconde
+  let pos = el.scrollLeft, held = false, idle = 0, seen = true, last = 0;
+  const loopW = () => el.children[items.length].offsetLeft - el.children[0].offsetLeft;
+  const hold = () => { held = true; clearTimeout(idle); };
+  const release = () => { clearTimeout(idle); idle = setTimeout(() => { const w = loopW(); pos = w ? el.scrollLeft % w : el.scrollLeft; held = false; }, 2500); };
+  el.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") hold(); });
+  el.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") release(); });
+  el.addEventListener("touchstart", hold, {passive: true});
+  el.addEventListener("touchend", release, {passive: true});
+  el.addEventListener("focusin", hold); el.addEventListener("focusout", release);
+  $$('[data-scroll="featured"]').forEach(b => b.addEventListener("click", () => { hold(); release(); }));
+  new IntersectionObserver(([en]) => { seen = en.isIntersecting; }).observe(el);
+  const step = t => {
+    const dt = Math.min(50, t - last); last = t;
+    if (!held && seen && !document.hidden) { pos += SPEED * dt / 1000; const w = loopW(); if (w && pos >= w) pos -= w; el.scrollLeft = pos; }
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(t => { last = t; requestAnimationFrame(step); });
+})();
+
+/* ---------- typographie française : apostrophes courbes, espaces insécables ---------- */
+(() => {
+  const SKIP = "SCRIPT,STYLE,TEXTAREA,SELECT,OPTION,INPUT";
+  const fix = s => s.replace(/'/g, "\u2019").replace(/ ([?!;])/g, "\u202f$1").replace(/\u00a0([?!;])/g, "\u202f$1").replace(/ :/g, "\u00a0:").replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»");
+  const walk = root => {
+    if (root.nodeType === 3) { if (!root.parentElement || root.parentElement.closest(SKIP)) return; const v = fix(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; return; }
+    if (root.nodeType !== 1 || root.closest(SKIP)) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) { if (n.parentElement.closest(SKIP)) continue; const v = fix(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; }
+    root.querySelectorAll && root.querySelectorAll("[placeholder],[aria-label]").forEach(e => ["placeholder", "aria-label"].forEach(a => { const v = e.getAttribute(a); if (v && fix(v) !== v) e.setAttribute(a, fix(v)); }));
+  };
+  walk(document.body);
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(walk))).observe(document.body, {childList: true, subtree: true});
+})();
 
 /* ---------- fond « mesh » de la pub ---------- */
 (() => {
