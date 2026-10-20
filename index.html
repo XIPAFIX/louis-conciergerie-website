@@ -982,7 +982,19 @@ const WALL = [
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
-const waLink = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || CONFIG.waMessage);
+/* ---------- code partenaire : louis-conciergerie.fr/?p=CODE, gardé 60 jours et ajouté aux messages WhatsApp ---------- */
+const REF = (() => {
+  const clean = c => String(c || "").toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 20);
+  const fromUrl = clean(new URLSearchParams(location.search).get("p"));
+  try {
+    if (fromUrl) { localStorage.setItem("lc-ref", JSON.stringify({ c: fromUrl, t: Date.now() })); return fromUrl; }
+    const saved = JSON.parse(localStorage.getItem("lc-ref") || "null");
+    if (saved && Date.now() - saved.t < 60 * 864e5) return clean(saved.c);
+  } catch {}
+  return fromUrl;
+})();
+const withRef = msg => REF && !msg.includes("Code partenaire") ? msg + "\n\nCode partenaire : " + REF : msg;
+const waLink = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(withRef(msg || CONFIG.waMessage));
 $$(".js-wa").forEach(a => a.href = waLink());
 const waNum = "+" + CONFIG.whatsapp.replace(/^(\d{2})(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5 $6");
 $$(".js-wa-num").forEach(el => el.textContent = waNum);
@@ -1224,7 +1236,8 @@ form.addEventListener("submit", async ev => {
   const msg = ["Bonjour Louis, je viens de remplir le formulaire de votre site, voici ma demande :",
     "Nom : " + v("nom"), "Téléphone : " + v("telephone"), v("email") && "Email : " + v("email"),
     "Événement : " + evTxt, "Nombre de places : " + qty,
-    v("rappel") && "Me rappeler : " + v("rappel"), v("message") && "Message : " + v("message")].filter(Boolean).join("\n");
+    v("rappel") && "Me rappeler : " + v("rappel"), v("message") && "Message : " + v("message"),
+    REF && "Code partenaire : " + REF].filter(Boolean).join("\n");
   const waSheet = (k, title) => openSheet(`<p class="k">${k}</p><h3 id="sheet-title">${title}</h3>
     <div class="preview">${esc(msg)}</div>
     <a class="btn btn-green" href="${waLink(msg)}" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
@@ -1232,7 +1245,7 @@ form.addEventListener("submit", async ev => {
   if (viaWhatsApp) return waSheet("Votre demande", "C'est prêt.");
   const btn = form.querySelector('[type="submit"]'); btn.disabled = true; btn.textContent = "Envoi…";
   const first = v("nom").split(" ")[0];
-  const data = new FormData(form); data.set("evenement", evTxt); data.set("places", qty);
+  const data = new FormData(form); data.set("evenement", evTxt); data.set("places", qty); if (REF) data.set("partenaire", REF);
   try {
     const r = await fetch("https://formspree.io/f/" + CONFIG.formspreeId, {method: "POST", body: data, headers: {Accept: "application/json"}});
     if (!r.ok) throw new Error();
