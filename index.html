@@ -802,7 +802,7 @@ const CONFIG = {
 };
 const UPCOMING = [
   /* ---- Football ---- */
-  { title: "PSG – OL", commons: ["Vitinha_(PSG).jpg"], type: "sport", kind: "foot", cat: "Ligue 1", date: "2026-10-25", venue: "Parc des Princes", city: "Paris", heat: 2, colors: ["#004170","#1d4ed8"] },
+  { title: "PSG – OL", commons: ["Vitinha_(PSG).jpg"], type: "sport", kind: "foot", cat: "Ligue 1", date: "2026-10-26", venue: "Parc des Princes", city: "Paris", heat: 2, note: "Décalé au lundi 26 octobre par la LFP", colors: ["#004170","#1d4ed8"] },
   { title: "PSG – AS Roma", commons: ["Achraf_Hakimi_PSG.jpg"], type: "sport", kind: "foot", cat: "Ligue des champions", date: "2026-11-25", venue: "Parc des Princes", city: "Paris", heat: 3, colors: ["#004170","#8e1f2f"] },
   { title: "PSG – Galatasaray", commons: ["Vitinha.jpg", "Victor-osimhen-nigeria-2024-3-4.jpg"], type: "sport", kind: "foot", cat: "Ligue des champions", date: "2027-01-27", venue: "Parc des Princes", city: "Paris", heat: 2, colors: ["#004170","#e2a400"] },
   { title: "PSG – OM", commons: ["Ousmane_Dembélé_2018_(cropped).jpg", "Achraf_Hakimi_PSG.jpg"], type: "sport", kind: "foot", cat: "Ligue 1 · Le Classique", date: "2027-02-07", venue: "Parc des Princes", city: "Paris", heat: 3, note: "Le match le plus attendu de la saison à Paris. Date annoncée par la LFP, sous réserve de la programmation TV", colors: ["#004170","#2faee0"] },
@@ -869,6 +869,8 @@ const UPCOMING = [
   { title: "Demi-finales du Top 14", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-06-18", end: "2027-06-19", venue: "Stade Atlantique", city: "Bordeaux", heat: 2, note: "Demi-finales les 18 et 19 juin" },
   { title: "Finale du Top 14", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-06-26", venue: "Stade de France", city: "Saint-Denis", heat: 3 },
   { title: "UBB – Stade Toulousain", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-03-28", venue: "Stade Atlantique", city: "Bordeaux", heat: 2, colors: ["#5b2c83","#d40000"] },
+  { title: "Stade Toulousain – Racing 92", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-12-05", end: "2026-12-06", whenText: "Week-end du 5 et 6 décembre 2026, jour exact à confirmer", labelText: "week-end du 5 décembre 2026", venue: "Stade Ernest-Wallon", city: "Toulouse", heat: 2, colors: ["#d40000","#7dd3fc"] },
+  { title: "RC Toulon – UBB", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-12-05", end: "2026-12-06", whenText: "Week-end du 5 et 6 décembre 2026, jour exact à confirmer", labelText: "week-end du 5 décembre 2026", venue: "Stade Mayol", city: "Toulon", heat: 2, colors: ["#e30613","#5b2c83"] },
   { title: "Stade Toulousain – USA Perpignan", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-10-24", venue: "Stade Ernest-Wallon", city: "Toulouse", heat: 2, colors: ["#d40000","#facc15"] },
   { title: "Stade Rochelais – Aviron Bayonnais", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-11-08", venue: "Stade Marcel-Deflandre", city: "La Rochelle", heat: 2, colors: ["#f5c400","#38bdf8"] },
   { title: "RC Toulon – Section Paloise", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-10-24", venue: "Stade Mayol", city: "Toulon", heat: 2, colors: ["#e30613","#00843d"] },
@@ -894,7 +896,6 @@ const UPCOMING = [
   { title: "Spurs – Pelicans", type: "sport", kind: "nba", cat: "NBA · Paris Game", date: "2027-01-14", venue: "Accor Arena", city: "Paris", heat: 3 },
 
   /* ---- Concerts ---- */
-  { title: "Korn", commons: ["Jonathan_Davis_of_Korn.jpg"], type: "concert", cat: "Concert", date: "2026-10-23", venue: "Accor Arena", city: "Paris", heat: 3, note: "Très demandé, places rares", colors: ["#dc2626","#111827"] },
   { title: "Don Toliver", type: "concert", cat: "Concert", date: "2026-10-25", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "The World of Hans Zimmer", type: "concert", cat: "Concert", date: "2026-11-02", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "J. Cole", commons: ["J._Cole_(DJ_Zeke_cropped_out).jpg"], type: "concert", cat: "Concert · The Fall-Off Tour", date: "2026-11-05", venue: "Accor Arena", city: "Paris", heat: 3, colors: ["#eab308","#7c2d12"] },
@@ -907,6 +908,13 @@ const UPCOMING = [
   { title: "Triangle des Bermudes", type: "concert", cat: "Concert · 2 dates", date: "2026-11-27", end: "2026-11-28", venue: "Accor Arena", city: "Paris", heat: 2, note: "Concerts les 27 et 28 novembre" },
   { title: "Muse", type: "concert", cat: "Concert · 2 dates", date: "2026-12-03", end: "2026-12-04", venue: "Sud de France Arena", city: "Montpellier", note: "Concerts les 3 et 4 décembre", heat: 2 },
   { title: "Noah Kahan", type: "concert", cat: "Concert", date: "2026-12-07", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "Vianney", type: "concert", cat: "Concert · 2 dates", date: "2027-11-26", end: "2027-11-27", venue: "Accor Arena", city: "Paris", heat: 2, note: "Concerts les 26 et 27 novembre" },
+  { title: "Bigflo & Oli", type: "concert", cat: "Concert · 2 dates", date: "2026-11-06", end: "2026-11-07", venue: "LDLC Arena", city: "Lyon", heat: 2, note: "Concerts les 6 et 7 novembre" },
+  { title: "Vanessa Paradis", type: "concert", cat: "Concert", date: "2026-11-14", venue: "LDLC Arena", city: "Lyon", heat: 2 },
+  { title: "Orelsan", type: "concert", cat: "Concert · 2 dates", date: "2026-11-16", end: "2026-11-17", venue: "LDLC Arena", city: "Lyon", heat: 2, note: "Concerts les 16 et 17 novembre" },
+  { title: "Placebo", type: "concert", cat: "Concert · 30 ans", date: "2026-11-23", venue: "LDLC Arena", city: "Lyon", heat: 2 },
+  { title: "Florent Pagny", type: "concert", cat: "Concert", date: "2026-12-03", venue: "LDLC Arena", city: "Lyon", heat: 2 },
+  { title: "Florent Pagny", type: "concert", cat: "Concert", date: "2027-01-15", venue: "LDLC Arena", city: "Lyon", heat: 2 },
   { title: "Deep Purple", type: "concert", cat: "Concert", date: "2026-11-15", venue: "LDLC Arena", city: "Lyon", heat: 2 },
   { title: "Christophe Maé", type: "concert", cat: "Concert · 2 dates", date: "2026-11-19", end: "2026-11-20", venue: "Accor Arena", city: "Paris", heat: 3, note: "Concerts les 19 et 20 novembre, très demandé" },
   { title: "Bryan Adams", type: "concert", cat: "Concert", date: "2026-11-30", venue: "LDLC Arena", city: "Lyon", heat: 2 },
