@@ -409,6 +409,9 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
 .foot-cols a{display:block;padding:3px 0;color:var(--text-2);text-decoration:none}
 .foot-cols a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;padding-top:18px}
+.foot-legal{display:flex;gap:18px}
+.foot-legal a{color:var(--text-2);text-decoration:none}
+.foot-legal a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:899px){footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}}
 /* ---------- défilement automatique des carrousels ---------- */
 .featured.auto,.past.auto{scroll-snap-type:none}
@@ -776,6 +779,7 @@ footer{margin-top:clamp(80px,12vw,140px);padding-block:40px calc(40px + env(safe
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Louis Conciergerie. Billetterie privée · Sport &amp; concerts.</span>
       <span>Photos : Wikimedia Commons, licences libres</span>
+      <span class="foot-legal"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></span>
     </div>
   </div>
 </footer>

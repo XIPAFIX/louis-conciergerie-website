@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#02040c">
+<title>Confidentialité · Louis Conciergerie</title>
+<link rel="canonical" href="https://louis-conciergerie.fr/confidentialite.html">
+<meta name="description" content="Ce que deviennent vos informations sur louis-conciergerie.fr : aucun cookie, formulaire envoyé uniquement sur WhatsApp, vos droits.">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icone-32.png?v=4">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=4">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Police Inter hébergée sur le site (licence OFL, fonts/OFL-Inter.txt) : aucune requête vers Google. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  color-scheme:dark;
+  --bg:#02040c;
+  --text:#ffffff;
+  --text-2:rgba(235,240,255,.74);
+  --text-3:rgba(225,232,255,.5);
+  --glass:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.13);
+  --pill:#ffffff;
+  --pill-ink:#0a1236;
+  --sky:#a9bfff;
+  --link:#6ea2ff;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Helvetica Neue",Arial,sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--text);font:400 17px/1.6 var(--font);letter-spacing:-.011em;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(70% 45% at 15% 0%,rgba(46,72,190,.38),transparent 70%),radial-gradient(60% 40% at 95% 10%,rgba(120,60,200,.28),transparent 70%),var(--bg) fixed}
+a{color:var(--sky);text-underline-offset:3px}
+a:hover{color:var(--text)}
+:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:8px}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+header{position:sticky;top:0;z-index:2;background:rgba(2,4,12,.72);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px;max-width:1120px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+img{display:block;max-width:100%}
+.brand img{flex:none}.brand .lc{height:28px;width:24px}.brand .wm{height:10px;width:132px}
+.back{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;background:var(--pill);color:var(--pill-ink);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.back:hover{color:var(--pill-ink);opacity:.9}
+main{padding:clamp(40px,8vw,80px) 0 40px}
+h1{margin:0 0 8px;font:700 clamp(36px,6vw,52px)/1.08 var(--font-display);letter-spacing:-.03em}
+.maj{margin:0 0 36px;color:var(--text-3);font-size:14px}
+h2{margin:44px 0 12px;font:650 22px/1.3 var(--font-display);letter-spacing:-.02em}
+p,li{color:var(--text-2)}
+p{margin:0 0 14px}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin:4px 0}
+strong{color:var(--text);font-weight:600}
+.card{margin:0 0 8px;padding:22px 24px;border-radius:24px;background:var(--glass);border:1px solid var(--line)}
+.card ul{margin:0;padding:0;list-style:none}
+.card li{position:relative;padding-left:28px;margin:8px 0;color:var(--text)}
+.card li::before{content:"";position:absolute;left:4px;top:.55em;width:10px;height:10px;border-radius:50%;background:#30d158}
+dl{margin:0 0 14px;display:grid;grid-template-columns:max-content 1fr;gap:6px 18px}
+dt{color:var(--text-3)}
+dd{margin:0;color:var(--text-2)}
+@media (max-width:520px){dl{grid-template-columns:1fr;gap:0}dd{margin-bottom:10px}}
+footer{margin-top:60px;padding:28px 0 calc(28px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+footer a{color:var(--text-2);text-decoration:none}
+footer a:hover{color:var(--text);text-decoration:underline}
+footer a[aria-current]{color:var(--text)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Louis Conciergerie, accueil"><img class="lc" src="images/logo-lc-blanc.png" alt="" width="204" height="240"><img class="wm" src="images/logo-texte-blanc.png" alt="" width="953" height="72"></a>
+    <a class="back" href="./">Retour au site</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <h1>Confidentialité</h1>
+    <p class="maj">Dernière mise à jour : 27 octobre 2026</p>
+<div class="card">
+      <ul>
+        <li>Aucun cookie, aucune publicité, aucun pistage d'un site à l'autre.</li>
+        <li>Ce que vous écrivez dans le formulaire part uniquement vers le WhatsApp de Louis, pour répondre à votre demande.</li>
+        <li>Vos informations ne sont jamais vendues ni partagées à des fins commerciales.</li>
+      </ul>
+    </div>
+
+    <h2>Qui est responsable de vos données&nbsp;?</h2>
+    <p><strong>LOUIS CONCIERGERIE</strong> (SASU), représentée par son président, Louis Caplet, Joinville-le-Pont (94340).</p>
+    <p>Pour toute question&nbsp;: <a href="https://wa.me/33619289447" target="_blank" rel="noopener">+33 6 19 28 94 47</a> sur WhatsApp, ou <a href="mailto:louis.caplet2006@gmail.com">louis.caplet2006@gmail.com</a>.</p>
+
+    <h2>Le formulaire de demande</h2>
+    <p>Quand vous remplissez le formulaire, rien n'est envoyé à un serveur&nbsp;: le site prépare un message que vous envoyez vous-même à Louis sur WhatsApp. Ce message contient ce que vous avez saisi&nbsp;: votre nom, votre téléphone, votre e-mail (facultatif), l'événement souhaité, le nombre de places, le moment où vous rappeler et votre message (facultatifs).</p>
+    <p><strong>Pourquoi&nbsp;:</strong> vous répondre, chercher vos places et organiser votre sortie. C'est nécessaire pour donner suite à votre demande (article 6.1.b du RGPD).</p>
+    <p>Vos coordonnées ne servent qu'à traiter vos demandes. Nous ne vous envoyons pas de messages publicitaires sans votre accord, et vous pouvez demander à tout moment à ne plus être contacté.</p>
+
+    <h2>WhatsApp</h2>
+    <p>Nos échanges passent par WhatsApp (WhatsApp Ireland Limited, groupe Meta). Les messages y sont chiffrés de bout en bout. L'utilisation de WhatsApp est soumise à sa propre politique de confidentialité.</p>
+
+    <h2>Si vous devenez client</h2>
+    <p>Nous conservons en plus les informations nécessaires à la facture (nom, prestation, date). C'est une obligation légale (article 6.1.c du RGPD).</p>
+
+    <h2>Combien de temps&nbsp;?</h2>
+    <ul>
+      <li>Demande restée sans suite&nbsp;: 3 ans après notre dernier échange.</li>
+      <li>Client&nbsp;: 3 ans après la fin de notre relation.</li>
+      <li>Factures et pièces comptables&nbsp;: 10 ans, comme l'exige la loi.</li>
+    </ul>
+
+    <h2>Qui y a accès&nbsp;?</h2>
+    <p>Louis uniquement. Pour la facturation et la comptabilité, notre banque et notre expert-comptable peuvent avoir accès aux informations de facture. Nous ne transmettons rien d'autre, sauf si la loi l'impose (administration fiscale, justice).</p>
+
+    <h2>Mesure d'audience</h2>
+    <p>Pour savoir combien de personnes visitent le site et quelles pages les intéressent, nous utilisons <strong>GoatCounter</strong>, un outil de statistiques respectueux de la vie privée. Il ne dépose aucun cookie, n'enregistre rien dans votre navigateur et ne conserve pas votre adresse IP. Il produit uniquement des chiffres anonymes&nbsp;: pages vues, site d'où vous venez, pays, navigateur, système, langue et taille d'écran.</p>
+    <p>GoatCounter est édité par Martin Tournoij (Irlande) et ses serveurs sont situés en Finlande et en Allemagne. Base légale&nbsp;: notre intérêt légitime à améliorer le site (article 6.1.f du RGPD).</p>
+
+    <h2>Hébergement du site</h2>
+    <p>Le site est hébergé par GitHub Pages (GitHub, Inc., États-Unis). Comme tout hébergeur, GitHub enregistre l'adresse IP des visiteurs pour la sécurité du service. Ce transfert vers les États-Unis est encadré par le cadre de protection des données UE–États-Unis (Data Privacy Framework).</p>
+
+    <h2>Cookies</h2>
+    <p>Le site ne dépose aucun cookie et ne stocke rien dans votre navigateur. Sa police d'écriture est hébergée sur le site lui-même, sans passer par Google. C'est pour cela qu'aucun bandeau de cookies ne s'affiche.</p>
+
+    <h2>Vos droits</h2>
+    <p>Vous pouvez à tout moment demander à accéder à vos données, les corriger, les effacer, vous opposer à leur utilisation, en limiter l'usage ou les récupérer. Écrivez-nous sur WhatsApp ou par e-mail&nbsp;: nous répondons sous un mois au plus tard.</p>
+    <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL&nbsp;: <a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Louis Conciergerie</span>
+    <nav aria-label="Pages légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html" aria-current="page">Confidentialité</a><a href="./">Accueil</a></nav>
+  </div>
+</footer>
+<script data-goatcounter="https://louis-conciergerie.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
