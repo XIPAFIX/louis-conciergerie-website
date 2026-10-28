@@ -1111,7 +1111,7 @@ const seg = $("#seg"), thumb = $("#seg-thumb");
 seg.insertAdjacentHTML("beforeend", CATS.map((c, i) => `<button type="button" data-cat="${c.key}" aria-pressed="${i === 0}">${c.name}</button>`).join(""));
 let cat = "all", query = "", showAll = false;
 const PAGE = 14;
-const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/ø/g, "o").replace(/æ/g, "ae").replace(/œ/g, "oe").replace(/ß/g, "ss");
 function moveThumb(animate) {
   const b = seg.querySelector('[aria-pressed="true"]'); if (!b) return;
   if (!animate) thumb.style.transition = "none";
@@ -1198,7 +1198,7 @@ function eventSheet(e) {
   if (e.note) rows.push(["À savoir", e.note]);
   return `<p class="k">${esc(e.cat)}</p><h3 id="sheet-title">${esc(e.title)}</h3><span class="badge h${e.heat}">${HEAT[e.heat]}</span>
     <dl class="info">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-    <a class="btn btn-green" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Je demande mes places</a>
+    <a class="btn btn-green" href="${waLink(waEventMsg(e))}" target="_blank" rel="noopener">Je demande mes places<span class="sr"> pour ${esc(e.title)}</span></a>
     <button class="btn btn-glass" type="button" data-form="${events.indexOf(e)}">Je préfère être rappelé</button>`;
 }
 document.addEventListener("click", ev => {
