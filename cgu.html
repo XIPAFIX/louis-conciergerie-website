@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#02040c">
+<title>Conditions générales d'utilisation · Louis Conciergerie</title>
+<link rel="canonical" href="https://louis-conciergerie.fr/cgu.html">
+<meta name="description" content="Conditions générales d'utilisation du site louis-conciergerie.fr : ce que propose le site, vos demandes, vos droits.">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icone-32.png?v=4">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=4">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Police Inter hébergée sur le site (licence OFL, fonts/OFL-Inter.txt) : aucune requête vers Google. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  color-scheme:dark;
+  --bg:#02040c;
+  --text:#ffffff;
+  --text-2:rgba(235,240,255,.74);
+  --text-3:rgba(225,232,255,.5);
+  --glass:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.13);
+  --pill:#ffffff;
+  --pill-ink:#0a1236;
+  --sky:#a9bfff;
+  --link:#6ea2ff;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Helvetica Neue",Arial,sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--text);font:400 17px/1.6 var(--font);letter-spacing:-.011em;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(70% 45% at 15% 0%,rgba(46,72,190,.38),transparent 70%),radial-gradient(60% 40% at 95% 10%,rgba(120,60,200,.28),transparent 70%),var(--bg) fixed}
+a{color:var(--sky);text-underline-offset:3px}
+a:hover{color:var(--text)}
+:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:8px}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+header{position:sticky;top:0;z-index:2;background:rgba(2,4,12,.72);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px;max-width:1120px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+img{display:block;max-width:100%}
+.brand img{flex:none}.brand .lc{height:28px;width:24px}.brand .wm{height:10px;width:132px}
+.back{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;background:var(--pill);color:var(--pill-ink);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.back:hover{color:var(--pill-ink);opacity:.9}
+main{padding:clamp(40px,8vw,80px) 0 40px}
+h1{margin:0 0 8px;font:700 clamp(36px,6vw,52px)/1.08 var(--font-display);letter-spacing:-.03em}
+.maj{margin:0 0 36px;color:var(--text-3);font-size:14px}
+h2{margin:44px 0 12px;font:650 22px/1.3 var(--font-display);letter-spacing:-.02em}
+p,li{color:var(--text-2)}
+p{margin:0 0 14px}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin:4px 0}
+strong{color:var(--text);font-weight:600}
+.card{margin:0 0 8px;padding:22px 24px;border-radius:24px;background:var(--glass);border:1px solid var(--line)}
+.card ul{margin:0;padding:0;list-style:none}
+.card li{position:relative;padding-left:28px;margin:8px 0;color:var(--text)}
+.card li::before{content:"";position:absolute;left:4px;top:.55em;width:10px;height:10px;border-radius:50%;background:#30d158}
+dl{margin:0 0 14px;display:grid;grid-template-columns:max-content 1fr;gap:6px 18px}
+dt{color:var(--text-3)}
+dd{margin:0;color:var(--text-2)}
+@media (max-width:520px){dl{grid-template-columns:1fr;gap:0}dd{margin-bottom:10px}}
+footer{margin-top:60px;padding:28px 0 calc(28px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+footer a{color:var(--text-2);text-decoration:none}
+footer a:hover{color:var(--text);text-decoration:underline}
+footer a[aria-current]{color:var(--text)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Louis Conciergerie, accueil"><img class="lc" src="images/logo-lc-blanc.png" alt="" width="204" height="240"><img class="wm" src="images/logo-texte-blanc.png" alt="" width="953" height="72"></a>
+    <a class="back" href="./">Retour au site</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <h1>Conditions générales d'utilisation</h1>
+    <p class="maj">Dernière mise à jour : 29 octobre 2026</p>
+<div class="card">
+      <ul>
+        <li>Le site présente des concerts et des événements sportifs et vous aide à préparer votre demande pour Louis.</li>
+        <li>Aucune vente et aucun paiement n'ont lieu sur le site, et il n'y a aucun compte à créer.</li>
+        <li>Envoyer une demande ne vous engage à rien.</li>
+      </ul>
+    </div>
+
+    <h2>1. À quoi servent ces conditions</h2>
+    <p>Les présentes conditions générales d'utilisation (CGU) encadrent l'utilisation du site <strong>louis-conciergerie.fr</strong>, édité par <strong>LOUIS CONCIERGERIE</strong>, SASU en cours de création (voir les <a href="mentions-legales.html">mentions légales</a>). En utilisant le site, vous acceptez ces conditions.</p>
+
+    <h2>2. Ce que propose le site</h2>
+    <p>Le site présente des événements (concerts, football, rugby, tennis, sports américains) et le service de conciergerie privée de Louis Conciergerie. Il vous permet de préparer une demande, que vous envoyez vous-même à Louis sur WhatsApp.</p>
+    <p>L'accès au site est gratuit, hors coût de votre connexion à internet. Aucune vente et aucun paiement n'ont lieu sur le site, et aucun compte n'est nécessaire.</p>
+
+    <h2>3. Les informations sur les événements</h2>
+    <p>Les dates, lieux et informations affichés reprennent les annonces officielles des organisateurs, des salles, des clubs et des fédérations. Nous les vérifions régulièrement, mais ils sont donnés à titre indicatif et peuvent changer à tout moment, sur décision de l'organisateur.</p>
+    <p>Louis Conciergerie n'est ni l'organisateur ni la billetterie officielle des événements présentés. La présence d'un événement sur le site ne garantit pas que des places pourront être trouvées.</p>
+    <p>L'indication «&nbsp;Très attendu&nbsp;» n'apparaît que lorsqu'une page officielle de la salle, de l'organisateur ou de l'artiste annonce l'événement complet ou une liste d'attente.</p>
+
+    <h2>4. Votre demande</h2>
+    <p>Le formulaire et les boutons WhatsApp préparent un message que vous choisissez d'envoyer ou non. Envoyer une demande est gratuit et ne vous engage à rien.</p>
+    <p>Si vous souhaitez aller plus loin, les conditions de la prestation (ce que fait Louis, son prix, le paiement et l'annulation) vous sont communiquées par écrit, sur WhatsApp ou par e-mail, avant tout engagement de votre part. Aucune prestation ne commence sans votre accord.</p>
+
+    <h2>5. Votre utilisation du site</h2>
+    <p>Vous vous engagez à utiliser le site de manière loyale&nbsp;: donner des informations exactes dans vos demandes, ne pas tenter de perturber le site ou d'y accéder de façon frauduleuse, et ne pas en reprendre le contenu à des fins commerciales.</p>
+
+    <h2>6. Propriété intellectuelle</h2>
+    <p>Les textes, la mise en page, le logo et les vidéos du site appartiennent à Louis Conciergerie. Les noms et marques des artistes, clubs, compétitions et événements appartiennent à leurs titulaires et ne sont cités que pour désigner les événements. Le détail figure dans les <a href="mentions-legales.html">mentions légales</a>.</p>
+
+    <h2>7. Liens vers d'autres sites</h2>
+    <p>Le site contient des liens vers d'autres services, comme WhatsApp. Louis Conciergerie n'est pas responsable du contenu ni du fonctionnement de ces services, qui ont leurs propres conditions.</p>
+
+    <h2>8. Disponibilité et responsabilité</h2>
+    <p>Nous faisons de notre mieux pour que le site soit accessible et ses informations exactes. Le site peut toutefois être interrompu, notamment pour maintenance, sans préavis.</p>
+    <p>Louis Conciergerie ne peut être tenue responsable des changements décidés par les organisateurs (date, lieu, programme, report ou annulation d'un événement), ni d'une interruption temporaire du site.</p>
+
+    <h2>9. Données personnelles et cookies</h2>
+    <p>Le site ne dépose aucun cookie. Ce que deviennent les informations que vous nous envoyez est expliqué sur la page <a href="confidentialite.html">Confidentialité</a>.</p>
+
+    <h2>10. Modification des conditions</h2>
+    <p>Ces conditions peuvent évoluer, par exemple quand le site change. La version qui s'applique est celle en ligne au moment de votre visite, avec sa date de mise à jour en haut de cette page.</p>
+
+    <h2>11. Droit applicable et litiges</h2>
+    <p>Ces conditions sont soumises au droit français. En cas de désaccord, écrivez-nous d'abord&nbsp;: nous cherchons toujours une solution amiable. À défaut, le litige sera porté devant les tribunaux compétents, selon les règles du droit français.</p>
+
+    <h2>12. Nous contacter</h2>
+    <p><a href="https://wa.me/33619289447" target="_blank" rel="noopener">+33 6 19 28 94 47</a> sur WhatsApp, ou <a href="mailto:louis.caplet2006@gmail.com">louis.caplet2006@gmail.com</a>.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Louis Conciergerie</span>
+    <nav aria-label="Pages légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="cgu.html" aria-current="page">Conditions d'utilisation</a><a href="./">Accueil</a></nav>
+  </div>
+</footer>
+<script data-goatcounter="https://louis-conciergerie.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
