@@ -1134,8 +1134,9 @@ const CATS = [
   {key: "us", name: "Sports US", test: e => e.kind === "nfl" || e.kind === "nba"}
 ].filter(c => c.key === "all" || events.some(c.test));
 const seg = $("#seg"), thumb = $("#seg-thumb");
-seg.insertAdjacentHTML("beforeend", CATS.map((c, i) => `<button type="button" data-cat="${c.key}" aria-pressed="${i === 0}">${c.name}</button>`).join(""));
-let cat = "all", query = "", showAll = false;
+seg.insertAdjacentHTML("beforeend", CATS.map(c => `<button type="button" data-cat="${c.key}" aria-pressed="false">${c.name}</button>`).join(""));
+// Aucune catégorie choisie au départ : la liste ne s'affiche qu'après un clic (ou une recherche)
+let cat = null, query = "", showAll = false;
 const PAGE = 14;
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/ø/g, "o").replace(/æ/g, "ae").replace(/œ/g, "oe").replace(/ß/g, "ss");
 function moveThumb(animate) {
@@ -1157,7 +1158,8 @@ function rowHTML(e) {
     ${badge(e)}${chev}</button>`;
 }
 function render() {
-  const c = CATS.find(x => x.key === cat), q = norm(query.trim());
+  const c = CATS.find(x => x.key === (cat || "all")), q = norm(query.trim());
+  if (!cat && !q) { $("#list").innerHTML = ""; $("#list-more").hidden = true; return; }
   let list = events.filter(c.test);
   if (q) list = list.filter(e => norm([e.title, e.cat, e.venue, e.city, e.note || ""].join(" ")).includes(q));
   const total = list.length, cut = !showAll && !q && cat === "all" && total > PAGE;
@@ -1179,8 +1181,11 @@ function render() {
 }
 seg.addEventListener("click", ev => {
   const b = ev.target.closest("button"); if (!b) return;
-  seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
-  cat = b.dataset.cat; showAll = false; moveThumb(true); render();
+  const off = b.dataset.cat === cat;
+  seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", !off && x === b));
+  cat = off ? null : b.dataset.cat; showAll = false;
+  if (off) thumb.style.width = "0px"; else moveThumb(true);
+  render();
   b.scrollIntoView({block: "nearest", inline: "nearest", behavior: reduce ? "auto" : "smooth"});
 });
 $("#q").addEventListener("input", ev => { query = ev.target.value; $("#q-clear").hidden = !query; render(); });
