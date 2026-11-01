@@ -876,14 +876,12 @@ const UPCOMING = [
   { title: "Stade Toulousain – Racing 92", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-12-05", end: "2026-12-06", whenText: "Week-end du 5 et 6 décembre 2026, jour exact à confirmer", labelText: "week-end du 5 décembre 2026", venue: "Stade Ernest-Wallon", city: "Toulouse", heat: 2, colors: ["#d40000","#7dd3fc"] },
   { title: "RC Toulon – UBB", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-12-05", end: "2026-12-06", whenText: "Week-end du 5 et 6 décembre 2026, jour exact à confirmer", labelText: "week-end du 5 décembre 2026", venue: "Stade Mayol", city: "Toulon", heat: 2, colors: ["#e30613","#5b2c83"] },
   { title: "Stade Rochelais – Aviron Bayonnais", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-11-08", venue: "Stade Marcel-Deflandre", city: "La Rochelle", heat: 2, colors: ["#f5c400","#38bdf8"] },
-  { title: "UBB – Aviron Bayonnais", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-10-31", venue: "Stade Chaban-Delmas", city: "Bordeaux", heat: 2, heatSrc: "https://www.ubbrugby.com/", colors: ["#5b2c83","#38bdf8"] },
   { title: "UBB – Stormers", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2026-12-13", venue: "Stade Chaban-Delmas", city: "Bordeaux", heat: 2, colors: ["#5b2c83","#1e3a8a"] },
   { title: "Stade Toulousain – ASM Clermont", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-11-07", venue: "Stade Ernest-Wallon", city: "Toulouse", heat: 2, colors: ["#d40000","#fcd116"] },
   { title: "Section Paloise – Stade Toulousain", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-11-01", venue: "Stade du Hameau", city: "Pau", heat: 2, colors: ["#00843d","#d40000"] },
   { title: "RC Toulon – Stade Français", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-11-07", venue: "Stade Mayol", city: "Toulon", heat: 2, colors: ["#e30613","#e4007f"] },
   { title: "UBB – Section Paloise", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-12-20", venue: "Stade Atlantique", city: "Bordeaux", heat: 2, colors: ["#5b2c83","#00843d"] },
   { title: "UBB – Munster", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2027-01-10", venue: "Stade Chaban-Delmas", city: "Bordeaux", heat: 2, colors: ["#5b2c83","#c8102e"] },
-  { title: "Stade Français – Stade Rochelais", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2026-10-31", venue: "Stade Jean-Bouin", city: "Paris", heat: 2, colors: ["#e4007f","#f5c400"] },
   { title: "Stade Toulousain – Saracens", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2027-01-17", venue: "Stade Ernest-Wallon", city: "Toulouse", heat: 2, colors: ["#d40000","#111827"] },
   { title: "Stade Rochelais – Connacht", type: "sport", kind: "rugby", cat: "Rugby · Champions Cup", date: "2027-01-16", venue: "Stade Marcel-Deflandre", city: "La Rochelle", heat: 2, colors: ["#f5c400","#15803d"] },
   { title: "Championnat du monde de rugby à 7", type: "sport", kind: "rugby", cat: "Rugby à 7 · World Rugby", date: "2027-05-28", end: "2027-05-30", venue: "Stade Atlantique", city: "Bordeaux", heat: 2, note: "Dernière étape du HSBC SVNS World Championship" },
@@ -893,7 +891,7 @@ const UPCOMING = [
   { title: "RC Toulon – Stade Toulousain", type: "sport", kind: "rugby", cat: "Rugby · Top 14", date: "2027-04-17", venue: "CEPAC Vélodrome", city: "Marseille", heat: 2, colors: ["#e30613","#d40000"] },
 
   /* ---- Sports US ---- */
-  { title: "Spurs – Pelicans", type: "sport", kind: "nba", cat: "NBA · Paris Game", date: "2027-01-14", venue: "Accor Arena", city: "Paris", heat: 3 },
+  { title: "Pelicans – Spurs", type: "sport", kind: "nba", cat: "NBA · Paris Game", date: "2027-01-14", venue: "Accor Arena", city: "Paris", heat: 3, heatSrc: "https://nbaevents.nba.com/paris/en" },
 
   /* ---- Concerts ---- */
   { title: "The World of Hans Zimmer", type: "concert", cat: "Concert", date: "2026-11-02", venue: "Accor Arena", city: "Paris", heat: 2 },
@@ -991,9 +989,13 @@ const UPCOMING = [
   { title: "Keblack", type: "concert", cat: "Concert", date: "2027-03-25", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "Tokio Hotel", type: "concert", cat: "Concert", date: "2026-11-21", venue: "Adidas Arena", city: "Paris", heat: 2 },
   { title: "Phoebe Bridgers", type: "concert", cat: "Concert · The Lost Tour", date: "2026-12-04", venue: "Adidas Arena", city: "Paris", heat: 2 },
-  { title: "James Blunt", type: "concert", cat: "Concert · Airplane Mode Tour", date: "2027-02-21", venue: "Adidas Arena", city: "Paris", heat: 2 },
+  { title: "James Blunt", type: "concert", cat: "Concert", date: "2027-02-21", venue: "Adidas Arena", city: "Paris", heat: 2 },
   { title: "Grand Corps Malade", type: "concert", cat: "Concert · 2 dates", date: "2027-03-12", end: "2027-03-13", venue: "Adidas Arena", city: "Paris", heat: 2, note: "Concerts les 12 et 13 mars" },
   { title: "Jenifer", type: "concert", cat: "Concert", date: "2027-05-29", venue: "Adidas Arena", city: "Paris", heat: 2 },
+  { title: "No Limit", type: "concert", cat: "Concert · Orelsan, Gazo, Hamza, Tiakola, SDM…", date: "2026-11-18", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "Superbus", type: "concert", cat: "Concert", date: "2026-11-24", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "Calema", type: "concert", cat: "Concert", date: "2027-04-25", venue: "Accor Arena", city: "Paris", heat: 2 },
+  { title: "La Mano 1.9", type: "concert", cat: "Concert", date: "2027-05-07", venue: "Accor Arena", city: "Paris", heat: 2 },
   { title: "Gracie Abrams", type: "concert", cat: "Concert · 3 dates", date: "2027-04-08", end: "2027-04-12", venue: "Accor Arena", city: "Paris", heat: 2, note: "Concerts les 8, 9 et 12 avril" },
   { title: "Niska", type: "concert", cat: "Concert · 3 dates", date: "2027-04-09", end: "2027-04-11", venue: "Stade de France", city: "Saint-Denis", heat: 2, heatSrc: "https://www.stadefrance.com/en/ticket/niska", note: "Concerts les 9, 10 et 11 avril" },
   { title: "Sofiane Pamart", commons: ["Muse_TIFO_Stade_de_France.jpg"], photoNote: "Le Stade de France en concert", type: "concert", cat: "Concert", date: "2027-04-17", venue: "Stade de France", city: "Saint-Denis", heat: 2, note: "Premier pianiste à jouer au Stade de France", colors: ["#94a3b8","#0b1020"] },
